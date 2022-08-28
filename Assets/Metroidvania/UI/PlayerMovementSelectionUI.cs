@@ -26,14 +26,14 @@ public class PlayerMovementSelectionUI : MonoBehaviour
         {
             var movementStat = MovementStats[i];
             ListButton newButton = Instantiate(ListButtonPrefab);
-            newButton.transform.SetParent(SelectionPanel);
+            newButton.transform.SetParent(SelectionPanel, false);
             RectTransform rect = newButton.GetComponent<RectTransform>();
 
             if (buttonHeight == 0f)
             {
                 buttonHeight = rect.rect.height;
             }
-            buttonPosition -= buttonHeight;
+            buttonPosition += buttonHeight;
             Vector2 position = rect.position;
             position.y = buttonPosition;
             rect.position = position;

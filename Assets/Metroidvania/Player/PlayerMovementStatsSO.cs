@@ -8,4 +8,5 @@ public class PlayerMovementStatsSO : ScriptableObject
     public float TurnSmoothTime = 0.1f;
     public float JumpHeight = 1f;
     public float Gravity = -9.81f;
+    public bool AllowMidAirTurning = false;
 }

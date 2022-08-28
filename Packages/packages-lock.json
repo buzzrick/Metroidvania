@@ -1,11 +1,25 @@
 {
   "dependencies": {
+    "com.coffee.upm-git-extension": {
+      "version": "https://github.com/mob-sakai/UpmGitExtension.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e949d3e741950d55be7e3d6c6924dcf8935bbec2"
+    },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
       "depth": 0,
       "source": "git",
       "dependencies": {},
       "hash": "f48cb4b03e6214d9a02cedfda6f26635dad001fb"
+    },
+    "com.svermeulen.extenject": {
+      "version": "https://github.com/starikcetin/Extenject.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "8261b211687c43c40203c3e7dcdf9e0edfaf17a6"
     },
     "com.unity.burst": {
       "version": "1.7.3",
