@@ -9,6 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/GameCoreScene.unity
     guid: 58d15460300200140853150ef105717d
   - enabled: 1
+    path: Assets/Scenes/SceneAnchors.unity
+    guid: c1dd4097964311e4098d159db51131e5
+  - enabled: 1
     path: Assets/Scenes/Level1Scene.unity
     guid: 2a00252a0d8e91143af51800aa9d4574
+  - enabled: 1
+    path: Assets/Scenes/Level2Scene.unity
+    guid: e20295547e984a54186123dab0f61973
+  - enabled: 1
+    path: Assets/Scenes/Level3Scene.unity
+    guid: beeb3857fcf20684e9c9286832846615
   m_configObjects: {}
