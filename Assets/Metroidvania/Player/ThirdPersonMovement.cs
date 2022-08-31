@@ -12,6 +12,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private float _turnSmoothVelocity;
     private bool _isGrounded = false;
+    private Vector3 _horizontalVelocity = Vector3.zero;
     private Vector3 _verticalVelocity = Vector3.zero;
 
     private const string Horizontal = "Horizontal";
@@ -38,9 +39,15 @@ public class ThirdPersonMovement : MonoBehaviour
         float horizontal = Input.GetAxisRaw(Horizontal);
         float vertical = Input.GetAxisRaw(Vertical);
         Vector3 inputVector = new Vector3(horizontal, 0f, vertical).normalized;
-        Vector3 velocity = Vector3.zero;
-
+        
         RecalculateGrounded();
+
+        bool isTurningAllowed = (_isGrounded || PlayerMovementStats.IsMidAirTurningAllowed());
+
+        if (isTurningAllowed)
+        {
+            _horizontalVelocity = Vector3.zero;
+        }
 
         if (inputVector.magnitude > 0.1f)
         {
@@ -48,9 +55,13 @@ public class ThirdPersonMovement : MonoBehaviour
                 + _cameraTransform.eulerAngles.y;   //  rotate move direction based on camera
 
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, PlayerMovementStats.TurnSmoothTime);
+
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            velocity = (Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward).normalized * PlayerMovementStats.Speed;
+            if (_isGrounded || PlayerMovementStats.IsMidAirTurningAllowed())
+            {
+                _horizontalVelocity = (Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward).normalized * PlayerMovementStats.Speed;
+            }
         }
 
         //  calculate gravity / jumping
@@ -68,7 +79,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         _verticalVelocity.y += (PlayerMovementStats.Gravity * Time.deltaTime) * GravityTweak;
-        _characterController.Move((velocity + _verticalVelocity) * Time.deltaTime);
+        _characterController.Move((_horizontalVelocity + _verticalVelocity) * Time.deltaTime);
     }
 
     private void RecalculateGrounded()

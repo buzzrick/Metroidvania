@@ -9,4 +9,10 @@ public class PlayerMovementStatsSO : ScriptableObject
     public float JumpHeight = 1f;
     public float Gravity = -9.81f;
     public bool AllowMidAirTurning = false;
+
+
+    public bool IsMidAirTurningAllowed()
+    {
+        return AllowMidAirTurning;
+    }
 }
