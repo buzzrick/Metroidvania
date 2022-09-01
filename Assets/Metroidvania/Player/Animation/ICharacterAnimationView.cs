@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ICharacterAnimationView
+public interface ICharacterAnimationView 
 {
     void SetGrounded(bool isGrounded);
     void SetJumping(bool isJumping);

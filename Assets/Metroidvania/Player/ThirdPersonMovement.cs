@@ -1,7 +1,8 @@
+using Metroidvania.Player.Animation;
 using System;
 using UnityEngine;
 
-public class ThirdPersonMovement : MonoBehaviour
+public class ThirdPersonMovement : MonoBehaviour, ICharacterViewDriver
 {
     public bool LogIsGrounded = false;
     public PlayerMovementStatsSO PlayerMovementStats;
@@ -16,6 +17,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private Vector3 _horizontalVelocity = Vector3.zero;
     private Vector3 _verticalVelocity = Vector3.zero;
     private ICharacterAnimationView _characterAnimationView;
+    private CharacterBlinker _blinker;
     private const string Horizontal = "Horizontal";
     private const string Vertical = "Vertical";
 
@@ -103,11 +105,18 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 Debug.Log($"Character is {(_isGrounded ? "" : "NOT")} Grounded");
             }
+            //_blinker.Blink(2, 0.1f);
         }
     }
 
     public void RegisterCharacterAnimationView(ICharacterAnimationView characterAnimationView)
     {
         _characterAnimationView = characterAnimationView;
+    }
+
+
+    public void RegisterCharacterBlinker(CharacterBlinker blinker)
+    {
+        _blinker = blinker;
     }
 }
