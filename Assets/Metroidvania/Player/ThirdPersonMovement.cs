@@ -88,6 +88,7 @@ public class ThirdPersonMovement : MonoBehaviour, ICharacterViewDriver
             if (Input.GetButtonDown("Jump"))
             {
                 _verticalVelocity.y = Mathf.Sqrt(PlayerMovementStats.JumpHeight * GravityTweak * -2 * PlayerMovementStats.Gravity) ;
+                _characterAnimationView.SetJumping(true);
             }
         }
 
