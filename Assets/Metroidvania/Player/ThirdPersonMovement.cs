@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ThirdPersonMovement : MonoBehaviour
@@ -14,7 +15,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private bool _isGrounded = false;
     private Vector3 _horizontalVelocity = Vector3.zero;
     private Vector3 _verticalVelocity = Vector3.zero;
-
+    private ICharacterAnimationView _characterAnimationView;
     private const string Horizontal = "Horizontal";
     private const string Vertical = "Vertical";
 
@@ -60,8 +61,18 @@ public class ThirdPersonMovement : MonoBehaviour
 
             if (_isGrounded || PlayerMovementStats.IsMidAirTurningAllowed())
             {
-                _horizontalVelocity = (Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward).normalized * PlayerMovementStats.Speed;
+                Vector3 inputDirection = (Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward);
+                if (inputDirection.sqrMagnitude > 1f)
+                {
+                    inputDirection = inputDirection.normalized;
+                }
+                _horizontalVelocity = inputDirection * PlayerMovementStats.Speed;
+                _characterAnimationView.SetSpeed(_horizontalVelocity.magnitude);
             }
+        }
+        else
+        {
+            _characterAnimationView.SetSpeed(0f);
         }
 
         //  calculate gravity / jumping
@@ -93,5 +104,10 @@ public class ThirdPersonMovement : MonoBehaviour
                 Debug.Log($"Character is {(_isGrounded ? "" : "NOT")} Grounded");
             }
         }
+    }
+
+    public void RegisterCharacterAnimationView(ICharacterAnimationView characterAnimationView)
+    {
+        _characterAnimationView = characterAnimationView;
     }
 }
