@@ -1,0 +1,27 @@
+Characters
+
+Megamillious the Magician
+Pretentious snob, Doesn't really know what he's doing.
+
+Mayer Horton
+Loves the magician
+Thinks that the magician solves all of there problems, although it is actually the player.
+
+Townspeople
+Loves the magician
+
+
+
+Story
+MTM sends player to the town: "See what the rabble are making all the noise about"
+Player passes a horse+cart by the hole in the road (currently covered). This allows us to make a bottleneck getting through there.
+In the town there is a crowd blocking the docks area
+townspeople say there's a vicious orc on the loose.
+Mayer sends player back to MTM to ask for help.
+player walks back up hill, 
+Starts raining
+player falls through the ground next to the horse+cart. Lightning bolt breaks it up?
+
+player finds an old sword in the sewer. "What do I need a sword for. I want to be a magician"
+in the sewer player must kill slimes avoid them.
+player can find a power crystal (for powering portals) in the sewer.
