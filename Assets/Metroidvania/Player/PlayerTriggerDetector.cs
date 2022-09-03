@@ -1,3 +1,4 @@
+using Metroidvania.Interactables;
 using Metroidvania.Player;
 using UnityEngine;
 
@@ -12,13 +13,23 @@ public class PlayerTriggerDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"Player OnTriggerEnter {other.name}");
-        var triggerZone = other.GetComponent<IPlayerEnterTriggerZone>();
+        IPlayerEnterTriggerZone triggerZone = other.GetComponent<IPlayerEnterTriggerZone>();
         if (triggerZone != null)
         {
 
-            Debug.Log($"Triggering {other.name}");
+            Debug.Log($"Player Triggering {other.name}");
             triggerZone.OnPlayerEnteredZone(_playerRoot);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        IPlayerExitTriggerZone triggerZone = other.GetComponent<IPlayerExitTriggerZone>();
+        if (triggerZone != null)
+        {
+
+            Debug.Log($"Player Triggering {other.name}");
+            triggerZone.OnPlayerExitedZone(_playerRoot);
         }
     }
 }

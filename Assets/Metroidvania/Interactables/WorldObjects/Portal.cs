@@ -2,42 +2,45 @@ using Metroidvania.Player;
 using UnityEngine;
 using Zenject;
 
-public class Portal : MonoBehaviour, IPlayerEnterTriggerZone
+namespace Metroidvania.Interactables
 {
-    [SerializeField] private Transform ExitPoint;
-    [SerializeField] private Portal TargetPortal;
-
-    [SerializeField] private string TargetPortalScene;
-    [SerializeField] private string TargetPortalName;
-    private MultiSceneLoader _multiSceneLoader;
-
-    public Vector3 GetExitPoint() => ExitPoint.position;
-
-    [Inject]
-    private void Initialise(MultiSceneLoader multiSceneLoader)
+    public class Portal : MonoBehaviour, IPlayerEnterTriggerZone
     {
-        _multiSceneLoader = multiSceneLoader;
-    }
+        [SerializeField] private Transform ExitPoint;
+        [SerializeField] private Portal TargetPortal;
 
-    private void Awake()
-    {
-        if (TargetPortal == this)
+        [SerializeField] private string TargetPortalScene;
+        [SerializeField] private string TargetPortalName;
+        private MultiSceneLoader _multiSceneLoader;
+
+        public Vector3 GetExitPoint() => ExitPoint.position;
+
+        [Inject]
+        private void Initialise(MultiSceneLoader multiSceneLoader)
         {
-            Debug.LogError($"Portal {name} is targeting itself");
+            _multiSceneLoader = multiSceneLoader;
         }
-    }
 
-    public async void OnPlayerEnteredZone(PlayerRoot player)
-    {
-        if (TargetPortal != null)
+        private void Awake()
         {
-            player.SetWorldPosition(TargetPortal.GetExitPoint());
+            if (TargetPortal == this)
+            {
+                Debug.LogError($"Portal {name} is targeting itself");
+            }
         }
-        else if (!string.IsNullOrEmpty(TargetPortalScene) 
-            && !string.IsNullOrEmpty(TargetPortalName))
+
+        public async void OnPlayerEnteredZone(PlayerRoot player)
         {
-            Portal targetPortal = await _multiSceneLoader.LoadSceneAndGetObject<Portal>(TargetPortalScene, TargetPortalName);
-            player.SetWorldPosition(targetPortal.GetExitPoint());
+            if (TargetPortal != null)
+            {
+                player.SetWorldPosition(TargetPortal.GetExitPoint());
+            }
+            else if (!string.IsNullOrEmpty(TargetPortalScene)
+                && !string.IsNullOrEmpty(TargetPortalName))
+            {
+                Portal targetPortal = await _multiSceneLoader.LoadSceneAndGetObject<Portal>(TargetPortalScene, TargetPortalName);
+                player.SetWorldPosition(targetPortal.GetExitPoint());
+            }
         }
     }
 }
