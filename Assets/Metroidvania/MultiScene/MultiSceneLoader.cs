@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,14 +16,33 @@ public class MultiSceneLoader : MonoBehaviour
     {
         foreach (string sceneName in RequiredScenes)
         {
-            Debug.Log($"Loading Scene {sceneName}");
-            Scene scene = SceneManager.GetSceneByName(sceneName);
-            if (scene != null && scene.isLoaded)
-            {
-                continue;
-            }
-            
-            await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            await LoadScene(sceneName);
         }
+    }
+
+    public async UniTask LoadScene(string sceneName)
+    {
+        Scene scene = SceneManager.GetSceneByName(sceneName);
+        if (scene != null && scene.isLoaded)
+        {
+            Debug.Log($"Loading Scene {sceneName} (already loaded)");
+            return;
+        }
+
+        Debug.Log($"Loading Scene {sceneName}");
+
+        await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+    }
+
+    public async UniTask<T> LoadSceneAndGetObject<T>(string sceneName, string objectPath) 
+        where T : MonoBehaviour
+    {
+        await LoadScene(sceneName);
+        GameObject targetObject = GameObject.Find(objectPath);
+        if (targetObject != null)
+        {
+            return targetObject.GetComponent<T>();
+        }
+        return null;
     }
 }
