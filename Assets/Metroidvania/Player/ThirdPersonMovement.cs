@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Metroidvania.Player.Animation;
 using System;
 using UnityEngine;
@@ -37,8 +38,10 @@ public class ThirdPersonMovement : MonoBehaviour, ICharacterViewDriver
     // Update is called once per frame
     public void Update()
     {
-        //  calculate horizontal movement
+        if (!_characterController.enabled)
+            return;
 
+        //  calculate horizontal movement
         float horizontal = Input.GetAxisRaw(Horizontal);
         float vertical = Input.GetAxisRaw(Vertical);
         Vector3 inputVector = new Vector3(horizontal, 0f, vertical).normalized;
@@ -119,5 +122,21 @@ public class ThirdPersonMovement : MonoBehaviour, ICharacterViewDriver
     public void RegisterCharacterBlinker(CharacterBlinker blinker)
     {
         _blinker = blinker;
+    }
+
+    public async void Teleport(Vector3 position)
+    {
+
+        Debug.Log($"Teleporting to {position}");
+        _horizontalVelocity = Vector3.zero;
+        _verticalVelocity = Vector3.zero;
+        _characterAnimationView.SetSpeed(0f);
+        _blinker.Blink(7, 0.1f);
+
+        _characterController.enabled = false;
+        Physics.SyncTransforms();       //  https://issuetracker.unity3d.com/issues/charactercontroller-overrides-objects-position-when-teleporting-with-transform-dot-position
+        transform.position = position;
+        await UniTask.Delay(1500, DelayType.UnscaledDeltaTime);  //  wait for camera to catch up
+        _characterController.enabled = true;
     }
 }
