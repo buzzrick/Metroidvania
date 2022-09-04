@@ -1,6 +1,7 @@
 using Metroidvania.Interactables.PlayerZones;
 using Metroidvania.Player;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Metroidvania.Interactables.WorldObjects
@@ -12,6 +13,7 @@ namespace Metroidvania.Interactables.WorldObjects
 
         [SerializeField] private string TargetPortalScene;
         [SerializeField] private string TargetPortalName;
+
         private MultiSceneLoader _multiSceneLoader;
 
         public Vector3 GetExitPoint() => ExitPoint.position;

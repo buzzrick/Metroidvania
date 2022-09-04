@@ -7,7 +7,7 @@ public class MultiSceneLoader : MonoBehaviour
 {
     public string[] RequiredScenes;
 
-    private async void Awake()
+    private async void Start()
     {
         await LoadRequiredScenes();
     }
@@ -23,14 +23,14 @@ public class MultiSceneLoader : MonoBehaviour
     public async UniTask LoadScene(string sceneName)
     {
         Scene scene = SceneManager.GetSceneByName(sceneName);
-        if (scene != null && scene.isLoaded)
+        if (scene.IsValid() && scene.isLoaded)
         {
             Debug.Log($"Loading Scene {sceneName} (already loaded)");
             return;
         }
 
         Debug.Log($"Loading Scene {sceneName}");
-
+        Debug.Log($"Scene was {(scene == null ? "NULL" : "Not Null")} and {(scene.isLoaded ? "loaded" : "not loaded")}");
         await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
     }
 

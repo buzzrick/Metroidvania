@@ -18,7 +18,7 @@ namespace Metroidvania.Player
             if (triggerZone != null)
             {
 
-                Debug.Log($"Player Triggering {other.name}");
+                Debug.Log($"Player Triggering {other.name}", other);
                 triggerZone.OnPlayerEnteredZone(_playerRoot);
             }
         }
@@ -29,7 +29,7 @@ namespace Metroidvania.Player
             if (triggerZone != null)
             {
 
-                Debug.Log($"Player Triggering {other.name}");
+                Debug.Log($"Player Triggering {other.name}", other);
                 triggerZone.OnPlayerExitedZone(_playerRoot);
             }
         }

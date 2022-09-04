@@ -19,9 +19,13 @@ namespace Assets.Metroidvania.MultiScene
 
         private bool _isLoaded;
         private bool _shouldLoad;
+        private PlayerRoot _playerRoot;
 
         [Inject]
-        private PlayerRoot PlayerRoot;
+        private void Initialise(PlayerRoot playerRoot)
+        {
+            _playerRoot = playerRoot;
+        }
 
         private void Awake()
         {
@@ -32,6 +36,8 @@ namespace Assets.Metroidvania.MultiScene
                     Scene scene = SceneManager.GetSceneAt(i);
                     if (scene.name == gameObject.name)
                     {
+
+                        Debug.Log($"Marking {scene.name} scene as loaded on launch");
                         _isLoaded = true;
                         break;
                     }
@@ -55,7 +61,7 @@ namespace Assets.Metroidvania.MultiScene
 
         private void DistanceCheck()
         {
-            if (Vector3.Distance(PlayerRoot.transform.position, transform.position) < LoadRange)
+            if (Vector3.Distance(_playerRoot.transform.position, transform.position) < LoadRange)
             {
                 LoadScene();
             }
