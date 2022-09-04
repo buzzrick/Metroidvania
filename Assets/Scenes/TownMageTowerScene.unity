@@ -3223,6 +3223,87 @@ Transform:
   m_Father: {fileID: 1428393364}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &526000651
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3466493344257306760, guid: 14e5c58c5cd6d484ebd62c9bd8e845fa,
+        type: 3}
+      propertyPath: TargetPortalName
+      value: TownRiseToMageTowerPortal
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466493344257306760, guid: 14e5c58c5cd6d484ebd62c9bd8e845fa,
+        type: 3}
+      propertyPath: TargetPortalScene
+      value: TownRiseScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 7194071223034538566, guid: 14e5c58c5cd6d484ebd62c9bd8e845fa,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7194071223034538566, guid: 14e5c58c5cd6d484ebd62c9bd8e845fa,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -271.84766
+      objectReference: {fileID: 0}
+    - target: {fileID: 7194071223034538566, guid: 14e5c58c5cd6d484ebd62c9bd8e845fa,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 53.381424
+      objectReference: {fileID: 0}
+    - target: {fileID: 7194071223034538566, guid: 14e5c58c5cd6d484ebd62c9bd8e845fa,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 53.558628
+      objectReference: {fileID: 0}
+    - target: {fileID: 7194071223034538566, guid: 14e5c58c5cd6d484ebd62c9bd8e845fa,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7194071223034538566, guid: 14e5c58c5cd6d484ebd62c9bd8e845fa,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7194071223034538566, guid: 14e5c58c5cd6d484ebd62c9bd8e845fa,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7194071223034538566, guid: 14e5c58c5cd6d484ebd62c9bd8e845fa,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7194071223034538566, guid: 14e5c58c5cd6d484ebd62c9bd8e845fa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7194071223034538566, guid: 14e5c58c5cd6d484ebd62c9bd8e845fa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7194071223034538566, guid: 14e5c58c5cd6d484ebd62c9bd8e845fa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7194071223034538567, guid: 14e5c58c5cd6d484ebd62c9bd8e845fa,
+        type: 3}
+      propertyPath: m_Name
+      value: MageTowerToTownRisePortal
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: 14e5c58c5cd6d484ebd62c9bd8e845fa, type: 3}
 --- !u!4 &544743224 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2431563443609412441, guid: b5242ec25ee5af648bb18b4d84c2e243,

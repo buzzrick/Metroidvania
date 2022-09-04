@@ -1,35 +1,37 @@
-using Metroidvania.Interactables;
-using Metroidvania.Player;
+using Metroidvania.Interactables.PlayerZones;
 using UnityEngine;
 
-public class PlayerTriggerDetector : MonoBehaviour
+namespace Metroidvania.Player
 {
-    private PlayerRoot _playerRoot;
-
-    private void Awake()
+    public class PlayerTriggerDetector : MonoBehaviour
     {
-        _playerRoot = GetComponentInParent<PlayerRoot>();
-    }
+        private PlayerRoot _playerRoot;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        IPlayerEnterTriggerZone triggerZone = other.GetComponent<IPlayerEnterTriggerZone>();
-        if (triggerZone != null)
+        private void Awake()
         {
-
-            Debug.Log($"Player Triggering {other.name}");
-            triggerZone.OnPlayerEnteredZone(_playerRoot);
+            _playerRoot = GetComponentInParent<PlayerRoot>();
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        IPlayerExitTriggerZone triggerZone = other.GetComponent<IPlayerExitTriggerZone>();
-        if (triggerZone != null)
+        private void OnTriggerEnter(Collider other)
         {
+            IPlayerEnterTriggerZone triggerZone = other.GetComponent<IPlayerEnterTriggerZone>();
+            if (triggerZone != null)
+            {
 
-            Debug.Log($"Player Triggering {other.name}");
-            triggerZone.OnPlayerExitedZone(_playerRoot);
+                Debug.Log($"Player Triggering {other.name}");
+                triggerZone.OnPlayerEnteredZone(_playerRoot);
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            IPlayerExitTriggerZone triggerZone = other.GetComponent<IPlayerExitTriggerZone>();
+            if (triggerZone != null)
+            {
+
+                Debug.Log($"Player Triggering {other.name}");
+                triggerZone.OnPlayerExitedZone(_playerRoot);
+            }
         }
     }
 }

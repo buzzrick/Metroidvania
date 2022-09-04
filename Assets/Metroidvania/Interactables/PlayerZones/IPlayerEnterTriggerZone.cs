@@ -1,6 +1,6 @@
 using Metroidvania.Player;
 
-namespace Metroidvania.Interactables
+namespace Metroidvania.Interactables.PlayerZones
 {
     public interface IPlayerEnterTriggerZone
     {

@@ -1,8 +1,9 @@
+using Metroidvania.Interactables.PlayerZones;
 using Metroidvania.Player;
 using UnityEngine;
 using Zenject;
 
-namespace Metroidvania.Interactables
+namespace Metroidvania.Interactables.WorldObjects
 {
     public class Portal : MonoBehaviour, IPlayerEnterTriggerZone
     {
