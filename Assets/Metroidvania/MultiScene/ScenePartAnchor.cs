@@ -1,4 +1,6 @@
-﻿using Metroidvania.Player;
+﻿using Cysharp.Threading.Tasks;
+using Metroidvania.Interactables.PlayerZones;
+using Metroidvania.Player;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,69 +8,27 @@ using Zenject;
 
 namespace Assets.Metroidvania.MultiScene
 {
-    public class ScenePartAnchor : MonoBehaviour
+    public class ScenePartAnchor : MonoBehaviour, IPlayerEnterTriggerZone, IPlayerExitTriggerZone
     {
-        public enum SceneLoadCheckMethod
-        {
-            Distance,
-            Trigger
-        }
-
-        public SceneLoadCheckMethod CheckMethod;
         public float LoadRange = 25f;
 
         private bool _isLoaded;
         private bool _shouldLoad;
         private PlayerRoot _playerRoot;
+        private MultiSceneLoader _multiSceneLoader;
 
         [Inject]
-        private void Initialise(PlayerRoot playerRoot)
+        private void Initialise(PlayerRoot playerRoot, MultiSceneLoader multiSceneLoader)
         {
             _playerRoot = playerRoot;
-        }
+            _multiSceneLoader = multiSceneLoader;
 
-        private void Awake()
-        {
-            if (SceneManager.sceneCount > 0)
-            {
-                for (int i = 0; i < SceneManager.sceneCount; i++)
-                {
-                    Scene scene = SceneManager.GetSceneAt(i);
-                    if (scene.name == gameObject.name)
-                    {
-
-                        Debug.Log($"Marking {scene.name} scene as loaded on launch");
-                        _isLoaded = true;
-                        break;
-                    }
-                }
-            }
+            _isLoaded = _multiSceneLoader.IsSceneLoaded(gameObject.name);
         }
 
         private void Update()
         {
-            switch (CheckMethod)
-            {
-                case SceneLoadCheckMethod.Distance:
-                    DistanceCheck();
-                    break;
-                case SceneLoadCheckMethod.Trigger:
-                    TriggerCheck();
-                    break;
-            }
-        }
-
-
-        private void DistanceCheck()
-        {
-            if (Vector3.Distance(_playerRoot.transform.position, transform.position) < LoadRange)
-            {
-                LoadScene();
-            }
-            else
-            {
-                UnloadScene();
-            }
+            TriggerCheck();
         }
 
 
@@ -84,41 +44,32 @@ namespace Assets.Metroidvania.MultiScene
             }
         }
 
-        private void LoadScene()
+        private async void LoadScene()
         {
             if (!_isLoaded)
             {
-                SceneManager.LoadSceneAsync(gameObject.name, LoadSceneMode.Additive);
                 _isLoaded = true;
+                await _multiSceneLoader.LoadScene(gameObject.name);
             }
         }
 
-        private void UnloadScene()
+        private async void UnloadScene()
         {
             if (_isLoaded)
             {
-                SceneManager.UnloadSceneAsync(gameObject.name);
                 _isLoaded = false;
+                await _multiSceneLoader.UnloadScene(gameObject.name);
             }
         }
 
-        private void OnTriggerEnter(Collider other)
+        public void OnPlayerExitedZone(PlayerRoot player)
         {
-            if (other.CompareTag("LevelLoader"))
-            {
-                Debug.Log($"OnEnterTrigger Anchor:{name}, other:{other.name}");
-                _shouldLoad = true;
-            }
+            _shouldLoad = false;
         }
 
-        private void OnTriggerExit(Collider other)
+        public void OnPlayerEnteredZone(PlayerRoot player)
         {
-            if (other.CompareTag("LevelLoader"))
-            {
-
-                Debug.Log($"OnExitTrigger Anchor:{name}, other:{other.name}");
-                _shouldLoad = false;
-            }
+            _shouldLoad = true;
         }
     }
 }

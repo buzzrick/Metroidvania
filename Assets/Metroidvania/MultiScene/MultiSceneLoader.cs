@@ -1,4 +1,6 @@
 using Cysharp.Threading.Tasks;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +8,18 @@ using UnityEngine.SceneManagement;
 public class MultiSceneLoader : MonoBehaviour
 {
     public string[] RequiredScenes;
+
+    private List<string> _loadedScenes = new();
+
+    private void Awake()
+    {
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            Scene scene = SceneManager.GetSceneAt(i);
+            if (scene.isLoaded)
+                _loadedScenes.Add(scene.name);
+        }
+    }
 
     private async void Start()
     {
@@ -20,18 +34,25 @@ public class MultiSceneLoader : MonoBehaviour
         }
     }
 
+    public async UniTask UnloadScene(string sceneName)
+    {
+        if (_loadedScenes.Contains(sceneName))
+        {
+            await SceneManager.UnloadSceneAsync(sceneName);
+            _loadedScenes.Remove(sceneName);
+        }
+    }
+
     public async UniTask LoadScene(string sceneName)
     {
-        Scene scene = SceneManager.GetSceneByName(sceneName);
-        if (scene.IsValid() && scene.isLoaded)
+        if (_loadedScenes.Contains(sceneName))
         {
-            Debug.Log($"Loading Scene {sceneName} (already loaded)");
             return;
         }
 
         Debug.Log($"Loading Scene {sceneName}");
-        Debug.Log($"Scene was {(scene == null ? "NULL" : "Not Null")} and {(scene.isLoaded ? "loaded" : "not loaded")}");
         await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        _loadedScenes.Add(sceneName);
     }
 
     public async UniTask<T> LoadSceneAndGetObject<T>(string sceneName, string objectPath) 
@@ -44,5 +65,10 @@ public class MultiSceneLoader : MonoBehaviour
             return targetObject.GetComponent<T>();
         }
         return null;
+    }
+
+    public bool IsSceneLoaded(string name)
+    {
+        return _loadedScenes.Contains(name);
     }
 }
