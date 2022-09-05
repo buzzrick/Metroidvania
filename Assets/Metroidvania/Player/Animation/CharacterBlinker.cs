@@ -5,7 +5,7 @@ namespace Metroidvania.Player.Animation
     public class CharacterBlinker : MonoBehaviour
     {
         public Renderer ObjectToBlink;
-        public ICharacterViewDriver CharacterDriver;
+        public ICharacterMovementDriver CharacterDriver;
 
         //Blinking
         Color _colorOriginal;
@@ -24,7 +24,7 @@ namespace Metroidvania.Player.Animation
 
             if (CharacterDriver == null)
             {
-                CharacterDriver = GetComponentInParent<ICharacterViewDriver>();
+                CharacterDriver = GetComponentInParent<ICharacterMovementDriver>();
             }
             CharacterDriver.RegisterCharacterBlinker(this);
         }

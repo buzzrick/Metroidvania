@@ -1,12 +1,9 @@
-﻿using Cysharp.Threading.Tasks;
-using Metroidvania.Interactables.PlayerZones;
+﻿using Metroidvania.Interactables;
 using Metroidvania.Player;
-using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
-namespace Assets.Metroidvania.MultiScene
+namespace Metroidvania.MultiScene
 {
     public class ScenePartAnchor : MonoBehaviour, IPlayerEnterTriggerZone, IPlayerExitTriggerZone
     {

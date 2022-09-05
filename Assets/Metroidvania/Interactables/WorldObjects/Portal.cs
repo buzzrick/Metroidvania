@@ -1,7 +1,5 @@
-using Metroidvania.Interactables.PlayerZones;
 using Metroidvania.Player;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Metroidvania.Interactables.WorldObjects

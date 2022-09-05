@@ -3,7 +3,7 @@ using Metroidvania.Player.Animation;
 using System;
 using UnityEngine;
 
-public class ThirdPersonMovement : MonoBehaviour, ICharacterViewDriver
+public class ThirdPersonMovement : MonoBehaviour, ICharacterMovementDriver
 {
     public bool LogIsGrounded = false;
     public PlayerMovementStatsSO PlayerMovementStats;
@@ -22,7 +22,7 @@ public class ThirdPersonMovement : MonoBehaviour, ICharacterViewDriver
     private const string Horizontal = "Horizontal";
     private const string Vertical = "Vertical";
 
-    private void Awake()
+    private async void Awake()
     {
         _characterController = GetComponent<CharacterController>();
         _cameraTransform = Camera.main.transform;
@@ -31,7 +31,10 @@ public class ThirdPersonMovement : MonoBehaviour, ICharacterViewDriver
         {
             //  just used the default.
             PlayerMovementStats = ScriptableObject.CreateInstance<PlayerMovementStatsSO>();
-        }    
+        }
+        _characterController.enabled = false;
+        await UniTask.Delay(1000);
+        _characterController.enabled = true;
     }
 
 

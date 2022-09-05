@@ -1,4 +1,4 @@
-using Metroidvania.Interactables.PlayerZones;
+using Metroidvania.Interactables;
 using Metroidvania.Player;
 using UnityEngine;
 using Zenject;

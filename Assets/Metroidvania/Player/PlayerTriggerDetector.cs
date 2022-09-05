@@ -1,15 +1,16 @@
-using Metroidvania.Interactables.PlayerZones;
+using Metroidvania.Interactables;
 using UnityEngine;
 
 namespace Metroidvania.Player
 {
+    [RequireComponent(typeof(Collider))]
     public class PlayerTriggerDetector : MonoBehaviour
     {
         private PlayerRoot _playerRoot;
 
         private void Awake()
         {
-            _playerRoot = GetComponentInParent<PlayerRoot>();
+            _playerRoot = GetComponent<PlayerRoot>();
         }
 
         private void OnTriggerEnter(Collider other)

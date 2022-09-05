@@ -1,40 +1,56 @@
+using Metroidvania.Player;
 using Metroidvania.Player.Animation;
 using System.Collections;
 using UnityEngine;
 
 public class PlayerAnimationView : MonoBehaviour, ICharacterAnimationView
 {
-    private ICharacterViewDriver CharacterDriver;
+    private ICharacterMovementDriver _characterMovementDriver;
+    [SerializeField] private PlayerInteractionController _playerInteractionController;
     private Animator _animator;
     private Transform _root;
     private Transform _projector;
-    private GameObject _model;
+    [SerializeField] private GameObject _model;
     private Transform _headBone;
     private Rigidbody[] _boneRig;
     private readonly int HashSpeed = Animator.StringToHash("Speed");
     private readonly int HashJump = Animator.StringToHash("Jump");
     private readonly int HashFall = Animator.StringToHash("JumpDown");
+    private readonly int HashInteraction = Animator.StringToHash("Interact");
     private float mass = 0.1f;	// Mass of each bone
 
     private void Awake()
     {
         _animator = gameObject.GetComponent<Animator>();
-        if (CharacterDriver == null)
+        if (_characterMovementDriver == null)
         {
-            CharacterDriver = GetComponentInParent<ICharacterViewDriver>();
+            _characterMovementDriver = GetComponentInParent<ICharacterMovementDriver>();
         }
-        CharacterDriver.RegisterCharacterAnimationView(this);
+        _characterMovementDriver.RegisterCharacterAnimationView(this);
+
+        _playerInteractionController.OnInteraction += HandleOnInteractionStarted;
+        _playerInteractionController.OnInteractionFailed += HandleOnInterationFailed;
 
         if (_root == null)
             _root = transform.Find("Root");
-        if (_projector == null)
-            _projector = transform.Find("Blob Shadow Projector");
         if (_model == null)
-            _model = transform.Find("MicroMale").gameObject;
+        {
+            var modelObject = transform.Find("MicroMale") ?? transform.Find("MicroFemale");
+            _model = modelObject.gameObject;
+        }
         if (_headBone == null)
             _headBone = transform.Find("Head");
         _boneRig = gameObject.GetComponentsInChildren<Rigidbody>();
         DisableRagdoll();
+    }
+
+    private void HandleOnInterationFailed()
+    {
+    }
+
+    private void HandleOnInteractionStarted()
+    {
+        _animator.SetTrigger(HashInteraction);
     }
 
     public void SetSpeed(float speed)
