@@ -106,6 +106,7 @@ public class ThirdPersonMovement : MonoBehaviour, ICharacterMovementDriver
             _verticalVelocity.y += (PlayerMovementStats.Gravity * Time.deltaTime) * GravityTweak;
         }
         _characterController.Move((_horizontalVelocity + _verticalVelocity) * Time.deltaTime);
+        _characterAnimationView.SetGrounded(_isGrounded);
     }
 
     private void RecalculateGrounded()

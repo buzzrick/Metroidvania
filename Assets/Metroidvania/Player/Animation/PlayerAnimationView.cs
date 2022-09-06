@@ -15,7 +15,7 @@ public class PlayerAnimationView : MonoBehaviour, ICharacterAnimationView
     private Rigidbody[] _boneRig;
     private readonly int HashSpeed = Animator.StringToHash("Speed");
     private readonly int HashJump = Animator.StringToHash("Jump");
-    private readonly int HashFall = Animator.StringToHash("JumpDown");
+    private readonly int HashGrounded = Animator.StringToHash("Grounded");
     private readonly int HashInteraction = Animator.StringToHash("Interact");
     private float mass = 0.1f;	// Mass of each bone
 
@@ -60,12 +60,12 @@ public class PlayerAnimationView : MonoBehaviour, ICharacterAnimationView
 
     public void SetJumping(bool isJumping)
     {
-        _animator.SetBool(HashJump, isJumping);
+        //_animator.SetBool(HashJump, isJumping);
     }
 
     public void SetGrounded(bool isGrounded)
     {
-        _animator.SetBool(HashFall, isGrounded);
+        _animator.SetBool(HashGrounded, isGrounded);
     }
 
 
