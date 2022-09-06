@@ -22,6 +22,8 @@ public class ThirdPersonMovement : MonoBehaviour, ICharacterMovementDriver
     private const string Horizontal = "Horizontal";
     private const string Vertical = "Vertical";
 
+    private bool _firstMovement = true;
+
     private async void Awake()
     {
         _characterController = GetComponent<CharacterController>();
@@ -60,6 +62,7 @@ public class ThirdPersonMovement : MonoBehaviour, ICharacterMovementDriver
 
         if (inputVector.magnitude > 0.1f)
         {
+            _firstMovement = false;
             float targetAngle = Mathf.Atan2(inputVector.x, inputVector.z) * Mathf.Rad2Deg
                 + _cameraTransform.eulerAngles.y;   //  rotate move direction based on camera
 
@@ -98,7 +101,10 @@ public class ThirdPersonMovement : MonoBehaviour, ICharacterMovementDriver
             }
         }
 
-        _verticalVelocity.y += (PlayerMovementStats.Gravity * Time.deltaTime) * GravityTweak;
+        if (!_firstMovement)
+        {
+            _verticalVelocity.y += (PlayerMovementStats.Gravity * Time.deltaTime) * GravityTweak;
+        }
         _characterController.Move((_horizontalVelocity + _verticalVelocity) * Time.deltaTime);
     }
 
