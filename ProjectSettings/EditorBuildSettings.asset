@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/GameCoreScene.unity
     guid: 58d15460300200140853150ef105717d
   - enabled: 1
+    path: Assets/Scenes/LightingScene.unity
+    guid: 83eaddfdc59ff0945a2e1cfee35bda7f
+  - enabled: 1
     path: Assets/Scenes/SceneAnchors.unity
     guid: c1dd4097964311e4098d159db51131e5
   - enabled: 1

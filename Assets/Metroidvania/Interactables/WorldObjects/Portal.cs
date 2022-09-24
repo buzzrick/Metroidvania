@@ -1,3 +1,4 @@
+using Metroidvania.MultiScene;
 using Metroidvania.Player;
 using UnityEngine;
 using Zenject;

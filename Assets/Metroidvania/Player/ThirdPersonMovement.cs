@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using Metroidvania.Player.Animation;
-using System;
 using UnityEngine;
 
 public class ThirdPersonMovement : MonoBehaviour, ICharacterMovementDriver
@@ -22,9 +21,9 @@ public class ThirdPersonMovement : MonoBehaviour, ICharacterMovementDriver
     private const string Horizontal = "Horizontal";
     private const string Vertical = "Vertical";
 
-    private bool _firstMovement = true;
+    private bool _isEnabled = false;
 
-    private async void Awake()
+    private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
         _cameraTransform = Camera.main.transform;
@@ -34,16 +33,13 @@ public class ThirdPersonMovement : MonoBehaviour, ICharacterMovementDriver
             //  just used the default.
             PlayerMovementStats = ScriptableObject.CreateInstance<PlayerMovementStatsSO>();
         }
-        _characterController.enabled = false;
-        await UniTask.Delay(1000);
-        _characterController.enabled = true;
     }
 
 
     // Update is called once per frame
     public void Update()
     {
-        if (!_characterController.enabled)
+        if (!_isEnabled)
             return;
 
         //  calculate horizontal movement
@@ -62,7 +58,6 @@ public class ThirdPersonMovement : MonoBehaviour, ICharacterMovementDriver
 
         if (inputVector.magnitude > 0.1f)
         {
-            _firstMovement = false;
             float targetAngle = Mathf.Atan2(inputVector.x, inputVector.z) * Mathf.Rad2Deg
                 + _cameraTransform.eulerAngles.y;   //  rotate move direction based on camera
 
@@ -101,10 +96,7 @@ public class ThirdPersonMovement : MonoBehaviour, ICharacterMovementDriver
             }
         }
 
-        if (!_firstMovement)
-        {
-            _verticalVelocity.y += (PlayerMovementStats.Gravity * Time.deltaTime) * GravityTweak;
-        }
+        _verticalVelocity.y += (PlayerMovementStats.Gravity * Time.deltaTime) * GravityTweak;
         _characterController.Move((_horizontalVelocity + _verticalVelocity) * Time.deltaTime);
         _characterAnimationView.SetGrounded(_isGrounded);
     }
@@ -136,17 +128,22 @@ public class ThirdPersonMovement : MonoBehaviour, ICharacterMovementDriver
 
     public async void Teleport(Vector3 position)
     {
-
         Debug.Log($"Teleporting to {position}");
         _horizontalVelocity = Vector3.zero;
         _verticalVelocity = Vector3.zero;
         _characterAnimationView.SetSpeed(0f);
         _blinker.Blink(7, 0.1f);
 
+        bool wasEnabled = _characterController.enabled;
         _characterController.enabled = false;
         Physics.SyncTransforms();       //  https://issuetracker.unity3d.com/issues/charactercontroller-overrides-objects-position-when-teleporting-with-transform-dot-position
         transform.position = position;
         await UniTask.Delay(1500, DelayType.UnscaledDeltaTime);  //  wait for camera to catch up
         _characterController.enabled = true;
+    }
+
+    public void Enable(bool isEnabled)
+    {
+        _isEnabled = isEnabled;
     }
 }
