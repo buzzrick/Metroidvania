@@ -11,18 +11,16 @@ namespace Metroidvania.MultiScene
 
         private bool _isLoaded;
         private bool _shouldLoad;
-        private PlayerRoot _playerRoot;
-        private MultiSceneLoader _multiSceneLoader;
+        private ISceneLoader _sceneLoader;
         private SceneAnchorController _sceneAnchorController;
 
         [Inject]
-        private void Initialise(PlayerRoot playerRoot, MultiSceneLoader multiSceneLoader, SceneAnchorController sceneAnchorController)
+        private void Initialise(ISceneLoader sceneLoader, SceneAnchorController sceneAnchorController)
         {
-            _playerRoot = playerRoot;
-            _multiSceneLoader = multiSceneLoader;
+            _sceneLoader = sceneLoader;
             _sceneAnchorController = sceneAnchorController;
 
-            _isLoaded = _multiSceneLoader.IsSceneLoaded(gameObject.name);
+            _isLoaded = _sceneLoader.IsSceneLoaded(gameObject.name);
         }
 
         private void Update()
@@ -49,7 +47,7 @@ namespace Metroidvania.MultiScene
             {
                 _isLoaded = true;
                 _sceneAnchorController.HandleSceneAnchorLoading(gameObject.name);
-                await _multiSceneLoader.LoadScene(gameObject.name);
+                await _sceneLoader.LoadAdditiveSceneAsync(gameObject.name);
                 _sceneAnchorController.HandleSceneAnchorLoaded(gameObject.name);
             }
         }
@@ -59,7 +57,7 @@ namespace Metroidvania.MultiScene
             if (_isLoaded)
             {
                 _isLoaded = false;
-                await _multiSceneLoader.UnloadScene(gameObject.name);
+                await _sceneLoader.UnloadSceneAsync(gameObject.name, null);
                 _sceneAnchorController.HandleSceneAnchorUnLoaded(gameObject.name);
             }
         }

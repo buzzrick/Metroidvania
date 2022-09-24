@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Metroidvania.MultiScene;
 using Metroidvania.Player;
 using UnityEngine;
@@ -5,7 +6,7 @@ using Zenject;
 
 namespace Metroidvania.Interactables.WorldObjects
 {
-    public class Portal : MonoBehaviour, IPlayerEnterTriggerZone
+    public class Portal : MonoBehaviour, IPlayerEnterTriggerZone, IView
     {
         [SerializeField] private Transform ExitPoint;
         [SerializeField] private Portal TargetPortal;
@@ -13,12 +14,12 @@ namespace Metroidvania.Interactables.WorldObjects
         [SerializeField] private string TargetPortalScene;
         [SerializeField] private string TargetPortalName;
 
-        private MultiSceneLoader _multiSceneLoader;
+        private ISceneLoader _multiSceneLoader;
 
         public Vector3 GetExitPoint() => ExitPoint.position;
 
         [Inject]
-        private void Initialise(MultiSceneLoader multiSceneLoader)
+        private void Initialise(ISceneLoader multiSceneLoader)
         {
             _multiSceneLoader = multiSceneLoader;
         }
@@ -40,9 +41,14 @@ namespace Metroidvania.Interactables.WorldObjects
             else if (!string.IsNullOrEmpty(TargetPortalScene)
                 && !string.IsNullOrEmpty(TargetPortalName))
             {
-                Portal targetPortal = await _multiSceneLoader.LoadSceneAndGetObject<Portal>(TargetPortalScene, TargetPortalName);
+                Portal targetPortal = await _multiSceneLoader.LoadUISceneAsync<Portal>(TargetPortalScene, TargetPortalName, false);
                 player.SetWorldPosition(targetPortal.GetExitPoint());
             }
+        }
+
+        public UniTask CleanupSelf()
+        {
+            return UniTask.CompletedTask;
         }
     }
 }

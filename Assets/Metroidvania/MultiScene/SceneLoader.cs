@@ -1,7 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,12 +8,27 @@ namespace Metroidvania.MultiScene
 {
     public class SceneLoader : ISceneLoader
     {
-        private static IList<string> _loadedUiScenes = new List<string>();
+        private static Dictionary<string, Scene> _loadedScenes = new ();
         private static IList<string> _autoUnloadUiScenes = new List<string>();
         public event Action OnSceneUnloading;
         public string CurrentScene => SceneManager.GetActiveScene().name;
 
-        public async Task LoadMainSceneAsync(string sceneName)
+        public UniTask StartCore()
+        {
+            Debug.Log($"Starting SceneLoader");
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                Scene scene = SceneManager.GetSceneAt(i);
+                if (scene.isLoaded)
+                {
+                    Debug.Log($"Found {scene.name} already loaded");
+                    _loadedScenes.Add(scene.name, scene);
+                }
+            }
+            return UniTask.CompletedTask;
+        }
+
+        public async UniTask LoadMainSceneAsync(string sceneName)
         {
             if (!Application.isPlaying) return;
             Debug.Log($"Loading Scene {sceneName}");
@@ -25,7 +39,7 @@ namespace Metroidvania.MultiScene
             SceneManager.SetActiveScene(scene);
         }
 
-        public async Task SwitchMainScene(string newScene)
+        public async UniTask SwitchMainScene(string newScene)
         {
             if (!Application.isPlaying) return;
             Scene currentMainScene = SceneManager.GetActiveScene();
@@ -36,19 +50,25 @@ namespace Metroidvania.MultiScene
             }
         }
 
-        public async Task<T> LoadUISceneAsync<T>(string uiScene, bool autoUnloadOnSceneChange = true)
-            where T : class, IView
+
+        public async UniTask LoadAdditiveSceneAsync(string sceneName, bool autoUnloadOnSceneChange = false)
         {
-            if (!IsUILoaded(uiScene))
+            if (!IsSceneLoaded(sceneName))
             {
-                var loadTask = SceneManager.LoadSceneAsync(uiScene, LoadSceneMode.Additive);
+                var loadTask = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
                 await loadTask;
-                _loadedUiScenes.Add(uiScene);
+                _loadedScenes.Add(sceneName, SceneManager.GetSceneByName(sceneName));
                 if (autoUnloadOnSceneChange)
                 {
-                    _autoUnloadUiScenes.Add(uiScene);
+                    _autoUnloadUiScenes.Add(sceneName);
                 }
             }
+        }
+
+        public async UniTask<T> LoadUISceneAsync<T>(string uiScene, bool autoUnloadOnSceneChange = true)
+            where T : class, IView
+        {
+            await LoadAdditiveSceneAsync(uiScene, autoUnloadOnSceneChange);
 
             //  find the object we need with the same name as the SceneName
             //  TODO: see if we can cache this.
@@ -84,31 +104,51 @@ namespace Metroidvania.MultiScene
             return null;
         }
 
-
-        public bool IsUILoaded(string uiScene)
+        public async UniTask<T> LoadUISceneAsync<T>(string uiScene, string objectPath, bool autoUnloadOnSceneChange = true)
+            where T : class, IView
         {
-            return _loadedUiScenes.Contains(uiScene);
+            await LoadAdditiveSceneAsync(uiScene, autoUnloadOnSceneChange);
+
+            GameObject targetObject = GameObject.Find(objectPath);
+            if (targetObject != null)
+            {
+                T targetComponent = targetObject.GetComponent<T>();
+                if (targetComponent != null)
+                {
+                    return targetComponent;
+                }
+            }
+
+            string typeName = typeof(T).ToString();
+            Debug.LogWarning($"Unable to find component of type {typeName} in object {targetObject?.name ?? "NULL"} at path {uiScene}");
+            return null;
         }
 
 
-        public async Task UnloadUIAsync(string uiScene, IView view)
+        public bool IsSceneLoaded(string scene)
+        {
+            return _loadedScenes.ContainsKey(scene);
+        }
+
+
+        public async UniTask UnloadSceneAsync(string uiScene, IView view)
         {
             //Debug.Log($"UnloadUIAsync {ui}");
             // Debug.LogFormat("UnloadUIAsync:{0}", uiScene);
             if (!Application.isPlaying) return;
-            if (IsUILoaded(uiScene))
+            if (IsSceneLoaded(uiScene))
             {
                 if (view != null)
                 {
                     await view.CleanupSelf();
                 }
-                _loadedUiScenes.Remove(uiScene);
+                _loadedScenes.Remove(uiScene);
                 _autoUnloadUiScenes.Remove(uiScene);
                 await SceneManager.UnloadSceneAsync(uiScene);
             }
         }
 
-        public async Task UnloadAllScenesAndReloadScene(string sceneName)
+        public async UniTask UnloadAllScenesAndReloadScene(string sceneName)
         {
             Debug.Log($"Unloading all scenes then reloading {sceneName}");
             await AutoUnloadUIScenes();
@@ -116,22 +156,15 @@ namespace Metroidvania.MultiScene
             await LoadMainSceneAsync(sceneName);
         }
 
-        private async Task AutoUnloadUIScenes()
+        private async UniTask AutoUnloadUIScenes()
         {
-            List<string> scenesToUnload = new List<string>(_loadedUiScenes);
-            List<UniTask> unloaders = new List<UniTask>();
+            List<UniTask> unloaders = new List<UniTask>(_autoUnloadUiScenes.Count);
 
             foreach (string uiScene in _autoUnloadUiScenes)
             {
-                unloaders.Add(UnloadUIAsync(uiScene, null).AsUniTask());
+                unloaders.Add(UnloadSceneAsync(uiScene, null));
             }
             await UniTask.WhenAll(unloaders);
-        }
-
-        public bool IsSceneLoaded(string sceneName)
-        {
-            Scene scene = SceneManager.GetSceneByName(sceneName);
-            return scene != null;
         }
 
         public bool IsCurrentMainScene(string sceneName) => CurrentScene == sceneName;
