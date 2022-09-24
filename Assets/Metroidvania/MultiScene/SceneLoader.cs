@@ -19,12 +19,10 @@ namespace Metroidvania.MultiScene
             for (int i = 0; i < SceneManager.sceneCount; i++)
             {
                 Scene scene = SceneManager.GetSceneAt(i);
-                if (scene.isLoaded)
-                {
-                    Debug.Log($"Found {scene.name} already loaded");
-                    _loadedScenes.Add(scene.name, scene);
-                }
+                Debug.Log($"Found {scene.name} already loaded");
+                _loadedScenes.Add(scene.name, scene);
             }
+
             return UniTask.CompletedTask;
         }
 
