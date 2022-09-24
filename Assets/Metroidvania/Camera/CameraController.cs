@@ -1,13 +1,14 @@
 using Cinemachine;
-using System;
+using Cysharp.Threading.Tasks;
+using Metroidvania.GameCore;
+using Metroidvania.Player;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
+using Zenject;
 
 namespace Metroidvania.Camera
 {
-    public class CameraController : MonoBehaviour
+    public class CameraController : MonoBehaviour, ICore
     {
 
         private CinemachineVirtualCameraBase _mainCamera;
@@ -16,6 +17,14 @@ namespace Metroidvania.Camera
         private CinemachineVirtualCameraBase[] _cameras;
         private List<CameraZone> _boostedCameras = new();
         private Dictionary<string, int> _defaultCameraPriorities = new();
+        private PlayerCore _playerCore;
+        private PlayerRoot _playerRoot;
+
+        [Inject]
+        private void Initialise(PlayerCore playerCore)
+        {
+            _playerCore = playerCore;
+        }
 
         private void Awake()
         {
@@ -77,5 +86,22 @@ namespace Metroidvania.Camera
                 camera.Priority = _defaultCameraPriorities[camera.Name];
             }
         }
+
+        private void ResetCameraTargets()
+        {
+            foreach (var camera in _cameras)
+            {
+                camera.LookAt = _playerRoot.transform;
+                camera.Follow = _playerRoot.transform;
+            }
+        }
+
+        public UniTask StartCore()
+        {
+            _playerRoot = _playerCore.GetPlayerRoot();
+            ResetCameraTargets();
+            return UniTask.CompletedTask;
+        }
+
     }
 }

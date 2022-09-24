@@ -1,3 +1,4 @@
+using Metroidvania.Player;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class PlayerMovementSelectionUI : MonoBehaviour
     public RectTransform SelectionPanel;
     public ListButton ListButtonPrefab;
 
-    public ThirdPersonMovement CharacterToControl;
+    public PlayerMovementController_NoIK CharacterToControl;
 
     private List<Button> _listButtons = new List<Button>();
 

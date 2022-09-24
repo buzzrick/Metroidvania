@@ -68,14 +68,26 @@ namespace Metroidvania.MultiScene
         {
             await LoadAdditiveSceneAsync(uiScene, autoUnloadOnSceneChange);
 
+
+            Debug.Log($"Getting object from {uiScene}");
             //  find the object we need with the same name as the SceneName
             //  TODO: see if we can cache this.
 
             // Changed this slightly to handle cases where the root gameobject doesn't have the same name as the 
             // the scene, or is nested.
             Scene scene = SceneManager.GetSceneByName(uiScene);
-            GameObject[] gameObjects = scene.GetRootGameObjects();
-            foreach (GameObject gameObject in gameObjects)
+            GameObject[] rootObjects = scene.GetRootGameObjects();
+            //  look in root objects
+            foreach (GameObject gameObject in rootObjects)
+            {
+                T targetComponent = gameObject.GetComponent<T>();
+                if (targetComponent != null)
+                {
+                    return targetComponent;
+                }
+            }
+            //  not found in root objects, try the children
+            foreach (GameObject gameObject in rootObjects)
             {
                 T targetComponent = gameObject.GetComponentInChildren<T>();
                 if (targetComponent != null)
@@ -83,7 +95,6 @@ namespace Metroidvania.MultiScene
                     return targetComponent;
                 }
             }
-
 
             // GameObject targetObject = GameObject.Find(uiScene);
             // if (targetObject != null)
@@ -98,7 +109,7 @@ namespace Metroidvania.MultiScene
             // }
 
 
-            Debug.LogWarning($"Unable to find UI Scene object at path {uiScene}");
+            Debug.LogWarning($"Unable to find UI Scene object of type {typeof(T).Name}at path {uiScene}");
             return null;
         }
 

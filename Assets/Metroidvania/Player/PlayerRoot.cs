@@ -1,17 +1,17 @@
 ﻿using Cysharp.Threading.Tasks;
 using Metroidvania.GameCore;
-using System.Threading.Tasks;
+using Metroidvania.MultiScene;
 using UnityEngine;
 
 namespace Metroidvania.Player
 {
-    public class PlayerRoot : MonoBehaviour, ICore
+    public class PlayerRoot : MonoBehaviour, ICore, IView
     {
-        ThirdPersonMovement _playerMovement;
+        PlayerMovementController_NoIK _playerMovement;
 
         private void Awake()
         {
-            _playerMovement = GetComponent<ThirdPersonMovement>();
+            _playerMovement = GetComponent<PlayerMovementController_NoIK>();
         }
 
         public void SetWorldPosition(Vector3 position)
@@ -21,8 +21,13 @@ namespace Metroidvania.Player
 
         public UniTask StartCore()
         {
-            Debug.Log($"Starting PlayerCore");
+            Debug.Log($"Starting PlayerRoot");
             _playerMovement.Enable(true);
+            return UniTask.CompletedTask;
+        }
+
+        public UniTask CleanupSelf()
+        {
             return UniTask.CompletedTask;
         }
     }
