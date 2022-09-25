@@ -403,7 +403,7 @@ MonoBehaviour:
   - name: Outdoor
     LightingRoot: {fileID: 1997605414}
   - name: Cave
-    LightingRoot: {fileID: 0}
+    LightingRoot: {fileID: 1988744835}
 --- !u!1 &1593940108
 GameObject:
   m_ObjectHideFlags: 0

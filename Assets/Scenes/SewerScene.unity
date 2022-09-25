@@ -707,6 +707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CameraName: ThirdPersonSouthCamera
   ActiveLightingScene: SewerScene
+  ActiveLightSetup: Cave
 --- !u!1001 &318693987
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1285,6 +1286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CameraName: ThirdPersonSouthCamera
   ActiveLightingScene: SewerScene
+  ActiveLightSetup: Cave
 --- !u!1001 &703051440
 PrefabInstance:
   m_ObjectHideFlags: 0

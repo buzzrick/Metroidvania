@@ -1,4 +1,5 @@
 using Metroidvania.Interactables;
+using Metroidvania.Lighting;
 using Metroidvania.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,14 +11,20 @@ namespace Metroidvania.Camera
     public class CameraZone : MonoBehaviour, IPlayerEnterTriggerZone, IPlayerExitTriggerZone
     {
         public string CameraName;
+        [Tooltip("The scene which should be set active to load the correct LightSettings when in this trigger zone")]
         public string ActiveLightingScene;
+        [Tooltip("The set of lights that should be active when in this trigger zone")]
+        public string ActiveLightSetup;
 
         private CameraController _cameraController;
+        private LightingCore _lightingCore;
 
         [Inject]
-        private void Initialise(CameraController cameraController)
+        private void Initialise(CameraController cameraController,
+            LightingCore lightingCore)
         {
             _cameraController = cameraController;
+            _lightingCore = lightingCore;
         }
 
         public void OnPlayerEnteredZone(PlayerRoot player)
@@ -33,11 +40,14 @@ namespace Metroidvania.Camera
             {
                 SetDefaultScene();
             }
+
+            _lightingCore.EnableLightSetup(ActiveLightSetup, name);
         }
 
         public void OnPlayerExitedZone(PlayerRoot player)
         {
             _cameraController.ClearPrioritisedCamera(this);
+            _lightingCore.DisableLightSetup(ActiveLightSetup, name);
         }
 
         private void SetDefaultScene()

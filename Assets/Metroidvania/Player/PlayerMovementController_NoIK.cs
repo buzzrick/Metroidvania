@@ -9,6 +9,7 @@ namespace Metroidvania.Player
         public PlayerMovementStatsSO PlayerMovementStats;
 
         protected CharacterController _characterController;
+        private Rigidbody _rigidBody;
         protected Animator _animator;
         private Transform _cameraTransform;
         private int _floorMask;
@@ -35,6 +36,7 @@ namespace Metroidvania.Player
         private void Awake()
         {
             _characterController = GetComponent<CharacterController>();
+            _rigidBody = GetComponent<Rigidbody>();
             _animator = GetComponentInChildren<Animator>();
             _cameraTransform = UnityEngine.Camera.main.transform;
 
@@ -277,6 +279,8 @@ namespace Metroidvania.Player
 
             _characterController.enabled = false;
             Physics.SyncTransforms();       //  https://issuetracker.unity3d.com/issues/charactercontroller-overrides-objects-position-when-teleporting-with-transform-dot-position
+
+            _rigidBody.position = position;
             transform.position = position;
             //await UniTask.Delay(1500, DelayType.UnscaledDeltaTime);  //  wait for camera to catch up
             _characterController.enabled = true;
