@@ -8,8 +8,9 @@ namespace Metroidvania.MultiScene
 {
     public class SceneLoader : ISceneLoader
     {
-        private static Dictionary<string, Scene> _loadedScenes = new ();
-        private static IList<string> _autoUnloadUiScenes = new List<string>();
+        private Dictionary<string, Scene> _loadedScenes = new ();
+        private IList<string> _autoUnloadUiScenes = new List<string>();
+        private IList<string> _pendingScenes = new List<string>();
         public event Action OnSceneUnloading;
         public string CurrentScene => SceneManager.GetActiveScene().name;
 
@@ -51,8 +52,11 @@ namespace Metroidvania.MultiScene
 
         public async UniTask LoadAdditiveSceneAsync(string sceneName, bool autoUnloadOnSceneChange = false)
         {
+            await UniTask.WaitUntil(() => !IsScenePending(sceneName));
+
             if (!IsSceneLoaded(sceneName))
             {
+                _pendingScenes.Add(sceneName);
                 var loadTask = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
                 await loadTask;
                 _loadedScenes.Add(sceneName, SceneManager.GetSceneByName(sceneName));
@@ -60,14 +64,19 @@ namespace Metroidvania.MultiScene
                 {
                     _autoUnloadUiScenes.Add(sceneName);
                 }
+                _pendingScenes.Remove(sceneName);
             }
+        }
+
+        private bool IsScenePending(string sceneName)
+        {
+            return _pendingScenes.Contains(sceneName);
         }
 
         public async UniTask<T> LoadUISceneAsync<T>(string uiScene, bool autoUnloadOnSceneChange = true)
             where T : class, IView
         {
             await LoadAdditiveSceneAsync(uiScene, autoUnloadOnSceneChange);
-
 
             Debug.Log($"Getting object from {uiScene}");
             //  find the object we need with the same name as the SceneName
