@@ -123,6 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!137 &189656640 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 137448996307789082, guid: 90922ce0f904aa44391da2f710d39d33,
+    type: 3}
+  m_PrefabInstance: {fileID: 471024261}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &471024261
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -201,12 +207,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 471024261}
   m_PrefabAsset: {fileID: 0}
---- !u!137 &471024263 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 137309639597067924, guid: 90922ce0f904aa44391da2f710d39d33,
-    type: 3}
-  m_PrefabInstance: {fileID: 471024261}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &471024264 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1148478052367974, guid: 90922ce0f904aa44391da2f710d39d33,
@@ -245,7 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72d2423729a1f7e4692f0f2213cef0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectToBlink: {fileID: 471024263}
+  ObjectToBlink: {fileID: 189656640}
 --- !u!136 &471024268
 CapsuleCollider:
   m_ObjectHideFlags: 0

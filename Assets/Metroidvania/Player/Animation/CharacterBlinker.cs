@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace Metroidvania.Player.Animation
 {
@@ -18,15 +19,26 @@ namespace Metroidvania.Player.Animation
         int _blinkCounter;
         int _stopBlink;
 
+        /// <summary>
+        /// Turn on specific handling for Synty characters
+        /// </summary>
+        private bool _isSynty;
+        private const string SyntyColorProperty = "_Texture_Base_Primary";
+        private readonly static int SyntyColorPropertyID = Shader.PropertyToID(SyntyColorProperty);
+        private MaterialPropertyBlock _syntyProperties;
+
         private void Awake()
         {
-            _colorOriginal = ObjectToBlink.material.color;
+            _syntyProperties = new MaterialPropertyBlock();
+            _isSynty = CheckForSyntyCharacter();
+            _colorOriginal = GetCurrentColor();
 
             if (CharacterDriver == null)
             {
                 CharacterDriver = GetComponentInParent<ICharacterMovementDriver>();
             }
             CharacterDriver.RegisterCharacterBlinker(this);
+
         }
 
 
@@ -49,6 +61,21 @@ namespace Metroidvania.Player.Animation
             InvokeRepeating("BlinkInvoke", speed, speed);
         }
 
+        private bool CheckForSyntyCharacter()
+        {
+            string[] propertyNames = ObjectToBlink.sharedMaterial.GetTexturePropertyNames();
+            //  use this to list the available property names
+            //Debug.Log($"Found Property Names : {string.Join(",", propertyNames)}");
+
+            if (propertyNames.Contains(SyntyColorProperty))
+            {
+                ObjectToBlink.GetPropertyBlock(_syntyProperties);
+                Debug.Log($"Character is Synty");
+                return true;
+            }
+            return false;   
+        }
+
 
         public void BlinkInvoke()
         {
@@ -63,21 +90,48 @@ namespace Metroidvania.Player.Animation
                     color = new Color(_R, _G, _B, 1.0f);
                 }
 
-                if (ObjectToBlink.material.color == _colorOriginal)
+
+                if (GetCurrentColor() == _colorOriginal)
                 {
-                    ObjectToBlink.material.color = color;
+                    SetColor(color);
                 }
                 else
                 {
-                    ObjectToBlink.material.color = _colorOriginal;
+                    SetColor(_colorOriginal);
                 }
                 _blinkCounter++;
             }
             else
             {
-                ObjectToBlink.material.color = _colorOriginal;
+                SetColor(_colorOriginal);
                 _blinkCounter = 0;
                 CancelInvoke();
+            }
+        }
+
+
+        private Color GetCurrentColor()
+        {
+            if (_isSynty)
+            {
+                return _syntyProperties.GetColor(SyntyColorPropertyID);
+            }
+            else
+            {
+                return ObjectToBlink.material.color;
+            }
+        }
+
+        private void SetColor(Color color)
+        {
+            if (_isSynty)
+            {
+                _syntyProperties.SetColor(SyntyColorPropertyID, color);
+                ObjectToBlink.SetPropertyBlock(_syntyProperties);
+            }
+            else
+            {
+                ObjectToBlink.material.color = color;
             }
         }
     }
