@@ -1,6 +1,7 @@
 ﻿// character randomizer version 1.30
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace PsychoticLab
 {
@@ -74,32 +75,9 @@ namespace PsychoticLab
         [HideInInspector]
         public CharacterObjectListsAllGender allGender;
 
-        // reference to camera transform, used for rotation around the model during or after a randomization (this is sourced from Camera.main, so the main camera must be in the scene for this to work)
-        Transform camHolder;
 
-		// cam rotation x
-		float x = 16;
-
-		// cam rotation y
-		float y = -30;
-
-        // randomize character creating button
-        void OnGUI()
-        {
-            /*
-            if (GUI.Button(new Rect(10, 10, 150, 50), "Randomize Character"))
-            {
-                // call randomization method
-                Randomize();
-            }
-            */
-
-            GUIStyle style = new GUIStyle();
-            style.normal.textColor = Color.white;
-            style.fontStyle = FontStyle.Bold;
-            style.fontSize = 24;
-            GUI.Label(new Rect(10, 10, 150, 50), "Hold Right Mouse Button Down\nor use W A S D To Rotate.", style);
-        }
+        private List<SkinnedMeshRenderer> _allRenderers = new();
+        private MaterialPropertyBlock _materialPropertyBlock;
 
         private void Start()
         {
@@ -133,56 +111,16 @@ namespace PsychoticLab
             ActivateItem(male.leg_Right[0]);
             ActivateItem(male.leg_Left[0]);
 
-            // setting up the camera position, rotation, and reference for use
-            Transform cam = Camera.main.transform;
-            if(cam)
-            {
-                cam.position = transform.position + new Vector3(0, 0.3f, 2);
-                cam.rotation = Quaternion.Euler(0, -180, 0);
-                camHolder = new GameObject().transform;
-                camHolder.position = transform.position + new Vector3(0, 1, 0);
-                cam.LookAt(camHolder);
-                cam.SetParent(camHolder);
-            }
 
             // if repeat on play is checked in the inspector, repeat the randomize method based on the shuffle speed, also defined in the inspector
             if (repeatOnPlay)
                 InvokeRepeating("Randomize", shuffleSpeed, shuffleSpeed);
-        }
-
-        private void Update()
-        {
-            if (camHolder)
-            {
-                if (Input.GetKey(KeyCode.Mouse1))
-                {
-                    x += 1 * Input.GetAxis("Mouse X");
-                    y -= 1 * Input.GetAxis("Mouse Y");
-                    Cursor.lockState = CursorLockMode.Locked;
-                    Cursor.visible = false;
-                }
-                else
-                {
-                    x -= 1 * Input.GetAxis("Horizontal");
-                    y -= 1 * Input.GetAxis("Vertical");
-                    Cursor.lockState = CursorLockMode.None;
-                    Cursor.visible = true;
-                }
-            }
-        }
-
-        void LateUpdate()
-        {
-            // method for handling the camera rotation around the character
-            if (camHolder)
-            {
-                y = Mathf.Clamp(y, -45, 15);
-                camHolder.eulerAngles = new Vector3(y, x, 0.0f);
-            }
+            else
+                Randomize();
         }
 
         // character randomization method
-        void Randomize()
+        public void Randomize()
         {
             // initialize settings
             Gender gender = Gender.Male;
@@ -412,48 +350,48 @@ namespace PsychoticLab
 
             // randomize and set primary color
             if (primary.Length != 0)
-                mat.SetColor("_Color_Primary", primary[Random.Range(0, primary.Length)]);
+                SetMaterialColor("_Color_Primary", primary[Random.Range(0, primary.Length)]);
             else
                 Debug.Log("No Primary Colors Specified In The Inspector");
 
             // randomize and set secondary color
             if (secondary.Length != 0)
-                mat.SetColor("_Color_Secondary", secondary[Random.Range(0, secondary.Length)]);
+                SetMaterialColor("_Color_Secondary", secondary[Random.Range(0, secondary.Length)]);
             else
                 Debug.Log("No Secondary Colors Specified In The Inspector");
 
             // randomize and set primary metal color
             if (metalPrimary.Length != 0)
-                mat.SetColor("_Color_Metal_Primary", metalPrimary[Random.Range(0, metalPrimary.Length)]);
+                SetMaterialColor("_Color_Metal_Primary", metalPrimary[Random.Range(0, metalPrimary.Length)]);
             else
                 Debug.Log("No Primary Metal Colors Specified In The Inspector");
 
             // randomize and set secondary metal color
             if (metalSecondary.Length != 0)
-                mat.SetColor("_Color_Metal_Secondary", metalSecondary[Random.Range(0, metalSecondary.Length)]);
+                SetMaterialColor("_Color_Metal_Secondary", metalSecondary[Random.Range(0, metalSecondary.Length)]);
             else
                 Debug.Log("No Secondary Metal Colors Specified In The Inspector");
 
             // randomize and set primary leather color
             if (leatherPrimary.Length != 0)
-                mat.SetColor("_Color_Leather_Primary", leatherPrimary[Random.Range(0, leatherPrimary.Length)]);
+                SetMaterialColor("_Color_Leather_Primary", leatherPrimary[Random.Range(0, leatherPrimary.Length)]);
             else
                 Debug.Log("No Primary Leather Colors Specified In The Inspector");
 
             // randomize and set secondary leather color
             if (leatherSecondary.Length != 0)
-                mat.SetColor("_Color_Leather_Secondary", leatherSecondary[Random.Range(0, leatherSecondary.Length)]);
+                SetMaterialColor("_Color_Leather_Secondary", leatherSecondary[Random.Range(0, leatherSecondary.Length)]);
             else
                 Debug.Log("No Secondary Leather Colors Specified In The Inspector");
 
             // randomize and set body art color
             if (bodyArt.Length != 0)
-                mat.SetColor("_Color_BodyArt", bodyArt[Random.Range(0, bodyArt.Length)]);
+                SetMaterialColor("_Color_BodyArt", bodyArt[Random.Range(0, bodyArt.Length)]);
             else
                 Debug.Log("No Body Art Colors Specified In The Inspector");
 
             // randomize and set body art amount
-            mat.SetFloat("_BodyArt_Amount", Random.Range(0.0f, 1.0f));
+            SetMaterialFloat("_BodyArt_Amount", Random.Range(0.0f, 1.0f));
         }
 
         void RandomizeAndSetHairSkinColors(string info, Color[] skin, Color[] hair, Color stubble, Color scar)
@@ -461,7 +399,7 @@ namespace PsychoticLab
             // randomize and set elf skin color
             if (skin.Length != 0)
             {
-                mat.SetColor("_Color_Skin", skin[Random.Range(0, skin.Length)]);
+                SetMaterialColor("_Color_Skin", skin[Random.Range(0, skin.Length)]);
             }
             else
             {
@@ -471,7 +409,7 @@ namespace PsychoticLab
             // randomize and set elf hair color
             if (hair.Length != 0)
             {
-                mat.SetColor("_Color_Hair", hair[Random.Range(0, hair.Length)]);
+                SetMaterialColor("_Color_Hair", hair[Random.Range(0, hair.Length)]);
             }
             else
             {
@@ -479,10 +417,10 @@ namespace PsychoticLab
             }
 
             // set stubble color
-            mat.SetColor("_Color_Stubble", stubble);
+            SetMaterialColor("_Color_Stubble", stubble);
 
             // set scar color
-            mat.SetColor("_Color_Scar", scar);
+            SetMaterialColor("_Color_Scar", scar);
         }
 
         // method for handling the chance of left/right items to be differnt (such as shoulders, hands, legs, arms)
@@ -531,9 +469,34 @@ namespace PsychoticLab
             return p;
         }
 
+        private void SetMaterialColor(string colorPropertyName, Color color)
+        {
+            _materialPropertyBlock.SetColor(colorPropertyName, color);
+            foreach (var go in this.enabledObjects)
+            {
+                SkinnedMeshRenderer renderer = go.GetComponent<SkinnedMeshRenderer>();
+                renderer.SetPropertyBlock(_materialPropertyBlock);
+            }
+        }
+
+        private void SetMaterialFloat(string floatPropertyName, float value)
+        {
+            _materialPropertyBlock.SetFloat(floatPropertyName, value);
+            foreach (var go in this.enabledObjects)
+            {
+                SkinnedMeshRenderer renderer = go.GetComponent<SkinnedMeshRenderer>();
+                renderer.SetPropertyBlock(_materialPropertyBlock);
+            }
+
+            //mat.SetFloat(floatPropertyName, value);
+        }
+
+
         // build all item lists for use in randomization
         private void BuildLists()
         {
+            EnsureMaterialPropertyBlock();
+
             //build out male lists
             BuildList(male.headAllElements, "Male_Head_All_Elements");
             BuildList(male.headNoElements, "Male_Head_No_Elements");
@@ -582,6 +545,17 @@ namespace PsychoticLab
             BuildList(allGender.knee_Attachement_Right, "All_10_Knee_Attachement_Right");
             BuildList(allGender.knee_Attachement_Left, "All_11_Knee_Attachement_Left");
             BuildList(allGender.elf_Ear, "Elf_Ear");
+        }
+
+        private void EnsureMaterialPropertyBlock()
+        {
+            //  Build the MaterialPropertyBlock the first time if it doesn't exist
+            if (_materialPropertyBlock == null)
+            {
+                SkinnedMeshRenderer firstRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+                _materialPropertyBlock = new MaterialPropertyBlock();
+                firstRenderer.GetPropertyBlock(_materialPropertyBlock);
+            }
         }
 
         // called from the BuildLists method
