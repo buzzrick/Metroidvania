@@ -1,4 +1,5 @@
 using Metroidvania.Camera;
+using Metroidvania.Debugging;
 using Metroidvania.Lighting;
 using Metroidvania.MultiScene;
 using Metroidvania.Player;
@@ -17,6 +18,7 @@ namespace Metroidvania.GameCore
             Container.Bind<LightingCore>().FromNew().AsSingle();
             Container.Bind<SceneAnchorCore>().FromNew().AsSingle();
             Container.Bind<PlayerCore>().FromNew().AsSingle();
+            Container.Bind<DebuggingCore>().FromNew().AsSingle();
             Container.Bind<GameCore>().FromNew().AsSingle().NonLazy();
         }
     } 

@@ -1,22 +1,31 @@
+using Cysharp.Threading.Tasks;
+using Metroidvania.GameCore;
 using Metroidvania.Player;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
-public class PlayerMovementSelectionUI : MonoBehaviour
+public class PlayerMovementSelectionUI : MonoBehaviour, ICore
 {
     public PlayerMovementStatsSO[] MovementStats;
     public RectTransform SelectionPanel;
     public ListButton ListButtonPrefab;
 
-    public PlayerMovementController_NoIK CharacterToControl;
-
     private List<Button> _listButtons = new List<Button>();
+    private PlayerRoot _playerRoot;
+    private PlayerMovementController_NoIK CharacterToControl;
 
-    private void Awake()
+    [Inject]
+    private void Initialise(PlayerCore playerCore)
+    {
+        _playerRoot = playerCore.GetPlayerRoot();
+    }
+    public UniTask StartCore()
     {
         RenderButtons();
+        CharacterToControl = _playerRoot.GetComponent<PlayerMovementController_NoIK>();
+        return UniTask.CompletedTask;
     }
 
     private void RenderButtons()

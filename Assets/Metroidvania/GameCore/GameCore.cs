@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Metroidvania.Camera;
+using Metroidvania.Debugging;
 using Metroidvania.Lighting;
 using Metroidvania.MultiScene;
 using Metroidvania.Player;
@@ -14,18 +15,21 @@ namespace Metroidvania.GameCore
         private readonly LightingCore _lightingCore;
         private readonly PlayerCore _playerCore;
         private readonly CameraController _cameraController;
+        private readonly DebuggingCore _debuggingCore;
 
         public GameCore(ISceneLoader sceneLoader,
             SceneAnchorCore sceneAnchorCore,
             LightingCore lightingCore,
             PlayerCore playerCore,
-            CameraController cameraController)
+            CameraController cameraController,
+            DebuggingCore debuggingCore)
         {
             _sceneLoader = sceneLoader;
             _sceneAnchorCore = sceneAnchorCore;
             _lightingCore = lightingCore;
             _playerCore = playerCore;
             _cameraController = cameraController;
+            _debuggingCore = debuggingCore;
             StartCore().Forget();
         }
 
@@ -37,6 +41,7 @@ namespace Metroidvania.GameCore
             await _playerCore.StartCore();
             await _sceneAnchorCore.StartCore();
             await _cameraController.StartCore();
+            await _debuggingCore.StartCore();
             Debug.Log($"Starting GameCore Complete");
         }
     }

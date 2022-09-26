@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TownBeachScene.unity
     guid: d7faa2dea8623da44a25ee66321bf7d0
+  - enabled: 1
+    path: Assets/Scenes/DebuggingScene.unity
+    guid: d7a7bc92fd315c844984a1c8edec5367
   m_configObjects: {}
