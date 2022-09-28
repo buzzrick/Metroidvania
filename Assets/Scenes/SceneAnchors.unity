@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18290034, g: 0.22859599, b: 0.30690974, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 33238384}
   - component: {fileID: 33238383}
   - component: {fileID: 33238385}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: TownRiseScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 829471236}
   - component: {fileID: 829471237}
   - component: {fileID: 829471238}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: TownCenterScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,7 +407,7 @@ GameObject:
   - component: {fileID: 1634956244}
   - component: {fileID: 1634956243}
   - component: {fileID: 1634956242}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: SewerScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 1789223745}
   - component: {fileID: 1789223744}
   - component: {fileID: 1789223746}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: TownMageTowerScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -514,6 +514,92 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoadRange: 20
+--- !u!1001 &1805647521
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8193354048917108207, guid: c1428714edf6b3f45a1af67fa3e254db,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193354048917108207, guid: c1428714edf6b3f45a1af67fa3e254db,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193354048917108207, guid: c1428714edf6b3f45a1af67fa3e254db,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193354048917108207, guid: c1428714edf6b3f45a1af67fa3e254db,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193354048917108207, guid: c1428714edf6b3f45a1af67fa3e254db,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193354048917108207, guid: c1428714edf6b3f45a1af67fa3e254db,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193354048917108207, guid: c1428714edf6b3f45a1af67fa3e254db,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193354048917108207, guid: c1428714edf6b3f45a1af67fa3e254db,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193354048917108207, guid: c1428714edf6b3f45a1af67fa3e254db,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193354048917108207, guid: c1428714edf6b3f45a1af67fa3e254db,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193354048917108207, guid: c1428714edf6b3f45a1af67fa3e254db,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193354048917108207, guid: c1428714edf6b3f45a1af67fa3e254db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193354048917108207, guid: c1428714edf6b3f45a1af67fa3e254db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193354048917108207, guid: c1428714edf6b3f45a1af67fa3e254db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8862930910245695317, guid: c1428714edf6b3f45a1af67fa3e254db,
+        type: 3}
+      propertyPath: m_Name
+      value: Water_01
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: c1428714edf6b3f45a1af67fa3e254db, type: 3}
 --- !u!1 &1833537136
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,7 +611,7 @@ GameObject:
   - component: {fileID: 1833537139}
   - component: {fileID: 1833537138}
   - component: {fileID: 1833537137}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: TownDockScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -584,7 +670,7 @@ GameObject:
   - component: {fileID: 1922628807}
   - component: {fileID: 1922628806}
   - component: {fileID: 1922628805}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: TownBeachScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,11 +1,14 @@
-﻿using Metroidvania.Player.Animation;
+﻿using Cysharp.Threading.Tasks;
+using Metroidvania.Player.Animation;
 using UnityEngine;
+using System.Linq;
 
 namespace Metroidvania.Player
 {
     public class PlayerMovementController_NoIK : MonoBehaviour, ICharacterMovementDriver
     {
         public bool LogIsGrounded = false;
+        public bool SphereCastGrounded = false;
         public PlayerMovementStatsSO PlayerMovementStats;
 
         protected CharacterController _characterController;
@@ -40,7 +43,7 @@ namespace Metroidvania.Player
             _animator = GetComponentInChildren<Animator>();
             _cameraTransform = UnityEngine.Camera.main.transform;
 
-            _floorMask = ~LayerMask.GetMask("Player", "Untagged");
+            _floorMask = ~LayerMask.GetMask("Player", "Untagged", "SceneAnchors", "CameraIgnored");
 
             if (PlayerMovementStats == null)
             {
@@ -246,15 +249,29 @@ namespace Metroidvania.Player
         private RaycastHit[] _raycastHits = new RaycastHit[1];
         private bool _isEnabled;
 
-        protected virtual bool DetectGrounded2()
+        protected virtual bool DetectGrounded()
+        {
+            if (SphereCastGrounded)
+            {
+                return DetectGroundedSphereCast();
+            }
+            return DetectGroundedController();
+        }
+
+
+        protected virtual bool DetectGroundedSphereCast()
         {
             Ray floorDetectionRay = new Ray(transform.position, Vector3.down);
 
             int numResults = Physics.SphereCastNonAlloc(floorDetectionRay, GroundedDetectionRange, _raycastHits, GroundedDetectionRange, _floorMask);
             bool isGrounded = numResults > 0;
+            if (isGrounded)
+            {
+                Debug.Log($"Grounded on {numResults} items {string.Join("|", _raycastHits.Select(i => i.collider.name).ToArray())}");
+            }
             return isGrounded;
         }
-        protected virtual bool DetectGrounded() => _characterController.isGrounded;
+        protected virtual bool DetectGroundedController() => _characterController.isGrounded;
 
         public void RegisterCharacterAnimationView(ICharacterAnimationView characterAnimationView)
         {
