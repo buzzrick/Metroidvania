@@ -5949,6 +5949,38 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 14940731}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &845382758
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 845382759}
+  m_Layer: 0
+  m_Name: SouthCliffs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &845382759
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845382758}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1512649874}
+  m_Father: {fileID: 0}
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &856615299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11959,6 +11991,98 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 355335073548952889, guid: b01687bdaded6c442ac4b162802108b0,
     type: 3}
   m_PrefabInstance: {fileID: 1493489507}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1512649873
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 845382759}
+    m_Modifications:
+    - target: {fileID: 1991150893622598402, guid: be648366db2cfdd45851bca20a7ca4b3,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991150893622598402, guid: be648366db2cfdd45851bca20a7ca4b3,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991150893622598402, guid: be648366db2cfdd45851bca20a7ca4b3,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991150893622598402, guid: be648366db2cfdd45851bca20a7ca4b3,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991150893622598402, guid: be648366db2cfdd45851bca20a7ca4b3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -94.47144
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991150893622598402, guid: be648366db2cfdd45851bca20a7ca4b3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -40.303265
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991150893622598402, guid: be648366db2cfdd45851bca20a7ca4b3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -50.30999
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991150893622598402, guid: be648366db2cfdd45851bca20a7ca4b3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9837242
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991150893622598402, guid: be648366db2cfdd45851bca20a7ca4b3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.087954484
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991150893622598402, guid: be648366db2cfdd45851bca20a7ca4b3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.10013531
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991150893622598402, guid: be648366db2cfdd45851bca20a7ca4b3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.12051441
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991150893622598402, guid: be648366db2cfdd45851bca20a7ca4b3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 11.372
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991150893622598402, guid: be648366db2cfdd45851bca20a7ca4b3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 10.331
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991150893622598402, guid: be648366db2cfdd45851bca20a7ca4b3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -12.937
+      objectReference: {fileID: 0}
+    - target: {fileID: 5444175580597323629, guid: be648366db2cfdd45851bca20a7ca4b3,
+        type: 3}
+      propertyPath: m_Name
+      value: SouthTowerGround (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: be648366db2cfdd45851bca20a7ca4b3, type: 3}
+--- !u!4 &1512649874 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1991150893622598402, guid: be648366db2cfdd45851bca20a7ca4b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1512649873}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1516300977
 PrefabInstance:

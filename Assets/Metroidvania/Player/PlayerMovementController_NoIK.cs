@@ -28,7 +28,7 @@ namespace Metroidvania.Player
 
 
         [Range(0.1f, 5f)] public float GravityTweak = 2f;         //  Gravity multiplier, so the character doesn't feel so "Floaty". Haven't figured out why we need this
-        private const float JumpButtonGracePeriod = 0.15f;
+        private const float JumpButtonGracePeriod = 0.05f;
         private const float GroundedDetectionRange = 0.1f;
 
 
