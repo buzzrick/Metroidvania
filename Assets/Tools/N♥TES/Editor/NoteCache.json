@@ -1,0 +1,16 @@
+{
+    "notes": [
+        {
+            "noteText": "When you changed to a different animated character:\n\t- Add a CharacterAnimationView to the character.\n\t- Add a CharacterBlinker to the animation model ",
+            "show": true,
+            "typeName": "UnityEngine.GameObject",
+            "GlobalObjectSerialization": "GlobalObjectId_V1-2-4b3c228837c32194483dc2413038766b-1403159893-0"
+        },
+        {
+            "noteText": "Teleports to the Mage Tower",
+            "show": true,
+            "typeName": "UnityEngine.GameObject",
+            "GlobalObjectSerialization": "GlobalObjectId_V1-1-14e5c58c5cd6d484ebd62c9bd8e845fa-7194071223034538567-0"
+        }
+    ]
+}
