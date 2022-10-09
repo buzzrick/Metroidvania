@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Metroidvania.GameCore;
 using Metroidvania.MultiScene;
+using UnityEngine;
 
 namespace Metroidvania.Debugging
 {
@@ -17,6 +18,7 @@ namespace Metroidvania.Debugging
 
         public async UniTask StartCore()
         {
+            Debug.Log($"Starting DebuggingCore");
             _debuggingView = await _sceneLoader.LoadUISceneAsync<DebuggingView>("DebuggingScene");
             await _debuggingView.StartCore();
         }

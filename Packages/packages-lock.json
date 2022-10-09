@@ -14,6 +14,13 @@
       "dependencies": {},
       "hash": "f48cb4b03e6214d9a02cedfda6f26635dad001fb"
     },
+    "com.harumak.unitydebugsheet": {
+      "version": "https://github.com/Haruma-K/UnityDebugSheet.git?path=/Assets/UnityDebugSheet",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "afc6b38d704665875f94dc2a1f3242273a7ee86f"
+    },
     "com.svermeulen.extenject": {
       "version": "https://github.com/starikcetin/Extenject.git#upm",
       "depth": 0,
