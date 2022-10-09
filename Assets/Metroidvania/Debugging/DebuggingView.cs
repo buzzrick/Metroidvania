@@ -38,9 +38,8 @@ namespace Metroidvania.Debugging
             // Get or create the root page.
             var rootPage = DebugSheet.Instance.GetOrCreateInitialPage();
 
-            rootPage.AddPageLinkButton<DebugMovementTypeMenu>("Movement Type",
+            rootPage.AddPageLinkButton<DebugPlayerMenu>("Player Character",
                 onLoad: page => page.Setup(MovementStats, _playerCore));
-
             // You must call Reload() after adding cells.
             rootPage.Reload();
         }

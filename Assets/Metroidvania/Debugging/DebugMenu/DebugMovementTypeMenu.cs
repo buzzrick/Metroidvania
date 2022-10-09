@@ -5,26 +5,37 @@ using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityEngine;
 using System.Linq;
+using PsychoticLab;
 
 namespace Assets.Metroidvania.Debugging.DebugMenu
 {
-    public class DebugMovementTypeMenu : DebugPageBase
+    public class DebugPlayerMenu : DebugPageBase
     {
         private PlayerMovementStatsSO[] _movementStats;
+        private PlayerCore _playerCore;
+        private CharacterRandomizer _characterRandomiser;
         private PlayerMovementController_NoIK _characterToControl;
 
         protected override string Title { get; } = "Set Movement Type";
 
         public override IEnumerator Initialize()
         {
+            AddButton("Randomize Character", clicked: () =>
+            {
+                _characterRandomiser.Randomize();
+                DebugSheet.Instance.Hide();
+            });
+
+
             PickerCellModel movementPicker = new PickerCellModel();
             movementPicker.Text = "Movement Type";
             movementPicker.SetOptions(GetMovementTitlesList(), GetCurrentMovementTypeNum());
             movementPicker.Clicked += HandleMovementPicker_Clicked;
             movementPicker.Confirmed += HandleMovementPicker_Confirmed;
             movementPicker.ActiveOptionChanged += HandleMovementPicker_ActiveOptionChanged;
-
             AddPicker(movementPicker);
+
+
             ////  as a list of buttons
             //foreach (var movementType in _movementStats)
             //{
@@ -82,6 +93,8 @@ namespace Assets.Metroidvania.Debugging.DebugMenu
         public void Setup(PlayerMovementStatsSO[] movementStats, PlayerCore playerCore)
         {
             _movementStats = movementStats;
+            _playerCore = playerCore;
+            _characterRandomiser = playerCore.GetPlayerRoot().GetComponentInChildren<CharacterRandomizer>();
             _characterToControl = playerCore.GetPlayerRoot().GetComponent<PlayerMovementController_NoIK>();
         }
     }
