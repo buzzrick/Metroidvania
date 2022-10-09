@@ -1,4 +1,5 @@
-﻿using Metroidvania.Interactables;
+﻿using Cysharp.Threading.Tasks;
+using Metroidvania.Interactables;
 using Metroidvania.Player;
 using UnityEngine;
 using Zenject;
@@ -21,30 +22,36 @@ namespace Metroidvania.MultiScene
             _sceneAnchorController = sceneAnchorController;
 
             _isLoaded = _sceneLoader.IsSceneLoaded(gameObject.name);
+            //  handle the case wehre we were already loaded
+            if (_isLoaded)
+            {
+                _sceneAnchorController.HandleSceneAnchorLoaded(gameObject.name);
+            }
         }
 
-        private void Update()
+        private async void Update()
         {
-            TriggerCheck();
+            await TriggerCheck();
         }
 
 
-        private void TriggerCheck()
+        private async UniTask TriggerCheck()
         {
             if (_shouldLoad)
             {
-                LoadScene();
+                await LoadScene();
             }
             else
             {
-                UnloadScene();
+                await UnloadScene();
             }
         }
 
-        private async void LoadScene()
+        private async UniTask LoadScene()
         {
             if (!_isLoaded)
             {
+                //Debug.Log($"Loading Scene {gameObject.name} via SceneAnchor");
                 _isLoaded = true;
                 _sceneAnchorController.HandleSceneAnchorLoading(gameObject.name);
                 await _sceneLoader.LoadAdditiveSceneAsync(gameObject.name);
@@ -52,7 +59,7 @@ namespace Metroidvania.MultiScene
             }
         }
 
-        private async void UnloadScene()
+        private async UniTask UnloadScene()
         {
             if (_isLoaded)
             {
@@ -64,11 +71,13 @@ namespace Metroidvania.MultiScene
 
         public void OnPlayerExitedZone(PlayerRoot player)
         {
+            //Debug.Log($"OnPlayerExitedZone {name}");
             _shouldLoad = false;
         }
 
         public void OnPlayerEnteredZone(PlayerRoot player)
         {
+            //Debug.Log($"OnPlayerEnteredZone {name}");
             _shouldLoad = true;
         }
     }

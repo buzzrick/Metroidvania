@@ -18,8 +18,14 @@ namespace Metroidvania.MultiScene
 
         public async UniTask StartCore()
         {
+            Debug.Log($"Starting SceneAnchor Core");
             _controller = await _sceneLoader.LoadUISceneAsync<SceneAnchorController>("SceneAnchors", false);
             await _controller.StartCore();
+        }
+
+        public bool ForceCalculation()
+        {
+            return _controller.ForceCalculation();
         }
     }
 }
