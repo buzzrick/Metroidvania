@@ -80,6 +80,12 @@ namespace Metroidvania.MultiScene
             //Debug.Log($"OnPlayerEnteredZone {name}");
             _shouldLoad = true;
         }
+
+
+        /// <summary>
+        /// used for dynamically creating scene anchors
+        /// </summary>
+        public class Factory : PlaceholderFactory<ScenePartAnchor> { }
     }
 }
 

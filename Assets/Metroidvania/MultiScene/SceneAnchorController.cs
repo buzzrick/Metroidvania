@@ -1,8 +1,6 @@
 using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.Triggers;
 using Metroidvania.GameCore;
 using Metroidvania.Player;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -14,6 +12,8 @@ namespace Metroidvania.MultiScene
         private List<string> _loadedScenes = new();
         private List<string> _pendingScenes = new();
         private PlayerCore _playerCore;
+        private SceneAnchorOverridesSO _sceneAnchorOverrides;
+        private ScenePartAnchor.Factory _scenePartFactory;
         private ScenePartAnchor[] _anchors;
         private int _sceneAnchorLayerMask;
 
@@ -23,9 +23,13 @@ namespace Metroidvania.MultiScene
         }
 
         [Inject]
-        private void Initialise(PlayerCore playerCore)
+        private void Initialise(PlayerCore playerCore,
+            SceneAnchorOverridesSO sceneAnchorOverrides,
+            ScenePartAnchor.Factory scenePartFactory)
         {
             _playerCore = playerCore;
+            _sceneAnchorOverrides = sceneAnchorOverrides;
+            _scenePartFactory = scenePartFactory;
             _anchors = GetComponentsInChildren<ScenePartAnchor>();
             _sceneAnchorLayerMask = LayerMask.GetMask("SceneAnchors");
         }
@@ -63,6 +67,12 @@ namespace Metroidvania.MultiScene
 
         public bool ForceCalculation()
         {
+            if (!string.IsNullOrEmpty(_sceneAnchorOverrides.OverrideAnchorSceneName))
+            {
+                OverrideSceneAnchors(_sceneAnchorOverrides.OverrideAnchorSceneName);
+                return true;
+            }
+
             PlayerRoot playerRoot = _playerCore.GetPlayerRoot();
             int count = Physics.OverlapSphereNonAlloc(playerRoot.transform.position, 0.5f, _forceHits, _sceneAnchorLayerMask, QueryTriggerInteraction.Collide);
             bool hasHit = false;
@@ -79,6 +89,24 @@ namespace Metroidvania.MultiScene
                 }
             }
             return hasHit;
+        }
+
+        private void OverrideSceneAnchors(string overrideName)
+        {
+            if (!_pendingScenes.Contains(overrideName))
+            {
+                //_pendingScenes.Add(_sceneAnchorOverrides.OverrideAnchorSceneName);
+                ScenePartAnchor anchor = _scenePartFactory.Create();
+                anchor.name = overrideName;
+                anchor.OnPlayerEnteredZone(null);
+
+                foreach (var oldAnchor in _anchors)
+                {
+                    oldAnchor.enabled = false;
+                }
+                _anchors = new ScenePartAnchor[] { anchor };
+                _playerCore.GetPlayerRoot().SetWorldPosition(_sceneAnchorOverrides.PlayerPosition);
+            }
         }
     }
 }
