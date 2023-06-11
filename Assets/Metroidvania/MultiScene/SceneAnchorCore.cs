@@ -1,7 +1,5 @@
 using Cysharp.Threading.Tasks;
 using Metroidvania.GameCore;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Metroidvania.MultiScene
