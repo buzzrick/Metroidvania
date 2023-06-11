@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using Metroidvania.GameCore;
 using Metroidvania.Player;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +13,7 @@ namespace Metroidvania.Camera
     {
 
         private CinemachineVirtualCameraBase _mainCamera;
+        [SerializeField] private CinemachineBrain _brain;
 
         private int _mainCameraPriority = 0;
         private CinemachineVirtualCameraBase[] _cameras;
@@ -24,6 +26,7 @@ namespace Metroidvania.Camera
         private void Initialise(PlayerCore playerCore)
         {
             _playerCore = playerCore;
+            _brain.enabled = false;
         }
 
         private void Awake()
@@ -100,6 +103,7 @@ namespace Metroidvania.Camera
         {
             _playerRoot = _playerCore.GetPlayerRoot();
             ResetCameraTargets();
+            _brain.enabled = true;
             return UniTask.CompletedTask;
         }
 
