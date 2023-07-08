@@ -8,9 +8,9 @@ namespace Metroidvania.MultiScene
         bool IsCurrentMainScene(string sceneName);
         bool IsSceneLoaded(string uiScene);
         UniTask LoadMainSceneAsync(string sceneName);
-        UniTask LoadAdditiveSceneAsync(string sceneName, bool autoUnloadOnSceneChange = false);
-        UniTask<T> LoadUISceneAsync<T>(string uiScene, string objectPath, bool autoUnloadOnSceneChange = true) where T : class, IView;
-        UniTask<T> LoadUISceneAsync<T>(string uiScene, bool autoUnloadOnSceneChange = true) where T : class, IView;
+        UniTask LoadAdditiveSceneAsync(string sceneName, bool autoUnloadOnSceneChange = false, bool isEditor = false);
+        UniTask<T> LoadUISceneAsync<T>(string uiScene, string objectPath, bool autoUnloadOnSceneChange = true, bool isEditor = false) where T : class, IView;
+        UniTask<T> LoadUISceneAsync<T>(string uiScene, bool autoUnloadOnSceneChange = true, bool isEditor = false) where T : class, IView;
         UniTask UnloadAllScenesAndReloadScene(string sceneName);
         UniTask UnloadSceneAsync(string uiScene, IView view);
         UniTask SwitchMainScene(string newScene);

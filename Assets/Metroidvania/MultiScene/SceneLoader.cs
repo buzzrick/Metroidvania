@@ -50,15 +50,29 @@ namespace Metroidvania.MultiScene
         }
 
 
-        public async UniTask LoadAdditiveSceneAsync(string sceneName, bool autoUnloadOnSceneChange = false)
+        public async UniTask LoadAdditiveSceneAsync(string sceneName, bool autoUnloadOnSceneChange = false, bool isEditor = false)
         {
             await UniTask.WaitUntil(() => !IsScenePending(sceneName));
 
             if (!IsSceneLoaded(sceneName))
             {
                 _pendingScenes.Add(sceneName);
-                var loadTask = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-                await loadTask;
+#if UNITY_EDITOR
+                if (isEditor)
+                {
+                    //  if we're explicitly trying to load an editor mode scene,
+                    //  then it might not be in the build settings,
+                    //  so we need to load it with the editor scene manager
+                    LoadSceneParameters loadSceneParameters = new LoadSceneParameters(LoadSceneMode.Additive, LocalPhysicsMode.None);
+                    await UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(sceneName, loadSceneParameters);
+                }
+                else
+                {
+                    await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+                }
+#else
+                await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+#endif
                 _loadedScenes.Add(sceneName, SceneManager.GetSceneByName(sceneName));
                 if (autoUnloadOnSceneChange)
                 {
@@ -73,10 +87,10 @@ namespace Metroidvania.MultiScene
             return _pendingScenes.Contains(sceneName);
         }
 
-        public async UniTask<T> LoadUISceneAsync<T>(string uiScene, bool autoUnloadOnSceneChange = true)
+        public async UniTask<T> LoadUISceneAsync<T>(string uiScene, bool autoUnloadOnSceneChange = true, bool isEditor = false)
             where T : class, IView
         {
-            await LoadAdditiveSceneAsync(uiScene, autoUnloadOnSceneChange);
+            await LoadAdditiveSceneAsync(uiScene, autoUnloadOnSceneChange, isEditor);
 
             Debug.Log($"Getting object from {uiScene}");
             //  find the object we need with the same name as the SceneName
@@ -122,10 +136,10 @@ namespace Metroidvania.MultiScene
             return null;
         }
 
-        public async UniTask<T> LoadUISceneAsync<T>(string uiScene, string objectPath, bool autoUnloadOnSceneChange = true)
+        public async UniTask<T> LoadUISceneAsync<T>(string uiScene, string objectPath, bool autoUnloadOnSceneChange = true, bool isEditor = false)
             where T : class, IView
         {
-            await LoadAdditiveSceneAsync(uiScene, autoUnloadOnSceneChange);
+            await LoadAdditiveSceneAsync(uiScene, autoUnloadOnSceneChange, isEditor);
 
             GameObject targetObject = GameObject.Find(objectPath);
             if (targetObject != null)

@@ -99,6 +99,7 @@ namespace Metroidvania.MultiScene
                 ScenePartAnchor anchor = _scenePartFactory.Create();
                 anchor.name = overrideName;
                 anchor.OnPlayerEnteredZone(null);
+                anchor.IsEditorScene = true;
 
                 foreach (var oldAnchor in _anchors)
                 {

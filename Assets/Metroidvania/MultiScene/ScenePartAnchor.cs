@@ -14,6 +14,10 @@ namespace Metroidvania.MultiScene
         private bool _shouldLoad;
         private ISceneLoader _sceneLoader;
         private SceneAnchorController _sceneAnchorController;
+        /// <summary>
+        /// true if we should allow the editor to load scenes that aren't in the build settings
+        /// </summary>
+        public bool IsEditorScene = false;
 
         [Inject]
         private void Initialise(ISceneLoader sceneLoader, SceneAnchorController sceneAnchorController)
@@ -54,7 +58,7 @@ namespace Metroidvania.MultiScene
                 //Debug.Log($"Loading Scene {gameObject.name} via SceneAnchor");
                 _isLoaded = true;
                 _sceneAnchorController.HandleSceneAnchorLoading(gameObject.name);
-                await _sceneLoader.LoadAdditiveSceneAsync(gameObject.name);
+                await _sceneLoader.LoadAdditiveSceneAsync(gameObject.name, isEditor: IsEditorScene);
                 _sceneAnchorController.HandleSceneAnchorLoaded(gameObject.name);
             }
         }
