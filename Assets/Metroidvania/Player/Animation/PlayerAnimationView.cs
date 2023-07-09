@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace Metroidvania.Player.Animation
 {
@@ -13,13 +14,14 @@ namespace Metroidvania.Player.Animation
         private Transform _root;
         private Transform _headBone;
         private Rigidbody[] _boneRig;
-        private int _actionLayerID;
         private readonly int HashSpeed = Animator.StringToHash("Speed");
         private readonly int HashJump = Animator.StringToHash("Jump");
         private readonly int HashGrounded = Animator.StringToHash("Grounded");
         private float mass = 0.1f;  // Mass of each bone
+        public Animator GetAnimator() => _animator;
 
-        private void Awake()
+        [Inject]
+        private void Initialise(PlayerAnimationActionsView.Factory actionsViewFactory)
         {
             _animator = gameObject.GetComponent<Animator>();
             if (_characterMovementDriver == null)
@@ -43,7 +45,7 @@ namespace Metroidvania.Player.Animation
             _boneRig = gameObject.GetComponentsInChildren<Rigidbody>();
 
             DisableRagdoll();
-            _playerAnimationActionView = new PlayerAnimationActionsView(this, _animator);
+            _playerAnimationActionView = actionsViewFactory.Create();
             _playerAnimationActionView.Reset();
         }
 
@@ -58,7 +60,7 @@ namespace Metroidvania.Player.Animation
 
         private void HandleOnInteractionStarted()
         {
-            _playerAnimationActionView.StartActionAnimation(_playerAnimationActionView.HashActionChopDiagonal);
+            _playerAnimationActionView.StartActionAnimation(PlayerAnimationActionsView.InteractionActionType.MineOre);
         }
 
         public void SetSpeed(float speed)
@@ -111,5 +113,6 @@ namespace Metroidvania.Player.Animation
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<Rigidbody>().useGravity = false;
         }
+
     }
 }
