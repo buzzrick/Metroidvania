@@ -1,3 +1,5 @@
+using Metroidvania.Interactables.WorldObjects;
+using Metroidvania.ResourceTypes;
 using System.Collections;
 using UnityEngine;
 using Zenject;
@@ -10,7 +12,7 @@ namespace Metroidvania.Player.Animation
         [SerializeField] private PlayerInteractionController _playerInteractionController;
         [SerializeField] private GameObject _model;
         private Animator _animator;
-        private PlayerAnimationActionsView _playerAnimationActionView;
+        private PlayerAnimationActionsHandler _playerAnimationActionHandler;
         private Transform _root;
         private Transform _headBone;
         private Rigidbody[] _boneRig;
@@ -21,17 +23,16 @@ namespace Metroidvania.Player.Animation
         public Animator GetAnimator() => _animator;
 
         [Inject]
-        private void Initialise(PlayerAnimationActionsView.Factory actionsViewFactory)
+        private void Initialise(PlayerAnimationActionsHandler.Factory playerAnimationActionFactory)
         {
             _animator = gameObject.GetComponent<Animator>();
+            _playerAnimationActionHandler = playerAnimationActionFactory.Create(this);
+            _playerInteractionController.RegisterPlayerAnimationHandler(_playerAnimationActionHandler);
             if (_characterMovementDriver == null)
             {
                 _characterMovementDriver = GetComponentInParent<ICharacterMovementDriver>();
             }
             _characterMovementDriver.RegisterCharacterAnimationView(this);
-
-            _playerInteractionController.OnInteraction += HandleOnInteractionStarted;
-            _playerInteractionController.OnInteractionFailed += HandleOnInterationFailed;
 
             if (_root == null)
                 _root = transform.Find("Root");
@@ -45,22 +46,11 @@ namespace Metroidvania.Player.Animation
             _boneRig = gameObject.GetComponentsInChildren<Rigidbody>();
 
             DisableRagdoll();
-            _playerAnimationActionView = actionsViewFactory.Create();
-            _playerAnimationActionView.Reset();
         }
 
         private void Update()
         {
-            _playerAnimationActionView.Tick();   
-        }
-
-        private void HandleOnInterationFailed()
-        {
-        }
-
-        private void HandleOnInteractionStarted()
-        {
-            _playerAnimationActionView.StartActionAnimation(PlayerAnimationActionsView.InteractionActionType.MineOre);
+            _playerAnimationActionHandler.Tick();   
         }
 
         public void SetSpeed(float speed)

@@ -1,11 +1,13 @@
 ﻿using Cysharp.Threading.Tasks;
 using Metroidvania.Player.Installer;
+using Metroidvania.ResourceTypes;
+using System;
 using UnityEngine;
 using Zenject;
 
 namespace Metroidvania.Player.Animation
 {
-    public class PlayerAnimationActionsView
+    public class PlayerAnimationActionsHandler
     {
         private PlayerAnimationView _playerAnimationView;
         private Animator _animator;
@@ -14,18 +16,13 @@ namespace Metroidvania.Player.Animation
         public readonly int HashActionInteract = Animator.StringToHash("ActionInteract");
         public readonly int HashActionChopDiagonal = Animator.StringToHash("ActionChopDiagonal");
         public readonly int HashActionMining = Animator.StringToHash("ActionMining");
+        public readonly int HashActionUnsure = Animator.StringToHash("ActionUnsure");
 
         private float _timer = 0f;
         private Transform _leftHandTransform;
         private GameObject _pickAxeTool;
         private GameObject _axeTool;
 
-        public enum InteractionActionType
-        {
-            None,
-            MineOre,
-            ChopWood,
-        }
         public enum Tool
         {
             None,
@@ -33,7 +30,7 @@ namespace Metroidvania.Player.Animation
             Axe,
         }
 
-        public PlayerAnimationActionsView(PlayerAnimationView playerAnimationView, ToolPrefabs toolPrefabs)
+        public PlayerAnimationActionsHandler(PlayerAnimationView playerAnimationView, ToolPrefabs toolPrefabs)
         {
             _playerAnimationView = playerAnimationView;
             _animator = _playerAnimationView.GetAnimator();
@@ -41,6 +38,7 @@ namespace Metroidvania.Player.Animation
             _toolPrefabs = toolPrefabs;
             //Time.timeScale = 0.3f;
             BuildTools();
+            Reset();
         }
 
         private void BuildTools()
@@ -70,16 +68,32 @@ namespace Metroidvania.Player.Animation
             switch (interactionType)
             {
                 case InteractionActionType.None:
+                    _animator.SetTrigger(HashActionUnsure);
                     break;
                 case InteractionActionType.MineOre:
-                    _animator.SetTrigger(HashActionChopDiagonal);
+                    _animator.SetTrigger(HashActionMining);
                     break;
                 case InteractionActionType.ChopWood:
                     _animator.SetTrigger(HashActionChopDiagonal);
                     break;
+                case InteractionActionType.Interact:
+                    _animator.SetTrigger(HashActionInteract);
+                    break;
             }
 
             SetToolForAnimation(interactionType);
+        }
+
+        public void StartActionAnimation(ResourceTypeSO resourceTypeSO)
+        {
+            if (resourceTypeSO != null)
+            {
+                StartActionAnimation(resourceTypeSO.InteractionAction);
+            }
+            else
+            {
+                StartActionAnimation(InteractionActionType.None);
+            }
         }
 
         private void SetToolForAnimation(InteractionActionType interactionAction)
@@ -96,7 +110,7 @@ namespace Metroidvania.Player.Animation
                     break;
                 default:
                     SetTool(Tool.None);
-                    RunAnimationForSeconds(0f);
+                    RunAnimationForSeconds(1.2f);
                     break;
             }
         }
@@ -128,6 +142,6 @@ namespace Metroidvania.Player.Animation
             _animator.SetLayerWeight(_actionLayerID, 0);
         }
 
-        public class Factory : PlaceholderFactory<PlayerAnimationActionsView> { }
+        public class Factory : PlaceholderFactory<PlayerAnimationView, PlayerAnimationActionsHandler> { }
     }
 }
