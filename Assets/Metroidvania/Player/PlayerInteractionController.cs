@@ -42,17 +42,18 @@ namespace Metroidvania.Player
 
                 if (interactable != null)
                 {
-                    IResourceNode resourceNode = interactable as IResourceNode;
-                    if (resourceNode != null)
-                    {
-                        _playerAnimationActionHandler.StartActionAnimation(resourceNode.GetResourceType());
-                        return;
-                    }
-
                     bool interactionValid = await interactable.InteractAsync();
                     if (interactionValid)
                     {
-                        _playerAnimationActionHandler.StartActionAnimation(InteractionActionType.Interact);
+                        IResourceNode resourceNode = interactable as IResourceNode;
+                        if (resourceNode != null)
+                        {
+                            _playerAnimationActionHandler.StartActionAnimation(resourceNode.GetResourceType());
+                        }
+                        else
+                        {
+                            _playerAnimationActionHandler.StartActionAnimation(InteractionActionType.Interact);
+                        }
                         return;
                     }
                 }
