@@ -60,6 +60,7 @@ namespace Metroidvania.MultiScene
 #if UNITY_EDITOR
                 if (isEditor)
                 {
+                    Debug.LogWarning($"Edit mode scene loading for {sceneName}");
                     //  if we're explicitly trying to load an editor mode scene,
                     //  then it might not be in the build settings,
                     //  so we need to load it with the editor scene manager
