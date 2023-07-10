@@ -63,8 +63,12 @@ namespace Metroidvania.MultiScene
                     //  if we're explicitly trying to load an editor mode scene,
                     //  then it might not be in the build settings,
                     //  so we need to load it with the editor scene manager
-                    LoadSceneParameters loadSceneParameters = new LoadSceneParameters(LoadSceneMode.Additive, LocalPhysicsMode.None);
-                    await UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(sceneName, loadSceneParameters);
+                    var scene = SceneManager.GetSceneByName(sceneName);
+                    if (scene == null || !scene.isLoaded)
+                    {
+                        LoadSceneParameters loadSceneParameters = new LoadSceneParameters(LoadSceneMode.Additive, LocalPhysicsMode.None);
+                        await UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(sceneName, loadSceneParameters);
+                    }
                 }
                 else
                 {
