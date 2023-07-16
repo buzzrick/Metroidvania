@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48719191e8e946a47b76bebfaf18f71a, type: 3}
   m_Name: SceneAnchorOverrides
   m_EditorClassIdentifier: 
-  OverrideAnchorSceneName: Assets/Scenes/TestInteractables.unity
+  OverrideAnchorSceneName: Assets/Scenes/TestScenes/TestPlatforms.unity
   PlayerPosition: {x: 0, y: 0, z: 0}
