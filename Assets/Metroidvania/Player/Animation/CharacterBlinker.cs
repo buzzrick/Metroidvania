@@ -37,8 +37,7 @@ namespace Metroidvania.Player.Animation
             {
                 CharacterDriver = GetComponentInParent<ICharacterMovementDriver>();
             }
-            CharacterDriver.RegisterCharacterBlinker(this);
-
+            CharacterDriver?.RegisterCharacterBlinker(this);
         }
 
 

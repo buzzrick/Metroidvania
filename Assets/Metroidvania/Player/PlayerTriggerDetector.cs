@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Metroidvania.Player
 {
-    [RequireComponent(typeof(Collider))]
+//    [RequireComponent(typeof(Collider))]
     public class PlayerTriggerDetector : MonoBehaviour
     {
         private PlayerRoot _playerRoot;

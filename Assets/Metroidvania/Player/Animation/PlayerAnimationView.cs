@@ -32,7 +32,7 @@ namespace Metroidvania.Player.Animation
             {
                 _characterMovementDriver = GetComponentInParent<ICharacterMovementDriver>();
             }
-            _characterMovementDriver.RegisterCharacterAnimationView(this);
+            _characterMovementDriver?.RegisterCharacterAnimationView(this);
 
             if (_root == null)
                 _root = transform.Find("Root");
