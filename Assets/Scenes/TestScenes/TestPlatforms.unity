@@ -193,8 +193,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectsToSwitch:
   - {fileID: 543641288}
-  - {fileID: 1771664869}
-  - {fileID: 1003984838}
 --- !u!1001 &543641284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -468,11 +466,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 826378913732229828, guid: 14af263ad028e444fab71f6b70bd0130,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1771664868}
+      addedObject: {fileID: 1771664871}
     - targetCorrespondingSourceObject: {fileID: 826378913732229828, guid: 14af263ad028e444fab71f6b70bd0130,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1771664869}
+      addedObject: {fileID: 1771664877}
+    - targetCorrespondingSourceObject: {fileID: 826378913732229828, guid: 14af263ad028e444fab71f6b70bd0130,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1771664876}
   m_SourcePrefab: {fileID: 100100000, guid: 14af263ad028e444fab71f6b70bd0130, type: 3}
 --- !u!1001 &1003984836
 PrefabInstance:
@@ -555,11 +557,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 826378913732229828, guid: 14af263ad028e444fab71f6b70bd0130,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1003984839}
+      addedObject: {fileID: 1003984841}
     - targetCorrespondingSourceObject: {fileID: 826378913732229828, guid: 14af263ad028e444fab71f6b70bd0130,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1003984838}
+      addedObject: {fileID: 1003984847}
+    - targetCorrespondingSourceObject: {fileID: 826378913732229828, guid: 14af263ad028e444fab71f6b70bd0130,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1003984846}
   m_SourcePrefab: {fileID: 100100000, guid: 14af263ad028e444fab71f6b70bd0130, type: 3}
 --- !u!1 &1003984837 stripped
 GameObject:
@@ -567,7 +573,34 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1003984836}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1003984838
+--- !u!54 &1003984841
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003984837}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 0
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &1003984846
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -576,32 +609,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 1003984837}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2a181f41c626b94cbe6a3f816d55c26, type: 3}
+  m_Script: {fileID: 11500000, guid: b7edc6957dab9ac4797c1c0912ce3839, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SwitchAnimator: {fileID: 1003984839}
-  DefaultToggleState: 0
---- !u!95 &1003984839
-Animator:
-  serializedVersion: 5
+  Mover: {fileID: 1003984847}
+  TranslationAxis: {x: 1, y: 0, z: 0}
+  TranslationPeriod: 2
+  TranslationSpeed: 1
+  RotationAxis: {x: 0, y: 1, z: 0}
+  RotSpeed: 0
+  OscillationAxis: {x: 0, y: 0, z: 0}
+  OscillationPeriod: 10
+  OscillationSpeed: 10
+--- !u!114 &1003984847
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1003984837}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1511b0f0f71f5ea41ab65f91ad229700, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 075ccbe9837b0744985e09ba3f015b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rigidbody: {fileID: 1003984841}
+  MoveWithPhysics: 1
 --- !u!1001 &1095282625
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -831,28 +864,34 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 795576269}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1771664868
-Animator:
-  serializedVersion: 5
+--- !u!54 &1771664871
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1771664863}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c1140138373b5cc45b3197c99d0bbc6f, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1771664869
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 0
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &1771664876
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -861,11 +900,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 1771664863}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2a181f41c626b94cbe6a3f816d55c26, type: 3}
+  m_Script: {fileID: 11500000, guid: b7edc6957dab9ac4797c1c0912ce3839, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SwitchAnimator: {fileID: 1771664868}
-  DefaultToggleState: 0
+  Mover: {fileID: 1771664877}
+  TranslationAxis: {x: 0, y: 1, z: 0}
+  TranslationPeriod: 2
+  TranslationSpeed: 1
+  RotationAxis: {x: 0, y: 1, z: 0}
+  RotSpeed: 0
+  OscillationAxis: {x: 0, y: 0, z: 0}
+  OscillationPeriod: 10
+  OscillationSpeed: 10
+--- !u!114 &1771664877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771664863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 075ccbe9837b0744985e09ba3f015b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rigidbody: {fileID: 1771664871}
+  MoveWithPhysics: 1
 --- !u!1 &1849547655
 GameObject:
   m_ObjectHideFlags: 0
