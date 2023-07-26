@@ -64,6 +64,7 @@ namespace Metroidvania.Player
             _characterMotor = GetComponent<KinematicCharacterMotor>();
             _characterMotor.CharacterController = this;
             _playerControls = new PlayerControls();
+            Enable(false);
         }
 
         public void Enable(bool isEnabled)

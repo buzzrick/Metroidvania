@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
-namespace Metroidvania.Camera
+namespace Metroidvania.Cameras
 {
     [RequireComponent(typeof(Collider))]
     public class CameraZone : MonoBehaviour, IPlayerEnterTriggerZone, IPlayerExitTriggerZone

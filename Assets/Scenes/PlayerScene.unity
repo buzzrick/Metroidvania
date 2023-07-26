@@ -3957,6 +3957,7 @@ GameObject:
   - component: {fileID: 1403159901}
   - component: {fileID: 1403159903}
   - component: {fileID: 1403159904}
+  - component: {fileID: 1403159905}
   m_Layer: 8
   m_Name: PlayerRoot
   m_TagString: Untagged
@@ -4118,6 +4119,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerMovementController: {fileID: 1403159903}
+  PlayerCameraController: {fileID: 1403159905}
+--- !u!114 &1403159905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403159893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38f676560d4b7fe4180eab0cc677df2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Camera: {fileID: 0}
+  FollowPointFraming: {x: 0, y: 0}
+  FollowingSharpness: 10000
+  DefaultDistance: 6
+  MinDistance: 0
+  MaxDistance: 10
+  DistanceMovementSpeed: 5
+  DistanceMovementSharpness: 10
+  InvertX: 0
+  InvertY: 0
+  DefaultVerticalAngle: 20
+  MinVerticalAngle: -90
+  MaxVerticalAngle: 90
+  RotationSpeed: 1
+  RotationSharpness: 10000
+  RotateWithPhysicsMover: 0
+  ObstructionCheckRadius: 0.2
+  ObstructionLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  ObstructionSharpness: 10000
+  IgnoredColliders: []
 --- !u!1 &1646499688
 GameObject:
   m_ObjectHideFlags: 0

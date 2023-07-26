@@ -55,6 +55,24 @@ namespace Metroidvania.Player
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraRotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""da965918-0b98-4e88-98ee-6a21b5d76b6f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""CameraZoom"",
+                    ""type"": ""Value"",
+                    ""id"": ""5e515959-b2da-4d47-aad3-c38f78770285"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -145,6 +163,94 @@ namespace Metroidvania.Player
                     ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e30bab35-e67b-4541-8f4d-d3151cb47455"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""CameraRotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e7808fa-6833-4ddf-9bd0-277035d1a731"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraRotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""c1b12fed-c398-4ce3-891a-0767b7796330"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraZoom"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""260a7254-e075-4211-a03c-59ec0574a60c"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraZoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""dac0442e-df5f-4921-9a83-efd511aa6e70"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraZoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""beaf0ed0-0123-4fa0-8e63-c49400778a5f"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraZoom"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""dad74d06-b326-4c8e-82c9-66028c2d13cb"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraZoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""349d6586-56bf-4822-9c5d-3ca693a2ea5d"",
+                    ""path"": ""<Mouse>/scroll/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraZoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -179,6 +285,8 @@ namespace Metroidvania.Player
             m_World_MoveAxis = m_World.FindAction("MoveAxis", throwIfNotFound: true);
             m_World_Jump = m_World.FindAction("Jump", throwIfNotFound: true);
             m_World_Crouch = m_World.FindAction("Crouch", throwIfNotFound: true);
+            m_World_CameraRotate = m_World.FindAction("CameraRotate", throwIfNotFound: true);
+            m_World_CameraZoom = m_World.FindAction("CameraZoom", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -243,6 +351,8 @@ namespace Metroidvania.Player
         private readonly InputAction m_World_MoveAxis;
         private readonly InputAction m_World_Jump;
         private readonly InputAction m_World_Crouch;
+        private readonly InputAction m_World_CameraRotate;
+        private readonly InputAction m_World_CameraZoom;
         public struct WorldActions
         {
             private @PlayerControls m_Wrapper;
@@ -250,6 +360,8 @@ namespace Metroidvania.Player
             public InputAction @MoveAxis => m_Wrapper.m_World_MoveAxis;
             public InputAction @Jump => m_Wrapper.m_World_Jump;
             public InputAction @Crouch => m_Wrapper.m_World_Crouch;
+            public InputAction @CameraRotate => m_Wrapper.m_World_CameraRotate;
+            public InputAction @CameraZoom => m_Wrapper.m_World_CameraZoom;
             public InputActionMap Get() { return m_Wrapper.m_World; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -268,6 +380,12 @@ namespace Metroidvania.Player
                 @Crouch.started += instance.OnCrouch;
                 @Crouch.performed += instance.OnCrouch;
                 @Crouch.canceled += instance.OnCrouch;
+                @CameraRotate.started += instance.OnCameraRotate;
+                @CameraRotate.performed += instance.OnCameraRotate;
+                @CameraRotate.canceled += instance.OnCameraRotate;
+                @CameraZoom.started += instance.OnCameraZoom;
+                @CameraZoom.performed += instance.OnCameraZoom;
+                @CameraZoom.canceled += instance.OnCameraZoom;
             }
 
             private void UnregisterCallbacks(IWorldActions instance)
@@ -281,6 +399,12 @@ namespace Metroidvania.Player
                 @Crouch.started -= instance.OnCrouch;
                 @Crouch.performed -= instance.OnCrouch;
                 @Crouch.canceled -= instance.OnCrouch;
+                @CameraRotate.started -= instance.OnCameraRotate;
+                @CameraRotate.performed -= instance.OnCameraRotate;
+                @CameraRotate.canceled -= instance.OnCameraRotate;
+                @CameraZoom.started -= instance.OnCameraZoom;
+                @CameraZoom.performed -= instance.OnCameraZoom;
+                @CameraZoom.canceled -= instance.OnCameraZoom;
             }
 
             public void RemoveCallbacks(IWorldActions instance)
@@ -321,6 +445,8 @@ namespace Metroidvania.Player
             void OnMoveAxis(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnCrouch(InputAction.CallbackContext context);
+            void OnCameraRotate(InputAction.CallbackContext context);
+            void OnCameraZoom(InputAction.CallbackContext context);
         }
     }
 }

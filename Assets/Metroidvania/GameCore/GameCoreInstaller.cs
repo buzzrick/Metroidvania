@@ -1,4 +1,4 @@
-using Metroidvania.Camera;
+using Metroidvania.Cameras;
 using Metroidvania.Debugging;
 using Metroidvania.Lighting;
 using Metroidvania.MultiScene;

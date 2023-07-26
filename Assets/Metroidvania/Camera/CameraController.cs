@@ -3,11 +3,10 @@ using Cysharp.Threading.Tasks;
 using Metroidvania.GameCore;
 using Metroidvania.Player;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
-namespace Metroidvania.Camera
+namespace Metroidvania.Cameras
 {
     public class CameraController : MonoBehaviour, ICore
     {
