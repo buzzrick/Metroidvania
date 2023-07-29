@@ -9,11 +9,13 @@ namespace Metroidvania.Player
         public PlayerMovementController PlayerMovementController;
         public PlayerCameraController PlayerCameraController;
         private PlayerControls _playerControls;
+        private Transform _cameraTransform;
         PlayerCharacterInputs characterInputs = new PlayerCharacterInputs();
 
         private void Awake()
         {
             _playerControls = new PlayerControls();
+            _cameraTransform = Camera.main.transform;
             _playerControls.Enable();
 
             _playerControls.World.Jump.performed += ctx => characterInputs.JumpDown = true;
@@ -78,6 +80,7 @@ namespace Metroidvania.Player
             // Build the CharacterInputs struct
             characterInputs.MoveAxisForward = moveAxis.y;
             characterInputs.MoveAxisRight = moveAxis.x;
+            characterInputs.CameraRotation = _cameraTransform.rotation;
 
             // Apply inputs to character
             PlayerMovementController.SetInputs(ref characterInputs);
