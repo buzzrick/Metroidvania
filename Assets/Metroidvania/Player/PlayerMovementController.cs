@@ -1,5 +1,6 @@
 using KinematicCharacterController;
 using KinematicCharacterController.Examples;
+using Metroidvania.Player.Animation;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,9 +10,9 @@ namespace Metroidvania.Player
     {
         private KinematicCharacterMotor _characterMotor;
         private bool _isEnabled;
-        private PlayerControls _playerControls;
 
         public KinematicCharacterMotor Motor => _characterMotor;
+        public PlayerAnimationView PlayerAnimationView;
 
         [Header("Stable Movement")]
         public float MaxStableMoveSpeed = 10f;
@@ -63,7 +64,6 @@ namespace Metroidvania.Player
         {
             _characterMotor = GetComponent<KinematicCharacterMotor>();
             _characterMotor.CharacterController = this;
-            _playerControls = new PlayerControls();
             Enable(false);
         }
 
@@ -363,6 +363,9 @@ namespace Metroidvania.Player
                         break;
                     }
             }
+
+            PlayerAnimationView.SetGrounded(Motor.GroundingStatus.IsStableOnGround);
+            PlayerAnimationView.SetSpeed(currentVelocity.magnitude);
         }
 
 
