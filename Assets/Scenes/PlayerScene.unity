@@ -4087,16 +4087,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 764344dc63af1ac45929bd98ac0e1e0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerAnimationView: {fileID: 471024266}
   MaxStableMoveSpeed: 10
   StableMovementSharpness: 15
   OrientationSharpness: 10
-  OrientationMethod: 0
+  OrientationMethod: 1
   MaxAirMoveSpeed: 15
   AirAccelerationSpeed: 15
   Drag: 0.1
   AllowJumpingWhenSliding: 0
   JumpUpSpeed: 10
-  JumpScalableForwardSpeed: 10
+  JumpScalableForwardSpeed: 0
   JumpPreGroundingGraceTime: 0
   JumpPostGroundingGraceTime: 0
   IgnoredColliders: []
