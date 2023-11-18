@@ -1,7 +1,7 @@
 ﻿// character randomizer version 1.30
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
+//using static UnityEngine.Rendering.DebugUI;
 
 namespace PsychoticLab
 {

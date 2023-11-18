@@ -1,0 +1,25 @@
+{
+    "name": "Metroidvania",
+    "rootNamespace": "",
+    "references": [
+        "UniTask",
+        "Zenject",
+        "Buzzrick.UnityLibs",
+        "Cinemachine",
+        "UnityDebugSheet",
+        "KinematicCharacterController.Core",
+        "KinematicCharacterController.ExampleCharacter",
+        "Synty",
+        "Unity.TextMeshPro",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

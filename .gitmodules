@@ -1,0 +1,3 @@
+[submodule "Assets/Tools/Buzzrick.UnityLibs"]
+	path = Assets/Tools/Buzzrick.UnityLibs
+	url = git@bitbucket.org:buzzrickteam/buzzrick.unitylibs.git

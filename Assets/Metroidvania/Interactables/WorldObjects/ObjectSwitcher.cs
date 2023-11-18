@@ -11,6 +11,7 @@ namespace Metroidvania.Interactables.WorldObjects
 
         public async UniTask<bool> InteractAsync()
         {
+            Debug.Log($"Toggling Switcher {name}");
             if (ObjectsToSwitch.Length == 0)
                 return false;   
 

@@ -1,0 +1,17 @@
+{
+    "name": "KinematicCharacterController.Examples",
+    "rootNamespace": "",
+    "references": [
+        "GUID:ea8a35106addb2640a01b65134ed3e1c",
+        "GUID:09b3a518483ac7449b776e96f23941e0"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
