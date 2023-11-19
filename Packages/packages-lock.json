@@ -15,11 +15,11 @@
       "hash": "56662924960a53695a640af80125f1cfd334d5ee"
     },
     "com.harumak.unitydebugsheet": {
-      "version": "https://github.com/Haruma-K/UnityDebugSheet.git?path=/Assets/UnityDebugSheet",
+      "version": "https://github.com/Haruma-K/UnityDebugSheet.git?path=Assets/UnityDebugSheet/#1.5.2",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "afc6b38d704665875f94dc2a1f3242273a7ee86f"
+      "hash": "010fd5df0d8a9931a70473e71d896642581405c1"
     },
     "com.svermeulen.extenject": {
       "version": "https://github.com/starikcetin/Extenject.git#upm",

@@ -1,5 +1,5 @@
-﻿using Assets.Metroidvania.Debugging.DebugMenu;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
+using Metroidvania.Debugging.DebugMenu;
 using Metroidvania.GameCore;
 using Metroidvania.MultiScene;
 using Metroidvania.Player;
@@ -39,7 +39,7 @@ namespace Metroidvania.Debugging
             var rootPage = DebugSheet.Instance.GetOrCreateInitialPage();
 
             rootPage.AddPageLinkButton<DebugPlayerMenu>("Player Character",
-                onLoad: page => page.Setup(MovementStats, _playerCore));
+                onLoad: page => page.page.Setup(MovementStats, _playerCore));
             // You must call Reload() after adding cells.
             rootPage.Reload();
         }

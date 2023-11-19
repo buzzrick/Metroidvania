@@ -1,15 +1,14 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System.Collections;
+using System.Linq;
 using Metroidvania.Player;
-using System.Collections;
+using PsychoticLab;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityEngine;
-using System.Linq;
-using PsychoticLab;
 
-namespace Assets.Metroidvania.Debugging.DebugMenu
+namespace Metroidvania.Debugging.DebugMenu
 {
-    public class DebugPlayerMenu : DebugPageBase
+    public class DebugPlayerMenu : DefaultDebugPageBase
     {
         private PlayerMovementStatsSO[] _movementStats;
         private PlayerCore _playerCore;
@@ -25,8 +24,7 @@ namespace Assets.Metroidvania.Debugging.DebugMenu
                 _characterRandomiser.Randomize();
                 DebugSheet.Instance.Hide();
             });
-
-
+            
             PickerCellModel movementPicker = new PickerCellModel();
             movementPicker.Text = "Movement Type";
             movementPicker.SetOptions(GetMovementTitlesList(), GetCurrentMovementTypeNum());
