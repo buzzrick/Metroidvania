@@ -22,6 +22,7 @@ namespace Metroidvania.Player.Animation
         private Transform _leftHandTransform;
         private GameObject _pickAxeTool;
         private GameObject _axeTool;
+        private bool _isActive = false;
 
         public enum Tool
         {
@@ -40,6 +41,7 @@ namespace Metroidvania.Player.Animation
             BuildTools();
             Reset();
         }
+
 
         private void BuildTools()
         {
@@ -63,7 +65,7 @@ namespace Metroidvania.Player.Animation
             _axeTool.SetActive(tool == Tool.Axe);
         }
 
-        public void StartActionAnimation(InteractionActionType interactionType)
+        public async UniTask RunActionAnimationAsync(InteractionActionType interactionType)
         {
             switch (interactionType)
             {
@@ -82,17 +84,19 @@ namespace Metroidvania.Player.Animation
             }
 
             SetToolForAnimation(interactionType);
+
+            await UniTask.WaitUntil(() => !IsActionAnimationRunning());
         }
 
-        public void StartActionAnimation(ResourceTypeSO resourceTypeSO)
+        public async UniTask RunActionAnimationAsync(ResourceTypeSO resourceTypeSO)
         {
             if (resourceTypeSO != null)
             {
-                StartActionAnimation(resourceTypeSO.InteractionAction);
+                await RunActionAnimationAsync(resourceTypeSO.InteractionAction);
             }
             else
             {
-                StartActionAnimation(InteractionActionType.None);
+                await RunActionAnimationAsync(InteractionActionType.None);
             }
         }
 

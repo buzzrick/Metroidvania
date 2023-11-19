@@ -1,7 +1,8 @@
-﻿using Metroidvania.Interactables;
+﻿using Cysharp.Threading.Tasks;
+using Metroidvania.Interactables;
 using Metroidvania.Interactables.WorldObjects;
 using Metroidvania.Player.Animation;
-using System;
+using System.Threading;
 using UnityEngine;
 
 namespace Metroidvania.Player
@@ -9,25 +10,70 @@ namespace Metroidvania.Player
     public class PlayerInteractionController : MonoBehaviour
     {
         public float DetectionRadius;
-        public LayerMask LayerMask;
+        public LayerMask LayerMask;    
         private Collider[] _colliders = new Collider[10];
         private PlayerAnimationActionsHandler _playerAnimationActionHandler;
+        private bool _isAutomatic;
+        private CancellationTokenSource _tokenSource;
+        private CancellationToken _onDestroyToken;
+        private CancellationTokenSource _manualStopTokenSource;
+        private CancellationToken _manualStopToken;
 
         public void RegisterPlayerAnimationHandler(PlayerAnimationActionsHandler playerAnimationActionHandler)
         {
             _playerAnimationActionHandler = playerAnimationActionHandler;
+            _onDestroyToken = this.GetCancellationTokenOnDestroy();
+            
         }
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                AttemptInteraction();
+                AttemptInteraction(true);
             }
         }
 
-        private async void AttemptInteraction()
+
+        public void SetAutomatic(bool isAutomatic)
         {
+            if (isAutomatic != _isAutomatic)
+            {
+                Debug.Log($"Setting Automatic interation : {isAutomatic}");
+                _isAutomatic = isAutomatic;
+                if (_isAutomatic)
+                {
+                    BuildCancellationToken();
+                    DetectionLoop(_onDestroyToken).Forget();
+                }
+                else
+                {
+                    _manualStopTokenSource.Cancel();
+                }
+            }
+        }
+
+        private void BuildCancellationToken()
+        {
+            _manualStopTokenSource = new CancellationTokenSource();
+            _tokenSource = CancellationTokenSource.CreateLinkedTokenSource(_onDestroyToken, _manualStopTokenSource.Token);
+        }
+
+        private async UniTask DetectionLoop(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+
+                await AttemptInteraction(false);
+                await UniTask.Delay(500);
+                await UniTask.Yield();
+            }
+
+        }
+
+        private async UniTask AttemptInteraction(bool isForced)
+        {
+            Debug.Log($"AttemptInteraction");
             int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, DetectionRadius, _colliders, LayerMask);
             for (int i = 0; i < colliderCount; i++)
             {
@@ -42,23 +88,29 @@ namespace Metroidvania.Player
 
                 if (interactable != null)
                 {
+
+                    Debug.Log($"Attempting to interact with {interactable}");
                     bool interactionValid = await interactable.InteractAsync();
                     if (interactionValid)
                     {
                         IResourceNode resourceNode = interactable as IResourceNode;
                         if (resourceNode != null)
                         {
-                            _playerAnimationActionHandler.StartActionAnimation(resourceNode.GetResourceType());
+                            await _playerAnimationActionHandler.RunActionAnimationAsync(resourceNode.GetResourceType());
                         }
                         else
                         {
-                            _playerAnimationActionHandler.StartActionAnimation(InteractionActionType.Interact);
+                            await _playerAnimationActionHandler.RunActionAnimationAsync(InteractionActionType.Interact);
                         }
                         return;
                     }
                 }
             }
-            _playerAnimationActionHandler.StartActionAnimation(InteractionActionType.None);
+            if (isForced)
+            {
+                Debug.Log($"No interactable found");
+                await _playerAnimationActionHandler.RunActionAnimationAsync(InteractionActionType.None);
+            }
         }
 
     }

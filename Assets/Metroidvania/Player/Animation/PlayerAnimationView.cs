@@ -25,6 +25,7 @@ namespace Metroidvania.Player.Animation
         [Inject]
         private void Initialise(PlayerAnimationActionsHandler.Factory playerAnimationActionFactory)
         {
+            Debug.Log($"PlayerAnimationView Inject");
             _animator = gameObject.GetComponent<Animator>();
             _playerAnimationActionHandler = playerAnimationActionFactory.Create(this);
             _playerInteractionController.RegisterPlayerAnimationHandler(_playerAnimationActionHandler);
@@ -44,8 +45,9 @@ namespace Metroidvania.Player.Animation
             if (_headBone == null)
                 _headBone = transform.Find("Head");
             _boneRig = gameObject.GetComponentsInChildren<Rigidbody>();
-
             DisableRagdoll();
+
+            _playerInteractionController.SetAutomatic(true);
         }
 
         private void Update()
@@ -80,7 +82,10 @@ namespace Metroidvania.Player.Animation
                     ragdoll.GetComponent<Rigidbody>().mass = 0.01f;
                 }
             }
-            GetComponent<Collider>().enabled = true;
+            if (TryGetComponent<Collider>(out var collider))
+            {
+                collider.enabled = true;
+            }
         }
 
         public IEnumerator EnableRagdoll(float delay, Vector3 force)
