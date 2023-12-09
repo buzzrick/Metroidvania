@@ -90,17 +90,18 @@ namespace Metroidvania.Player
                 {
 
                     Debug.Log($"Attempting to interact with {interactable}");
-                    bool interactionValid = await interactable.InteractAsync();
-                    if (interactionValid)
+                    var interactionType = interactable.GetInteractionType();
+                    if (interactionType != InteractionActionType.None)
                     {
-                        IResourceNode resourceNode = interactable as IResourceNode;
-                        if (resourceNode != null)
+                        await _playerAnimationActionHandler.RunActionAnimationAsync(interactionType);
+                        //  if this is a simple interact then perform it directly 
+                        //  otherwise the player animation will trigger each interact as the animation collides
+                        if (interactionType == InteractionActionType.Interact)
                         {
-                            await _playerAnimationActionHandler.RunActionAnimationAsync(resourceNode.GetResourceType());
-                        }
-                        else
-                        {
-                            await _playerAnimationActionHandler.RunActionAnimationAsync(InteractionActionType.Interact);
+                            bool interactionValid = interactable.Interact(interactionType);
+                            if (interactionValid)
+                            {
+                            }
                         }
                         return;
                     }

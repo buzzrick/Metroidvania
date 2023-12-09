@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Metroidvania.ResourceTypes;
 using System;
+using Metroidvania.Player.Animation;
 using UnityEngine;
 
 namespace Metroidvania.Interactables.WorldObjects
@@ -20,8 +21,14 @@ namespace Metroidvania.Interactables.WorldObjects
             _startingScale = transform.localScale;
         }
 
-        public async UniTask<bool> InteractAsync()
+        public InteractionActionType GetInteractionType() =>
+            ResourceType != null ? ResourceType.InteractionAction : InteractionActionType.None;
+
+        public bool Interact(InteractionActionType interactionActionType)
         {
+            if (interactionActionType != GetInteractionType())
+                return false;
+            
             if (_currentResourceCount > 0)
             {
                 ScaleOverTime(GetScaleForResourceCount(_currentResourceCount), GetScaleForResourceCount(_currentResourceCount - 1), 0.5f, 0.25f).Forget(); //  don't await this

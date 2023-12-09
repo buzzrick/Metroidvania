@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using Metroidvania.Player.Animation;
 using UnityEngine;
 
 namespace Metroidvania.Interactables.WorldObjects
@@ -9,18 +10,25 @@ namespace Metroidvania.Interactables.WorldObjects
     {
         public ObjectSwitchable[] ObjectsToSwitch;
 
-        public async UniTask<bool> InteractAsync()
-        {
-            Debug.Log($"Toggling Switcher {name}");
-            if (ObjectsToSwitch.Length == 0)
-                return false;   
+        public InteractionActionType GetInteractionType() => InteractionActionType.Interact;
 
-            foreach (var switcher in ObjectsToSwitch)
+        public bool Interact(InteractionActionType interactionActionType)
+        {
+            if (interactionActionType == GetInteractionType())
             {
-                switcher.ToggleSwitchState();
+                Debug.Log($"Toggling Switcher {name}");
+                if (ObjectsToSwitch.Length == 0)
+                    return false;
+
+                foreach (var switcher in ObjectsToSwitch)
+                {
+                    switcher.ToggleSwitchState();
+                }
+
+                return true;
             }
 
-            return true;
+            return false;
         }
     }
 }
