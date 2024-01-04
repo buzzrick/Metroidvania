@@ -1,6 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
 using Metroidvania.Interactables;
-using Metroidvania.Interactables.WorldObjects;
 using Metroidvania.Player.Animation;
 using System.Threading;
 using UnityEngine;

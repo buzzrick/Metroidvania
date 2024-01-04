@@ -1,5 +1,4 @@
-using Metroidvania.Interactables.WorldObjects;
-using Metroidvania.ResourceTypes;
+using System;
 using System.Collections;
 using UnityEngine;
 using Zenject;
@@ -21,6 +20,8 @@ namespace Metroidvania.Player.Animation
         private readonly int HashGrounded = Animator.StringToHash("Grounded");
         private float mass = 0.1f;  // Mass of each bone
         public Animator GetAnimator() => _animator;
+
+        public event Action OnAnimationStriked;
 
         [Inject]
         private void Initialise(PlayerAnimationActionsHandler.Factory playerAnimationActionFactory)
@@ -50,11 +51,6 @@ namespace Metroidvania.Player.Animation
             _playerInteractionController.SetAutomatic(true);
         }
 
-        private void Update()
-        {
-            _playerAnimationActionHandler.Tick();   
-        }
-
         public void SetSpeed(float speed)
         {
             _animator.SetFloat(HashSpeed, speed);
@@ -70,6 +66,11 @@ namespace Metroidvania.Player.Animation
             _animator.SetBool(HashGrounded, isGrounded);
         }
 
+        public void Strike()
+        {
+            //Debug.Log("Strike!");
+            OnAnimationStriked?.Invoke();
+        }
 
         public void DisableRagdoll()
         {

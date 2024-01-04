@@ -12,17 +12,20 @@ namespace Metroidvania.Player.Animation
         private PlayerAnimationView _playerAnimationView;
         private Animator _animator;
         private int _actionLayerID;
+        private ActiveAnimatorDetector _actionAnimationDetector;
         private ToolPrefabs _toolPrefabs;
         public readonly int HashActionInteract = Animator.StringToHash("ActionInteract");
         public readonly int HashActionChopDiagonal = Animator.StringToHash("ActionChopDiagonal");
         public readonly int HashActionMining = Animator.StringToHash("ActionMining");
         public readonly int HashActionUnsure = Animator.StringToHash("ActionUnsure");
 
-        private float _timer = 0f;
         private Transform _leftHandTransform;
         private GameObject _pickAxeTool;
         private GameObject _axeTool;
         private bool _isActive = false;
+
+        public event Action OnAnimationComplete;
+        public event Action OnAnimationStrike;
 
         public enum Tool
         {
@@ -34,14 +37,17 @@ namespace Metroidvania.Player.Animation
         public PlayerAnimationActionsHandler(PlayerAnimationView playerAnimationView, ToolPrefabs toolPrefabs)
         {
             _playerAnimationView = playerAnimationView;
+            _playerAnimationView.OnAnimationStriked += HandleOnAnimationStriked;
             _animator = _playerAnimationView.GetAnimator();
             _actionLayerID = _animator.GetLayerIndex("ActionLayer");
+            _actionAnimationDetector = new ActiveAnimatorDetector(_animator, _actionLayerID);
             _toolPrefabs = toolPrefabs;
             //Time.timeScale = 0.3f;
             BuildTools();
             Reset();
         }
 
+        private void HandleOnAnimationStriked() => OnAnimationStrike?.Invoke();
 
         private void BuildTools()
         {
@@ -83,10 +89,13 @@ namespace Metroidvania.Player.Animation
                     break;
             }
 
+
             SetToolForAnimation(interactionType);
 
             await UniTask.WaitUntil(() => !IsActionAnimationRunning());
         }
+
+
 
         public async UniTask RunActionAnimationAsync(ResourceTypeSO resourceTypeSO)
         {
@@ -106,40 +115,31 @@ namespace Metroidvania.Player.Animation
             {
                 case InteractionActionType.MineOre:
                     SetTool(Tool.PickAxe);
-                    RunAnimationForSeconds(1.2f);
+                    RunAnimationToComplete();
                     break;
                 case InteractionActionType.ChopWood:
                     SetTool(Tool.Axe);
-                    RunAnimationForSeconds(1.2f);
+                    RunAnimationToComplete();
                     break;
                 default:
                     SetTool(Tool.None);
-                    RunAnimationForSeconds(1.2f);
+                    RunAnimationToComplete();
                     break;
             }
         }
 
-        private async void RunAnimationForSeconds(float seconds)
+        private async void RunAnimationToComplete()
         {
-            _timer = seconds;
             _animator.SetLayerWeight(_actionLayerID, 1f);
-            await UniTask.WaitUntil(()=>!IsActionAnimationRunning());
+            // wait for the animation to start
+            await UniTask.WaitUntil(() => IsActionAnimationRunning());
+            //  then wait again for it to stop
+            await UniTask.WaitUntil(() => !IsActionAnimationRunning());
             _animator.SetLayerWeight(_actionLayerID, 0);
             SetTool(Tool.None);
         }
 
-        public void Tick()
-        {
-            if (_timer > 0f)
-            {
-                _timer -= Time.deltaTime;
-            }
-        }
-
-        public bool IsActionAnimationRunning()
-        {
-            return _timer > 0f;
-        }
+        public bool IsActionAnimationRunning() => _actionAnimationDetector.IsActionAnimationRunning();
 
         public void Reset()
         {
