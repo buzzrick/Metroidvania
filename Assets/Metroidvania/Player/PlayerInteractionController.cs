@@ -1,6 +1,10 @@
 ﻿using Cysharp.Threading.Tasks;
 using Metroidvania.Interactables;
+using Metroidvania.Interactables.WorldObjects;
 using Metroidvania.Player.Animation;
+using Metroidvania.ResourceTypes;
+using System;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
@@ -17,10 +21,15 @@ namespace Metroidvania.Player
         private CancellationToken _onDestroyToken;
         private CancellationTokenSource _manualStopTokenSource;
         private CancellationToken _manualStopToken;
+        /// <summary>
+        /// The currently active interaction type
+        /// </summary>
+        private InteractionActionType _currentInteractionType = InteractionActionType.None;
 
         public void RegisterPlayerAnimationHandler(PlayerAnimationActionsHandler playerAnimationActionHandler)
         {
             _playerAnimationActionHandler = playerAnimationActionHandler;
+            _playerAnimationActionHandler.OnAnimationStrike += Handle_OnAnimationStrike;
             _onDestroyToken = this.GetCancellationTokenOnDestroy();
             
         }
@@ -29,7 +38,7 @@ namespace Metroidvania.Player
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                AttemptInteraction(true);
+                AttemptInteraction(true).Forget();
             }
         }
 
@@ -88,16 +97,16 @@ namespace Metroidvania.Player
                 if (interactable != null)
                 {
 
-                    Debug.Log($"Attempting to interact with {interactable}");
-                    var interactionType = interactable.GetInteractionType();
-                    if (interactionType != InteractionActionType.None)
+                    //Debug.Log($"Attempting to interact with {interactable}");
+                    _currentInteractionType = interactable.GetInteractionType();
+                    if (_currentInteractionType != InteractionActionType.None)
                     {
-                        await _playerAnimationActionHandler.RunActionAnimationAsync(interactionType);
+                        await _playerAnimationActionHandler.RunActionAnimationAsync(_currentInteractionType);
                         //  if this is a simple interact then perform it directly 
                         //  otherwise the player animation will trigger each interact as the animation collides
-                        if (interactionType == InteractionActionType.Interact)
+                        if (_currentInteractionType == InteractionActionType.Interact)
                         {
-                            bool interactionValid = interactable.Interact(interactionType);
+                            bool interactionValid = interactable.Interact(_currentInteractionType);
                             if (interactionValid)
                             {
                             }
@@ -113,5 +122,46 @@ namespace Metroidvania.Player
             }
         }
 
+        /// <summary>
+        /// Store the valid interactable rewards that have been observed in the interaction region
+        /// </summary>
+        /// <param name="interactionType"></param>
+        /// <param name="colliders"></param>
+        /// <param name="colliderCount"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void StoreInteractableRewards(InteractionActionType interactionType, Collider[] colliders, int colliderCount)
+        {
+            for (int i = 0; i < colliderCount; i++)
+            {
+            }
+        }
+
+        /// <summary>
+        /// triggered when the interaction animation hit's it's "Strike" callback. Here we generate the rewards;
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        private void Handle_OnAnimationStrike()
+        {
+            //  re-calculate the objects that we're facing in case we have rotated or moved elsewhere
+            int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, DetectionRadius, _colliders, LayerMask);
+
+            //Debug.Log($"Found {colliderCount} items");
+            for (int i = 0; i < colliderCount; i++)
+            {
+                Collider collider = _colliders[i];
+                IResourceNode resource = collider.GetComponent<IResourceNode>();
+                if (resource.GetInteractionType() == _currentInteractionType)
+                {
+                    var reward = resource.GetResource();
+                    Debug.Log($"Rewarding {reward.amount} {reward.resourceType} from {collider.name}   (#{i})");
+                }
+            }
+        }
+
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawSphere(transform.position, DetectionRadius);
+        }
     }
 }

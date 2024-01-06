@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Metroidvania.Interactables.WorldObjects
 {
-    public class ResourceNodeInteractable : MonoBehaviour, IPlayerInteractable, IResourceNode
+    public class ResourceNodeInteractable : MonoBehaviour, IResourceNode
     {
         public ResourceTypeSO ResourceType;
         public int MaxResourceCount = 5;
@@ -23,6 +23,11 @@ namespace Metroidvania.Interactables.WorldObjects
 
         public InteractionActionType GetInteractionType() =>
             ResourceType != null ? ResourceType.InteractionAction : InteractionActionType.None;
+
+        public (ResourceTypeSO resourceType, int amount) GetResource()
+        {
+            return (ResourceType, MaxResourceCount);
+        }
 
         public bool Interact(InteractionActionType interactionActionType)
         {

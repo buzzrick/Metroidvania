@@ -8,5 +8,8 @@ namespace Metroidvania.ResourceTypes
     {
         public Sprite ResourceSprite;
         public InteractionActionType InteractionAction;
+
+
+        public override string ToString() => $"Resource({name})";
     }
 }
