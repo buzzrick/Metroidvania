@@ -1,5 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using Metroidvania.Player.Animation;
+﻿using Metroidvania.Player.Animation;
 using UnityEngine;
 
 namespace Metroidvania.Interactables.WorldObjects
@@ -8,7 +7,7 @@ namespace Metroidvania.Interactables.WorldObjects
     [RequireComponent(typeof(Collider))]
     public class ObjectSwitcher : MonoBehaviour, IPlayerInteractable
     {
-        public ObjectSwitchable[] ObjectsToSwitch;
+        public ObjectSwitchableBase[] ObjectsToSwitch;
 
         public InteractionActionType GetInteractionType() => InteractionActionType.Interact;
 

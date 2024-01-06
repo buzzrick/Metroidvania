@@ -26,7 +26,6 @@ namespace Metroidvania.Player.Animation
         [Inject]
         private void Initialise(PlayerAnimationActionsHandler.Factory playerAnimationActionFactory)
         {
-            Debug.Log($"PlayerAnimationView Inject");
             _animator = gameObject.GetComponent<Animator>();
             _playerAnimationActionHandler = playerAnimationActionFactory.Create(this);
             _playerInteractionController.RegisterPlayerAnimationHandler(_playerAnimationActionHandler);

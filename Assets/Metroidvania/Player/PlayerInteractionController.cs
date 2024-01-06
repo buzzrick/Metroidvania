@@ -156,11 +156,16 @@ namespace Metroidvania.Player
                     Debug.Log($"Rewarding {reward.amount} {reward.resourceType} from {collider.name}   (#{i})");
                 }
             }
+
+            //  todo: play "Swish" sound if missed, or connect (chop/clang) sound on connect
         }
 
 
+        private Color _gizmoColor = new Color( 1f, 1f, 1f, 0.2f );
+
         private void OnDrawGizmos()
         {
+            Gizmos.color = _gizmoColor;
             Gizmos.DrawSphere(transform.position, DetectionRadius);
         }
     }

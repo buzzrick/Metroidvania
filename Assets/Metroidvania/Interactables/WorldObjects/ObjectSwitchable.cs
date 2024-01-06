@@ -2,29 +2,17 @@
 
 namespace Metroidvania.Interactables.WorldObjects
 {
-    public class ObjectSwitchable : MonoBehaviour
+    public class ObjectSwitchable : ObjectSwitchableBase
     {
         public Animator SwitchAnimator;
-        public bool DefaultToggleState = false;
-
         private readonly int SwitchHash = Animator.StringToHash("Switch");
 
-        private void Awake()
-        {
-            SetSwitchState(DefaultToggleState);   
-        }
-
-        public void ToggleSwitchState()
-        {
-            SetSwitchState(!GetSwitchState());
-        }
-
-        public bool GetSwitchState()
+        public override bool GetSwitchState()
         {
             return SwitchAnimator.GetBool(SwitchHash);
         }
 
-        public void SetSwitchState(bool state)
+        public override void SetSwitchState(bool state)
         {
             SwitchAnimator.SetBool(SwitchHash, state);
         }
