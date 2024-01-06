@@ -144,97 +144,6 @@ MonoBehaviour:
   ResourceType: {fileID: 11400000, guid: 9ecc0675c82ace34d9026bacfcf7db7f, type: 2}
   MaxResourceCount: 5
   ResetTime: 60
---- !u!1001 &219614456
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 826378913732229828, guid: 14af263ad028e444fab71f6b70bd0130,
-        type: 3}
-      propertyPath: m_Name
-      value: NewMovingPlatform_Vertical
-      objectReference: {fileID: 0}
-    - target: {fileID: 826378913732519652, guid: 14af263ad028e444fab71f6b70bd0130,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 826378913732519652, guid: 14af263ad028e444fab71f6b70bd0130,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4.385
-      objectReference: {fileID: 0}
-    - target: {fileID: 826378913732519652, guid: 14af263ad028e444fab71f6b70bd0130,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.336
-      objectReference: {fileID: 0}
-    - target: {fileID: 826378913732519652, guid: 14af263ad028e444fab71f6b70bd0130,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -11.203
-      objectReference: {fileID: 0}
-    - target: {fileID: 826378913732519652, guid: 14af263ad028e444fab71f6b70bd0130,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 826378913732519652, guid: 14af263ad028e444fab71f6b70bd0130,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 826378913732519652, guid: 14af263ad028e444fab71f6b70bd0130,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 826378913732519652, guid: 14af263ad028e444fab71f6b70bd0130,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 826378913732519652, guid: 14af263ad028e444fab71f6b70bd0130,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 826378913732519652, guid: 14af263ad028e444fab71f6b70bd0130,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 826378913732519652, guid: 14af263ad028e444fab71f6b70bd0130,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1027281616683763800, guid: 14af263ad028e444fab71f6b70bd0130,
-        type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 13400000, guid: 3077de0dc1ba77e4dafefef1b6f1db8a,
-        type: 2}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 826378913732229828, guid: 14af263ad028e444fab71f6b70bd0130,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2043254898}
-    - targetCorrespondingSourceObject: {fileID: 826378913732229828, guid: 14af263ad028e444fab71f6b70bd0130,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2043254897}
-    - targetCorrespondingSourceObject: {fileID: 826378913732229828, guid: 14af263ad028e444fab71f6b70bd0130,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2043254903}
-  m_SourcePrefab: {fileID: 100100000, guid: 14af263ad028e444fab71f6b70bd0130, type: 3}
 --- !u!1 &437013161
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +155,7 @@ GameObject:
   - component: {fileID: 437013164}
   - component: {fileID: 437013163}
   - component: {fileID: 437013165}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LeverSwitch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +214,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectsToSwitch:
   - {fileID: 543641288}
-  - {fileID: 2043254903}
+  - {fileID: 1771664878}
+  - {fileID: 1003984848}
 --- !u!1001 &543641284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -664,7 +574,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 826378913732229828, guid: 14af263ad028e444fab71f6b70bd0130,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1771664876}
+      addedObject: {fileID: 1771664878}
   m_SourcePrefab: {fileID: 100100000, guid: 14af263ad028e444fab71f6b70bd0130, type: 3}
 --- !u!1001 &908109780
 PrefabInstance:
@@ -874,7 +784,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 826378913732229828, guid: 14af263ad028e444fab71f6b70bd0130,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1003984846}
+      addedObject: {fileID: 1003984848}
   m_SourcePrefab: {fileID: 100100000, guid: 14af263ad028e444fab71f6b70bd0130, type: 3}
 --- !u!1 &1003984837 stripped
 GameObject:
@@ -909,27 +819,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1003984846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003984837}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7edc6957dab9ac4797c1c0912ce3839, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Mover: {fileID: 1003984847}
-  TranslationAxis: {x: 1, y: 0, z: 0}
-  TranslationPeriod: 2
-  TranslationSpeed: 1
-  RotationAxis: {x: 0, y: 1, z: 0}
-  RotSpeed: 0
-  OscillationAxis: {x: 0, y: 0, z: 0}
-  OscillationPeriod: 10
-  OscillationSpeed: 10
 --- !u!114 &1003984847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -944,6 +833,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rigidbody: {fileID: 1003984841}
   MoveWithPhysics: 1
+--- !u!114 &1003984848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003984837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba9088b08751a747a6d4d65b23d0a40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultToggleState: 0
+  Mover: {fileID: 1003984847}
+  TranslationAxis: {x: 1, y: 0, z: 0}
+  TranslationPeriod: 2
+  TranslationSpeed: 1
+  RotationAxis: {x: 0, y: 1, z: 0}
+  RotSpeed: 0
+  OscillationAxis: {x: 0, y: 0, z: 0}
+  OscillationPeriod: 10
+  OscillationSpeed: 10
 --- !u!1001 &1012749979
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1571,27 +1482,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1771664876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1771664863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7edc6957dab9ac4797c1c0912ce3839, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Mover: {fileID: 1771664877}
-  TranslationAxis: {x: 0, y: 1, z: 0}
-  TranslationPeriod: 2
-  TranslationSpeed: 1
-  RotationAxis: {x: 0, y: 1, z: 0}
-  RotSpeed: 0
-  OscillationAxis: {x: 0, y: 0, z: 0}
-  OscillationPeriod: 10
-  OscillationSpeed: 10
 --- !u!114 &1771664877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1606,6 +1496,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rigidbody: {fileID: 1771664871}
   MoveWithPhysics: 1
+--- !u!114 &1771664878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771664863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba9088b08751a747a6d4d65b23d0a40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultToggleState: 0
+  Mover: {fileID: 1771664877}
+  TranslationAxis: {x: 0, y: 1, z: 0}
+  TranslationPeriod: 2
+  TranslationSpeed: 1
+  RotationAxis: {x: 0, y: 1, z: 0}
+  RotSpeed: 0
+  OscillationAxis: {x: 0, y: 0, z: 0}
+  OscillationPeriod: 10
+  OscillationSpeed: 10
 --- !u!1 &1849547655
 GameObject:
   m_ObjectHideFlags: 0
@@ -1711,75 +1623,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e06d200a1878d1448c3dbab02e14a0b, type: 3}
---- !u!1 &2043254895 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 826378913732229828, guid: 14af263ad028e444fab71f6b70bd0130,
-    type: 3}
-  m_PrefabInstance: {fileID: 219614456}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2043254897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2043254895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 075ccbe9837b0744985e09ba3f015b9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Rigidbody: {fileID: 2043254898}
-  MoveWithPhysics: 1
---- !u!54 &2043254898
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2043254895}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 0
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &2043254903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2043254895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba9088b08751a747a6d4d65b23d0a40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DefaultToggleState: 0
-  Mover: {fileID: 2043254897}
-  TranslationAxis: {x: 0, y: 1, z: 0}
-  TranslationPeriod: 2
-  TranslationSpeed: 1
-  RotationAxis: {x: 0, y: 1, z: 0}
-  RotSpeed: 0
-  OscillationAxis: {x: 0, y: 0, z: 0}
-  OscillationPeriod: 10
-  OscillationSpeed: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1796,5 +1639,4 @@ SceneRoots:
   - {fileID: 1387936973}
   - {fileID: 1519716076}
   - {fileID: 795576269}
-  - {fileID: 219614456}
   - {fileID: 1003984836}

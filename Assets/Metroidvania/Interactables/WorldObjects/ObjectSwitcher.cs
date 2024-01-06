@@ -11,6 +11,13 @@ namespace Metroidvania.Interactables.WorldObjects
 
         public InteractionActionType GetInteractionType() => InteractionActionType.Interact;
 
+#if UNITY_EDITOR
+        private void Awake()
+        {
+            this.EnsureCorrectInteractableLayer();
+        }
+#endif
+
         public bool Interact(InteractionActionType interactionActionType)
         {
             if (interactionActionType == GetInteractionType())

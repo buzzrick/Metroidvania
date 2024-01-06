@@ -19,6 +19,7 @@ namespace Metroidvania.Interactables.WorldObjects
         {
             _currentResourceCount = MaxResourceCount;
             _startingScale = transform.localScale;
+            this.EnsureCorrectInteractableLayer();
         }
 
         public InteractionActionType GetInteractionType() =>

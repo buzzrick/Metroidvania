@@ -45,11 +45,6 @@ namespace Metroidvania.Interactables.WorldObjects
             }
         }
 
-        public void ToggleSwitchState()
-        {
-            _isMoving = !_isMoving;
-        }
-
         public override bool GetSwitchState()
         {
             return _isMoving;
