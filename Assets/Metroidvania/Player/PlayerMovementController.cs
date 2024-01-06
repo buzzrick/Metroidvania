@@ -62,13 +62,21 @@ namespace Metroidvania.Player
 
         private void Awake()
         {
-            _characterMotor = GetComponent<KinematicCharacterMotor>();
-            _characterMotor.CharacterController = this;
-            Enable(false);
+            FindMotor();
+        }
+
+        private void FindMotor()
+        {
+            if (_characterMotor == null)
+            {
+                _characterMotor = GetComponent<KinematicCharacterMotor>();
+                _characterMotor.CharacterController = this;
+            }
         }
 
         public void Enable(bool isEnabled)
         {
+            FindMotor();
             _isEnabled = isEnabled;
             Motor.enabled = isEnabled;
         }

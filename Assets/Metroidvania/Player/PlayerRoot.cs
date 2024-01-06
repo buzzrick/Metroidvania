@@ -1,5 +1,4 @@
 ﻿using Cysharp.Threading.Tasks;
-using KinematicCharacterController.Examples;
 using Metroidvania.GameCore;
 using Metroidvania.MultiScene;
 using UnityEngine;
@@ -18,10 +17,12 @@ namespace Metroidvania.Player
             if (UseOldPlayerMovementController)
             {
                 _playerMovementOld = GetComponent<PlayerMovementController_NoIK>();
+                _playerMovementOld.Enable(false);
             }
             else
             {
                 _playerMovement = GetComponent<PlayerMovementController>();
+                _playerMovement.Enable(false);
             }
             _playerTriggerDetector = GetComponent<PlayerTriggerDetector>();
         }

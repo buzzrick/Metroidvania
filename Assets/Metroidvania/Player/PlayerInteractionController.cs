@@ -72,7 +72,7 @@ namespace Metroidvania.Player
 
         private async UniTask AttemptInteraction(bool isForced)
         {
-            Debug.Log($"AttemptInteraction");
+            //Debug.Log($"AttemptInteraction");
             int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, DetectionRadius, _colliders, LayerMask);
             for (int i = 0; i < colliderCount; i++)
             {
