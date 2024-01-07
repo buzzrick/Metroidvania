@@ -90,9 +90,11 @@ namespace Metroidvania.Player.Animation
             }
 
 
-            SetToolForAnimation(interactionType);
+            await SetToolForAnimation(interactionType);
 
-            await UniTask.WaitUntil(() => !IsActionAnimationRunning());
+            //  this is redundant now?
+            //await UniTask.WaitUntil(() => !IsActionAnimationRunning());
+            OnAnimationComplete?.Invoke();
         }
 
 
@@ -109,26 +111,26 @@ namespace Metroidvania.Player.Animation
             }
         }
 
-        private void SetToolForAnimation(InteractionActionType interactionAction)
+        private async UniTask SetToolForAnimation(InteractionActionType interactionAction)
         {
             switch (interactionAction)
             {
                 case InteractionActionType.MineOre:
                     SetTool(Tool.PickAxe);
-                    RunAnimationToComplete();
+                    await RunAnimationToComplete();
                     break;
                 case InteractionActionType.ChopWood:
                     SetTool(Tool.Axe);
-                    RunAnimationToComplete();
+                    await RunAnimationToComplete();
                     break;
                 default:
                     SetTool(Tool.None);
-                    RunAnimationToComplete();
+                    await RunAnimationToComplete();
                     break;
             }
         }
 
-        private async void RunAnimationToComplete()
+        private async UniTask RunAnimationToComplete()
         {
             _animator.SetLayerWeight(_actionLayerID, 1f);
             // wait for the animation to start

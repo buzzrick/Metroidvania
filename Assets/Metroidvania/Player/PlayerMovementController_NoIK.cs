@@ -285,7 +285,7 @@ namespace Metroidvania.Player
             _blinker = blinker;
         }
 
-        public async void Teleport(Vector3 position)
+        public void Teleport(Vector3 position)
         {
 
             Debug.Log($"Teleporting to {position}");

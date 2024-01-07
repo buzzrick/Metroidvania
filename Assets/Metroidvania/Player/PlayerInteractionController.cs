@@ -2,9 +2,6 @@
 using Metroidvania.Interactables;
 using Metroidvania.Interactables.WorldObjects;
 using Metroidvania.Player.Animation;
-using Metroidvania.ResourceTypes;
-using System;
-using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
@@ -25,14 +22,19 @@ namespace Metroidvania.Player
         /// The currently active interaction type
         /// </summary>
         private InteractionActionType _currentInteractionType = InteractionActionType.None;
+        private IPlayerInteractable _currentInteractable = null;
+        private Color _gizmoColor = new Color(1f, 1f, 1f, 0.2f);
 
         public void RegisterPlayerAnimationHandler(PlayerAnimationActionsHandler playerAnimationActionHandler)
         {
             _playerAnimationActionHandler = playerAnimationActionHandler;
             _playerAnimationActionHandler.OnAnimationStrike += Handle_OnAnimationStrike;
+            _playerAnimationActionHandler.OnAnimationComplete += Handle_OnAnimationComplete;
+
             _onDestroyToken = this.GetCancellationTokenOnDestroy();
             
         }
+
 
         private void Update()
         {
@@ -81,6 +83,7 @@ namespace Metroidvania.Player
 
         private async UniTask AttemptInteraction(bool isForced)
         {
+            bool interactableFound = false;
             //Debug.Log($"AttemptInteraction");
             int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, DetectionRadius, _colliders, LayerMask);
             for (int i = 0; i < colliderCount; i++)
@@ -96,72 +99,87 @@ namespace Metroidvania.Player
 
                 if (interactable != null)
                 {
-
-                    //Debug.Log($"Attempting to interact with {interactable}");
+                    interactableFound = true;
                     _currentInteractionType = interactable.GetInteractionType();
+                    //Debug.Log($"Attempting to interact with {collider.name} (Type={_currentInteractionType})");
                     if (_currentInteractionType != InteractionActionType.None)
                     {
-                        await _playerAnimationActionHandler.RunActionAnimationAsync(_currentInteractionType);
-                        //  if this is a simple interact then perform it directly 
-                        //  otherwise the player animation will trigger each interact as the animation collides
                         if (_currentInteractionType == InteractionActionType.Interact)
                         {
-                            bool interactionValid = interactable.Interact(_currentInteractionType);
-                            if (interactionValid)
-                            {
-                            }
+                            _currentInteractable = interactable;
+                            //Debug.Log($"Found {interactable} to interact with");
                         }
+                        await _playerAnimationActionHandler.RunActionAnimationAsync(_currentInteractionType);
+                        //  if this is a simple interact then remember the interactable so that we can trigger it later
                         return;
                     }
                 }
             }
-            if (isForced)
+            if (isForced || interactableFound)
             {
-                Debug.Log($"No interactable found");
+                //  if interactableFound == true, then we don't know how to interact with it, so also play the "shrug" animation
+                //Debug.Log($"No interactable found");
                 await _playerAnimationActionHandler.RunActionAnimationAsync(InteractionActionType.None);
             }
         }
 
         /// <summary>
-        /// Store the valid interactable rewards that have been observed in the interaction region
+        /// triggered when the interaction animation hit's it's "Strike" callback. Here we generate the rewards
         /// </summary>
-        /// <param name="interactionType"></param>
-        /// <param name="colliders"></param>
-        /// <param name="colliderCount"></param>
-        /// <exception cref="NotImplementedException"></exception>
-        private void StoreInteractableRewards(InteractionActionType interactionType, Collider[] colliders, int colliderCount)
-        {
-            for (int i = 0; i < colliderCount; i++)
-            {
-            }
-        }
-
-        /// <summary>
-        /// triggered when the interaction animation hit's it's "Strike" callback. Here we generate the rewards;
-        /// </summary>
-        /// <exception cref="NotImplementedException"></exception>
         private void Handle_OnAnimationStrike()
         {
-            //  re-calculate the objects that we're facing in case we have rotated or moved elsewhere
-            int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, DetectionRadius, _colliders, LayerMask);
+            Debug.Log($"OnAnimationStrike");
+            DetectRewards();
+        }
 
-            //Debug.Log($"Found {colliderCount} items");
-            for (int i = 0; i < colliderCount; i++)
-            {
-                Collider collider = _colliders[i];
-                IResourceNode resource = collider.GetComponent<IResourceNode>();
-                if (resource.GetInteractionType() == _currentInteractionType)
-                {
-                    var reward = resource.GetResource();
-                    Debug.Log($"Rewarding {reward.amount} {reward.resourceType} from {collider.name}   (#{i})");
-                }
-            }
-
-            //  todo: play "Swish" sound if missed, or connect (chop/clang) sound on connect
+        private void Handle_OnAnimationComplete()
+        {
+            Debug.Log($"OnAnimationComplete");
+            DetectRewards();
         }
 
 
-        private Color _gizmoColor = new Color( 1f, 1f, 1f, 0.2f );
+        private void DetectRewards()
+        {
+            if (_currentInteractionType == InteractionActionType.None)
+            {
+                Debug.Log($"No Interactable");
+                return;
+            }
+            else if(_currentInteractionType == InteractionActionType.Interact)
+            {
+                Debug.Log($"Simple Interact with {(_currentInteractable == null ? "NULL" : _currentInteractable.ToString())}");
+                if (_currentInteractable != null)
+                {
+                    _currentInteractable.Interact(_currentInteractionType);
+                }
+            }
+            else
+            {
+                Debug.Log($"Resource Interactable");
+                //  re-calculate the objects that we're facing in case we have rotated or moved elsewhere
+                int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, DetectionRadius, _colliders, LayerMask);
+
+                //Debug.Log($"Found {colliderCount} items");
+                for (int i = 0; i < colliderCount; i++)
+                {
+                    Collider collider = _colliders[i];
+                    IResourceNode resource = collider.GetComponent<IResourceNode>();
+                    if (resource.GetInteractionType() == _currentInteractionType)
+                    {
+                        var reward = resource.GetResource();
+                        Debug.Log($"Rewarding {reward.amount} {reward.resourceType} from {collider.name}   (#{i})");
+                    }
+                }
+
+                //  todo: play "Swish" sound if missed, or connect (chop/clang) sound on connect etc
+
+            }
+
+            _currentInteractionType = InteractionActionType.None;
+            _currentInteractable = null;
+        }
+
 
         private void OnDrawGizmos()
         {
