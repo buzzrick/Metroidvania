@@ -5,7 +5,9 @@ namespace Metroidvania.Interactables
 {
     public interface IPlayerInteractable
     {
+        bool IsInteractionEnabled { get; }
+
         InteractionActionType GetInteractionType();
-        bool Interact(InteractionActionType interactionActionType);
+        UniTask<bool> Interact(InteractionActionType interactionActionType);
     }
 }

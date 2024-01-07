@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Metroidvania.Interactables.WorldObjects
@@ -8,16 +9,18 @@ namespace Metroidvania.Interactables.WorldObjects
 
         private void Awake()
         {
-            SetSwitchState(DefaultToggleState);
+            SetSwitchState(DefaultToggleState).Forget();
         }
 
-        public void ToggleSwitchState()
+        public async UniTask ToggleSwitchState()
         {
-            SetSwitchState(!GetSwitchState());
+            await SetSwitchState(!GetSwitchState());
         }
 
         public abstract bool GetSwitchState();
 
-        public abstract void SetSwitchState(bool state);
+        public abstract UniTask SetSwitchState(bool state);
+
+        public virtual bool IsSwitchAvailable => true;
     }
 }

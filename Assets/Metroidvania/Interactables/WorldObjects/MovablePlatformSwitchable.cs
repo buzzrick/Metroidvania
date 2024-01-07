@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using KinematicCharacterController;
 using UnityEngine;
 
@@ -50,9 +51,10 @@ namespace Metroidvania.Interactables.WorldObjects
             return _isMoving;
         }
 
-        public override void SetSwitchState(bool state)
+        public override UniTask SetSwitchState(bool state)
         {
             _isMoving = state;
+            return UniTask.CompletedTask;
         }
     }
 }

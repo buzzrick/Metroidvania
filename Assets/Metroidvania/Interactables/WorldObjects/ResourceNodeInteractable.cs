@@ -15,6 +15,9 @@ namespace Metroidvania.Interactables.WorldObjects
         private Vector3 _startingScale;
         private float _resetTimer;
 
+        //  todo: detect when there is no more resources to harvest
+        public bool IsInteractionEnabled => true;
+
         private void Awake()
         {
             _currentResourceCount = MaxResourceCount;
@@ -30,19 +33,19 @@ namespace Metroidvania.Interactables.WorldObjects
             return (ResourceType, MaxResourceCount);
         }
 
-        public bool Interact(InteractionActionType interactionActionType)
+        public UniTask<bool> Interact(InteractionActionType interactionActionType)
         {
             if (interactionActionType != GetInteractionType())
-                return false;
+                return new(false);
             
             if (_currentResourceCount > 0)
             {
                 ScaleOverTime(GetScaleForResourceCount(_currentResourceCount), GetScaleForResourceCount(_currentResourceCount - 1), 0.5f, 0.25f).Forget(); //  don't await this
                 _currentResourceCount--;
                 _resetTimer = ResetTime;
-                return true;
+                return new (true);
             }
-            return false;
+            return new (false);
         }
 
         private float GetScaleForResourceCount(int resourceCount)
