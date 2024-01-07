@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ResourceSprite: {fileID: 0}
   InteractionAction: 1
+  HarvestSound: {fileID: 8300000, guid: c9673359731ec70419e8485e7285b07c, type: 3}

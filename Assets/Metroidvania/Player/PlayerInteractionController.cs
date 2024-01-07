@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Metroidvania.Player
 {
+    [RequireComponent(typeof(AudioSource))]
     public class PlayerInteractionController : MonoBehaviour
     {
         public float DetectionRadius;
@@ -24,6 +25,13 @@ namespace Metroidvania.Player
         private InteractionActionType _currentInteractionType = InteractionActionType.None;
         private IPlayerInteractable _currentInteractable = null;
         private Color _gizmoColor = new Color(1f, 1f, 1f, 0.2f);
+        private AudioSource _audioSource;
+        public AudioClip SwishSound;
+
+        private void Awake()
+        {
+            _audioSource = GetComponent<AudioSource>();
+        }
 
         public void RegisterPlayerAnimationHandler(PlayerAnimationActionsHandler playerAnimationActionHandler)
         {
@@ -159,7 +167,7 @@ namespace Metroidvania.Player
                 Debug.Log($"Resource Interactable");
                 //  re-calculate the objects that we're facing in case we have rotated or moved elsewhere
                 int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, DetectionRadius, _colliders, LayerMask);
-
+                bool correctResourceFound = false;
                 //Debug.Log($"Found {colliderCount} items");
                 for (int i = 0; i < colliderCount; i++)
                 {
@@ -168,12 +176,20 @@ namespace Metroidvania.Player
                     if (resource.GetInteractionType() == _currentInteractionType)
                     {
                         var reward = resource.GetResource();
+                        if (reward.resourceType.HarvestSound != null)
+                        {
+                            _audioSource.PlayOneShot(reward.resourceType.HarvestSound);
+                        }
+                        correctResourceFound = true;
                         Debug.Log($"Rewarding {reward.amount} {reward.resourceType} from {collider.name}   (#{i})");
                     }
                 }
 
                 //  todo: play "Swish" sound if missed, or connect (chop/clang) sound on connect etc
-
+                if (!correctResourceFound)
+                {
+                    _audioSource.PlayOneShot(SwishSound);
+                }
             }
 
             _currentInteractionType = InteractionActionType.None;

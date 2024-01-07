@@ -8,7 +8,7 @@ namespace Metroidvania.ResourceTypes
     {
         public Sprite ResourceSprite;
         public InteractionActionType InteractionAction;
-
+        public AudioClip HarvestSound;
 
         public override string ToString() => $"Resource({name})";
     }

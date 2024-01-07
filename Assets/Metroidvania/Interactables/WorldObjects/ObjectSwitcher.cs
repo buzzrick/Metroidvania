@@ -11,6 +11,8 @@ namespace Metroidvania.Interactables.WorldObjects
         public ObjectSwitchableBase[] ObjectsToSwitch;
         private int _switchableCount;
         private UniTask[] _animations;
+        public AudioClip InteractionAudioClip;
+        public AudioSource? _audioSource;
 
         public InteractionActionType GetInteractionType() => InteractionActionType.Interact;
 
@@ -19,6 +21,7 @@ namespace Metroidvania.Interactables.WorldObjects
             this.EnsureCorrectInteractableLayer();
             _switchableCount = ObjectsToSwitch.Length;
             _animations = new UniTask[_switchableCount];
+            _audioSource = GetComponent<AudioSource>();
         }
 
         public async UniTask<bool> Interact(InteractionActionType interactionActionType)
@@ -38,6 +41,10 @@ namespace Metroidvania.Interactables.WorldObjects
                     {
                         _animations[i] = UniTask.CompletedTask;
                     }
+                }
+                if (InteractionAudioClip  != null)
+                {
+                    _audioSource?.PlayOneShot(InteractionAudioClip);
                 }
                 await UniTask.WhenAll(_animations);
             }
