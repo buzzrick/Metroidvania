@@ -1,7 +1,7 @@
 using Metroidvania.Interactables.ResourcePickups;
 using Metroidvania.Player.Inventory;
 using UnityEngine;
-using UnityEngine.UI;
+using Buzzrick.UnityLibs;
 using Zenject;
 
 namespace Metroidvania.Player
@@ -24,7 +24,7 @@ namespace Metroidvania.Player
 
         private void OnTriggerEnter(Collider other)
         {
-            if (IsInLayerMask(other.gameObject.layer, _layerMask))
+            if (_layerMask.IsInLayerMask(other.gameObject.layer))
             {
                 if (other.TryGetComponent<ResourcePickup>(out var pickup))
                 {
@@ -35,10 +35,5 @@ namespace Metroidvania.Player
             }
         }
 
-        private bool IsInLayerMask(int objectLayer, LayerMask layerMask)
-        {
-            //  calculating layermask: https://forum.unity.com/threads/raycast-layermask-parameter.944194/#post-6161542
-            return (layerMask & (1 << objectLayer)) != 0;
-        }
     }
 }
