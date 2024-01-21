@@ -3,6 +3,8 @@ using Metroidvania.Debugging;
 using Metroidvania.Lighting;
 using Metroidvania.MultiScene;
 using Metroidvania.Player;
+using Metroidvania.ResourceTypes;
+using Metroidvania.UI;
 using Zenject;
 
 namespace Metroidvania.GameCore
@@ -10,6 +12,7 @@ namespace Metroidvania.GameCore
     public class GameCoreInstaller : MonoInstaller
     {
         public CameraController CameraControllerInstance;
+        public ResourceTypeDB ResourceTypeDB;
 
         public override void InstallBindings()
         {
@@ -20,6 +23,9 @@ namespace Metroidvania.GameCore
             Container.Bind<PlayerCore>().FromNew().AsSingle();
             Container.Bind<DebuggingCore>().FromNew().AsSingle();
             Container.Bind<GameCore>().FromNew().AsSingle().NonLazy();
+            Container.Bind<UICore>().FromNew().AsSingle().NonLazy();
+
+            Container.BindInstance(ResourceTypeDB).AsSingle();
         }
     } 
 }

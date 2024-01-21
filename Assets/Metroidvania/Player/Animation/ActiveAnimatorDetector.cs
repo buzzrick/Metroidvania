@@ -18,7 +18,6 @@ namespace Metroidvania.Player.Animation
         }
 
 
-
         /// <summary>
         /// Detect if an action animation is playing
         /// </summary>

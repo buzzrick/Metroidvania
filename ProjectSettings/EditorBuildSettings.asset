@@ -38,6 +38,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PlayerScene.unity
     guid: f068845e6f1bca741ae64d5d344349ee
+  - enabled: 1
+    path: Assets/Metroidvania/UI/UIView.unity
+    guid: 83839619e3fd2e645b29bb91eefbb64c
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 5e8d29354a0c1454a8d6b187bb144398,
       type: 2}

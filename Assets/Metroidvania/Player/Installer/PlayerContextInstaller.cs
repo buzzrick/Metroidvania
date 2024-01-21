@@ -1,4 +1,5 @@
 using Metroidvania.Player.Animation;
+using Metroidvania.Player.Inventory;
 using Zenject;
 
 namespace Metroidvania.Player.Installer
@@ -13,6 +14,7 @@ namespace Metroidvania.Player.Installer
         {
             Container.BindInstance(PlayerAnimationView).AsSingle();
             Container.BindInstance(ToolPrefabs).AsSingle();
+            Container.Bind<PlayerInventoryManager>().AsSingle();
 
             Container.BindFactory<PlayerAnimationView, PlayerAnimationActionsHandler, PlayerAnimationActionsHandler.Factory>().AsSingle();
         }

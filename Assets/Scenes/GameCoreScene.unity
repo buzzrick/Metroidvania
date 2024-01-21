@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraControllerInstance: {fileID: 871331769}
+  ResourceTypeDB: {fileID: 11400000, guid: da1432b6ceb8cab4ea9ce0b4cc2e5eb1, type: 2}
 --- !u!1 &401791801
 GameObject:
   m_ObjectHideFlags: 3
