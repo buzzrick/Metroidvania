@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Wood
   m_EditorClassIdentifier: 
   ResourceSprite: {fileID: 0}
+  ResourcePickupPrefab: {fileID: 5013122573062885998, guid: 800380db38239674c8c2a2478af2d8b9,
+    type: 3}
   InteractionAction: 2
   HarvestSound: {fileID: 8300000, guid: e8c7d13f4f340284c99079cce7804fc3, type: 3}

@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Stone
   m_EditorClassIdentifier: 
   ResourceSprite: {fileID: 0}
+  ResourcePickupPrefab: {fileID: 8157950103990092827, guid: 62f979295b2f2f342bb5cf71d93e1394,
+    type: 3}
   InteractionAction: 1
   HarvestSound: {fileID: 8300000, guid: c9673359731ec70419e8485e7285b07c, type: 3}

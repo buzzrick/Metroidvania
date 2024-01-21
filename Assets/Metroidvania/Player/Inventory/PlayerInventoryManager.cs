@@ -1,4 +1,5 @@
 using Metroidvania.ResourceTypes;
+using System;
 using System.Collections.Generic;
 using Zenject;
 
@@ -48,6 +49,37 @@ namespace Metroidvania.Player.Inventory
             return newItem;
         }
 
+
+        private InventoryItem GetOrCreateInventoryItem(ResourceTypeSO resourceType)
+        {
+            foreach (InventoryItem item in InventoryList)
+            {
+                if (item.ResourceType == resourceType)
+                {
+                    return item;
+                }
+            }
+            var newItem = new InventoryItem
+            {
+                ResourceTypeID = resourceType.name,
+                ResourceType = resourceType,
+                ItemCount = 0
+            };
+            InventoryList.Add(newItem);
+            return newItem;
+        }
+
+        public void IncrementInventory(ResourceTypeSO resourceType, int amount)
+        {
+            GetOrCreateInventoryItem(resourceType).ItemCount += amount;
+        }
+
+        public void IncrementInventory(string resourceTypeID, int amount)
+        {
+            GetOrCreateInventoryItem(resourceTypeID).ItemCount += amount;
+        }
     }
+
+
 
 }

@@ -1,3 +1,4 @@
+using Metroidvania.Interactables.ResourcePickups;
 using Metroidvania.Player.Animation;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace Metroidvania.ResourceTypes
     public class ResourceTypeSO : ScriptableObject
     {
         public Sprite ResourceSprite;
+        public ResourcePickup ResourcePickupPrefab;
         public InteractionActionType InteractionAction;
         public AudioClip HarvestSound;
 
