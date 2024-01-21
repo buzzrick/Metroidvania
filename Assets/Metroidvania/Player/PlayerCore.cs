@@ -19,9 +19,15 @@ namespace Metroidvania.Player
         {
             Debug.Log($"Starting PlayerCore");
             _playerRoot = await _sceneLoader.LoadUISceneAsync<PlayerRoot>("PlayerScene", false);
-            await _playerRoot.StartCore();
         }
 
+        
+
         public PlayerRoot GetPlayerRoot() => _playerRoot;
+
+        internal async UniTask StartPlayer()
+        {
+            await _playerRoot.StartCore();
+        }
     }
 }

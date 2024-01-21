@@ -42,6 +42,9 @@ namespace Metroidvania.GameCore
             await _sceneAnchorCore.StartCore();
             await _cameraController.StartCore();
             await _debuggingCore.StartCore();
+
+            //  now that the entire scene should be loaded, start the player
+            await _playerCore.StartPlayer();    
             Debug.Log($"Starting GameCore Complete");
         }
     }
