@@ -42,8 +42,8 @@ namespace Metroidvania.GameCore
             Debug.Log($"Starting GameCore");
             await _sceneLoader.StartCore();
             await _lightingCore.StartCore();
-            await _uiCore.StartCore();
             await _playerCore.StartCore();
+            await _uiCore.StartCore();  //  UI Core requires GameCore loaded
             await _sceneAnchorCore.StartCore();
             await _cameraController.StartCore();
             await _debuggingCore.StartCore();

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8177f5fd0010b142808ed5f01ac5331, type: 3}
   m_Name: Stone
   m_EditorClassIdentifier: 
-  ResourceSprite: {fileID: 0}
+  ResourceSprite: {fileID: 21300000, guid: 51fffbb673c392041902048b351c3a88, type: 3}
   ResourcePickupPrefab: {fileID: 8157950103990092827, guid: 62f979295b2f2f342bb5cf71d93e1394,
     type: 3}
   InteractionAction: 1

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8177f5fd0010b142808ed5f01ac5331, type: 3}
   m_Name: Wood
   m_EditorClassIdentifier: 
-  ResourceSprite: {fileID: 0}
+  ResourceSprite: {fileID: 21300000, guid: 4433cc348530a1145bdf291eb50649ec, type: 3}
   ResourcePickupPrefab: {fileID: 5013122573062885998, guid: 800380db38239674c8c2a2478af2d8b9,
     type: 3}
   InteractionAction: 2

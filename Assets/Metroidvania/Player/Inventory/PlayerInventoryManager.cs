@@ -8,38 +8,34 @@ namespace Metroidvania.Player.Inventory
 
     public class PlayerInventoryManager 
     {
-        public List<InventoryItem> InventoryList = new();
+        public List<InventoryItemAmount> InventoryList = new();
         private ResourceTypeDB _resourceTypeDB;
+
+        public event Action<InventoryItemAmount> OnInventoryAmountChanged;
 
         [Inject]
         private void Initialise(ResourceTypeDB resourceTypeDB)
         {
             _resourceTypeDB = resourceTypeDB;
         }
-        
-        public class InventoryItem
-        {
-            public string ResourceTypeID;
-            public ResourceTypeSO ResourceType;
-            public int ItemCount;
-        }
+
 
 
         public int GetInventoryCount(string resourceTypeID)
         {
-            return GetOrCreateInventoryItem(resourceTypeID).ItemCount;
+            return GetOrCreateInventoryItemAmount(resourceTypeID).ItemCount;
         }
 
-        private InventoryItem GetOrCreateInventoryItem(string resourceTypeID)
+        private InventoryItemAmount GetOrCreateInventoryItemAmount(string resourceTypeID)
         {
-            foreach (InventoryItem item in InventoryList)
+            foreach (InventoryItemAmount item in InventoryList)
             {
                 if (item.ResourceTypeID == resourceTypeID)
                 {
                     return item;
                 }
             }
-            var newItem = new InventoryItem
+            var newItem = new InventoryItemAmount
             {
                 ResourceTypeID = resourceTypeID,
                 ResourceType = _resourceTypeDB.GetResourceType(resourceTypeID),
@@ -50,16 +46,16 @@ namespace Metroidvania.Player.Inventory
         }
 
 
-        private InventoryItem GetOrCreateInventoryItem(ResourceTypeSO resourceType)
+        private InventoryItemAmount GetOrCreateInventoryItemAmount(ResourceTypeSO resourceType)
         {
-            foreach (InventoryItem item in InventoryList)
+            foreach (InventoryItemAmount item in InventoryList)
             {
                 if (item.ResourceType == resourceType)
                 {
                     return item;
                 }
             }
-            var newItem = new InventoryItem
+            var newItem = new InventoryItemAmount
             {
                 ResourceTypeID = resourceType.name,
                 ResourceType = resourceType,
@@ -71,12 +67,24 @@ namespace Metroidvania.Player.Inventory
 
         public void IncrementInventory(ResourceTypeSO resourceType, int amount)
         {
-            GetOrCreateInventoryItem(resourceType).ItemCount += amount;
+            InventoryItemAmount inventoryItem = GetOrCreateInventoryItemAmount(resourceType);
+            inventoryItem.ItemCount += amount;
+            OnInventoryAmountChanged?.Invoke(inventoryItem);
         }
 
         public void IncrementInventory(string resourceTypeID, int amount)
         {
-            GetOrCreateInventoryItem(resourceTypeID).ItemCount += amount;
+            InventoryItemAmount inventoryItem = GetOrCreateInventoryItemAmount(resourceTypeID);
+            inventoryItem.ItemCount += amount;
+            OnInventoryAmountChanged?.Invoke(inventoryItem);
+        }
+
+
+        public class InventoryItemAmount
+        {
+            public string ResourceTypeID;
+            public ResourceTypeSO ResourceType;
+            public int ItemCount;
         }
     }
 
