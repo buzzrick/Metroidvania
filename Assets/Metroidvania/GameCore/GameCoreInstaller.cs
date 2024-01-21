@@ -1,5 +1,6 @@
 using Metroidvania.Cameras;
 using Metroidvania.Debugging;
+using Metroidvania.Interactables.ResourcePickups;
 using Metroidvania.Lighting;
 using Metroidvania.MultiScene;
 using Metroidvania.Player;
@@ -24,6 +25,7 @@ namespace Metroidvania.GameCore
             Container.Bind<DebuggingCore>().FromNew().AsSingle();
             Container.Bind<GameCore>().FromNew().AsSingle().NonLazy();
             Container.Bind<UICore>().FromNew().AsSingle().NonLazy();
+            Container.Bind<ResourcePickupGenerator>().FromNew().AsSingle().NonLazy();
 
             Container.BindInstance(ResourceTypeDB).AsSingle();
         }

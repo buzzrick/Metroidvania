@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17b95f5fe7415fd40a8a351d46f7f814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rigidBody: {fileID: 8901432752360501349}
   ResourceType: {fileID: 11400000, guid: 9ecc0675c82ace34d9026bacfcf7db7f, type: 2}
   Amount: 5
 --- !u!54 &8901432752360501349

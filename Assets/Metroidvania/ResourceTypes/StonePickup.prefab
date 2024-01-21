@@ -147,5 +147,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17b95f5fe7415fd40a8a351d46f7f814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rigidBody: {fileID: 2902437453055796943}
   ResourceType: {fileID: 11400000, guid: 3ef35fce1dd1f444a99bf029737906c0, type: 2}
-  Amount: 0
+  Amount: 5

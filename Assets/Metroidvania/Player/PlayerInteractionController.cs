@@ -1,9 +1,11 @@
 ﻿using Cysharp.Threading.Tasks;
 using Metroidvania.Interactables;
+using Metroidvania.Interactables.ResourcePickups;
 using Metroidvania.Interactables.WorldObjects;
 using Metroidvania.Player.Animation;
 using System.Threading;
 using UnityEngine;
+using Zenject;
 
 namespace Metroidvania.Player
 {
@@ -27,6 +29,21 @@ namespace Metroidvania.Player
         private Color _gizmoColor = new Color(1f, 1f, 1f, 0.2f);
         private AudioSource _audioSource;
         public AudioClip SwishSound;
+        private ResourcePickupGenerator _resourceGenerator;
+        /// <summary>
+        /// Used to calculate where spawned ResourcePickups are impulsed towards
+        /// </summary>
+        [SerializeField] private Transform _parentTransform;
+
+        [Inject]
+        private void Initialise(ResourcePickupGenerator resourceGenerator)
+        {
+            _resourceGenerator = resourceGenerator;
+            if (_parentTransform == null) 
+            {
+                _parentTransform = transform.parent.transform;
+            }
+        }
 
         private void Awake()
         {
@@ -181,7 +198,14 @@ namespace Metroidvania.Player
                             _audioSource.PlayOneShot(reward.resourceType.HarvestSound);
                         }
                         correctResourceFound = true;
-                        Debug.Log($"Rewarding {reward.amount} {reward.resourceType} from {collider.name}   (#{i})");
+                        //Debug.Log($"Generating {reward.amount} {reward.resourceType} from {collider.name}   (#{i})");
+                        
+                        _resourceGenerator.GeneratePickup(
+                            reward.resourceType, 
+                            reward.amount, 
+                            collider.transform,
+                            transform.position,  // collider.ClosestPoint(transform.position),  // ClosestPoint requires Convex mesh collider, so just use the interaction position
+                            _parentTransform.position);
                     }
                 }
 
