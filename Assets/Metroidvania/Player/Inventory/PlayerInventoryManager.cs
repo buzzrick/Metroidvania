@@ -1,24 +1,55 @@
+using Cysharp.Threading.Tasks;
 using Metroidvania.ResourceTypes;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
 using Zenject;
 
 namespace Metroidvania.Player.Inventory
 {
-
-    public class PlayerInventoryManager 
+    [Serializable]
+    public class PlayerInventoryManager
     {
-        public List<InventoryItemAmount> InventoryList = new();
+        [SerializeField] private List<InventoryItemAmount> InventoryList = new();
         private ResourceTypeDB _resourceTypeDB;
 
         public event Action<InventoryItemAmount> OnInventoryAmountChanged;
+
+        private static string SavePath;
 
         [Inject]
         private void Initialise(ResourceTypeDB resourceTypeDB)
         {
             _resourceTypeDB = resourceTypeDB;
+            SavePath = Path.Combine(Application.persistentDataPath, "PlayerInventory.json");
         }
 
+        public async UniTask LoadData()
+        {
+            if (File.Exists(SavePath))
+            {
+                Debug.Log($"Loading PlayerInventory from {SavePath}");
+                JsonUtility.FromJsonOverwrite(await File.ReadAllTextAsync(SavePath), this);
+
+                if (InventoryList == null)
+                {
+                    InventoryList = new();
+                }
+
+                /// wire back up the ResourceTypeSOs
+                foreach (var item in InventoryList)
+                {
+                    item.ResourceType = _resourceTypeDB.GetResourceType(item.ResourceTypeID);
+                }
+            }
+        }
+
+        public async UniTask SaveData()
+        {
+            Debug.Log($"Writing PlayerInventory to {SavePath}");
+            await File.WriteAllTextAsync(SavePath, JsonUtility.ToJson(this));
+        }
 
 
         public int GetInventoryCount(string resourceTypeID)
@@ -80,10 +111,11 @@ namespace Metroidvania.Player.Inventory
         }
 
 
+        [Serializable]
         public class InventoryItemAmount
         {
             public string ResourceTypeID;
-            public ResourceTypeSO ResourceType;
+            [NonSerialized] public ResourceTypeSO ResourceType;
             public int ItemCount;
         }
     }

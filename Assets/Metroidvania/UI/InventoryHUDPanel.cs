@@ -47,7 +47,6 @@ namespace Metroidvania.UI
             }
         }
 
-
         private void OnEnable()
         {
             _playerInventoryManager.OnInventoryAmountChanged += Handle_OnInventoryAmountChanged; ;

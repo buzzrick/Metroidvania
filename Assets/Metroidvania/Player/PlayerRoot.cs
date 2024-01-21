@@ -1,7 +1,9 @@
 ﻿using Cysharp.Threading.Tasks;
 using Metroidvania.GameCore;
 using Metroidvania.MultiScene;
+using Metroidvania.Player.Inventory;
 using UnityEngine;
+using Zenject;
 
 namespace Metroidvania.Player
 {
@@ -11,6 +13,8 @@ namespace Metroidvania.Player
         PlayerTriggerDetector _playerTriggerDetector;
         public bool UseOldPlayerMovementController = false;
         private PlayerMovementController _playerMovement;
+
+        [Inject] PlayerInventoryManager _playerInventoryManager;
 
         private void Awake()
         {
@@ -27,6 +31,8 @@ namespace Metroidvania.Player
             _playerTriggerDetector = GetComponent<PlayerTriggerDetector>();
         }
 
+        public bool IsStarted { get; private set; }
+
         private void Start()
         {
             if (UseOldPlayerMovementController)
@@ -37,6 +43,17 @@ namespace Metroidvania.Player
             {
                 _playerMovement.Enable(false);
             }
+        }
+
+        public async UniTask LoadAllData()
+        {
+            await _playerInventoryManager.LoadData();
+        }
+
+
+        public async UniTask SaveAllData()
+        {
+            await _playerInventoryManager.SaveData();
         }
 
         public void SetWorldPosition(Vector3 position)
@@ -62,14 +79,17 @@ namespace Metroidvania.Player
             }
             else
             {
-                await UniTask.Delay(1);
+                //await UniTask.Delay(1);
                 _playerMovement.Enable(true);
             }
+            await _playerInventoryManager.LoadData();
+            IsStarted = true;
             //return UniTask.CompletedTask;
         }
 
         public UniTask CleanupSelf()
         {
+            IsStarted = false;
             return UniTask.CompletedTask;
         }
     }

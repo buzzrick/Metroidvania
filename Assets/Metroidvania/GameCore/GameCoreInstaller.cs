@@ -1,3 +1,4 @@
+using Buzzrick.UnityLibs.Attributes;
 using Metroidvania.Cameras;
 using Metroidvania.Debugging;
 using Metroidvania.Interactables.ResourcePickups;
@@ -6,14 +7,16 @@ using Metroidvania.MultiScene;
 using Metroidvania.Player;
 using Metroidvania.ResourceTypes;
 using Metroidvania.UI;
+using UnityEngine;
 using Zenject;
 
 namespace Metroidvania.GameCore
 {
     public class GameCoreInstaller : MonoInstaller
     {
-        public CameraController CameraControllerInstance;
-        public ResourceTypeDB ResourceTypeDB;
+        [SerializeField, RequiredField] private CameraController CameraControllerInstance;
+        [SerializeField, RequiredField] private ResourceTypeDB ResourceTypeDB;
+        [SerializeField, RequiredField] private GameLifecycleManager GameLifecycleManager;
 
         public override void InstallBindings()
         {
@@ -27,6 +30,7 @@ namespace Metroidvania.GameCore
             Container.Bind<UICore>().FromNew().AsSingle().NonLazy();
             Container.Bind<ResourcePickupGenerator>().FromNew().AsSingle().NonLazy();
 
+            Container.BindInstance(GameLifecycleManager).AsSingle();
             Container.BindInstance(ResourceTypeDB).AsSingle();
         }
     } 
