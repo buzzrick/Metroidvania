@@ -98,7 +98,6 @@ namespace Metroidvania.Player
         {
             while (!token.IsCancellationRequested)
             {
-
                 await AttemptInteraction(false);
                 await UniTask.Delay(500);
                 await UniTask.Yield();
@@ -122,7 +121,7 @@ namespace Metroidvania.Player
                         return;
                 }
 
-                if (interactable != null)
+                if (interactable != null && interactable.IsInteractionEnabled)
                 {
                     interactableFound = true;
                     _currentInteractionType = interactable.GetInteractionType();
@@ -197,6 +196,7 @@ namespace Metroidvania.Player
                         {
                             _audioSource.PlayOneShot(reward.resourceType.HarvestSound);
                         }
+                        resource.Interact(_currentInteractionType); //  shrink's the resource
                         correctResourceFound = true;
                         //Debug.Log($"Generating {reward.amount} {reward.resourceType} from {collider.name}   (#{i})");
                         

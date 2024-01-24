@@ -16,7 +16,15 @@ namespace Metroidvania.Interactables.WorldObjects
         private float _resetTimer;
 
         //  todo: detect when there is no more resources to harvest
-        public bool IsInteractionEnabled => true;
+        public bool IsInteractionEnabled
+        {
+            get
+            {
+                if (ResourceType != null)
+                    return _currentResourceCount > 0;
+                return false;
+            }
+        }
 
         private void Awake()
         {
@@ -26,7 +34,7 @@ namespace Metroidvania.Interactables.WorldObjects
         }
 
         public InteractionActionType GetInteractionType() =>
-            ResourceType != null ? ResourceType.InteractionAction : InteractionActionType.None;
+            IsInteractionEnabled ? ResourceType.InteractionAction : InteractionActionType.None;
 
         public (ResourceTypeSO resourceType, int amount) GetResource()
         {
@@ -42,11 +50,17 @@ namespace Metroidvania.Interactables.WorldObjects
             {
                 ScaleOverTime(GetScaleForResourceCount(_currentResourceCount), GetScaleForResourceCount(_currentResourceCount - 1), 0.5f, 0.25f).Forget(); //  don't await this
                 _currentResourceCount--;
-                _resetTimer = ResetTime;
+                //  reset the respawn timer
+                if (_resetTimer <= 0f)
+                {
+                    _resetTimer = ResetTime;
+                }
                 return new (true);
             }
             return new (false);
         }
+        
+        
 
         private float GetScaleForResourceCount(int resourceCount)
         {
