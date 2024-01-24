@@ -2,6 +2,7 @@
 using Metroidvania.Player.Installer;
 using Metroidvania.ResourceTypes;
 using System;
+using System.Threading;
 using UnityEngine;
 using Zenject;
 
@@ -71,7 +72,7 @@ namespace Metroidvania.Player.Animation
             _axeTool.SetActive(tool == Tool.Axe);
         }
 
-        public async UniTask RunActionAnimationAsync(InteractionActionType interactionType)
+        public async UniTask RunActionAnimationAsync(InteractionActionType interactionType, CancellationToken token)
         {
             switch (interactionType)
             {
@@ -90,8 +91,10 @@ namespace Metroidvania.Player.Animation
             }
 
 
-            await SetToolForAnimation(interactionType);
-
+            await SetToolForAnimation(interactionType, token);
+            if (token.IsCancellationRequested)
+                return;
+            
             //  this is redundant now?
             //await UniTask.WaitUntil(() => !IsActionAnimationRunning());
             OnAnimationComplete?.Invoke();
@@ -99,44 +102,48 @@ namespace Metroidvania.Player.Animation
 
 
 
-        public async UniTask RunActionAnimationAsync(ResourceTypeSO resourceTypeSO)
+        public async UniTask RunActionAnimationAsync(ResourceTypeSO resourceTypeSO, CancellationToken token)
         {
             if (resourceTypeSO != null)
             {
-                await RunActionAnimationAsync(resourceTypeSO.InteractionAction);
+                await RunActionAnimationAsync(resourceTypeSO.InteractionAction, token);
             }
             else
             {
-                await RunActionAnimationAsync(InteractionActionType.None);
+                await RunActionAnimationAsync(InteractionActionType.None, token);
             }
         }
 
-        private async UniTask SetToolForAnimation(InteractionActionType interactionAction)
+        private async UniTask SetToolForAnimation(InteractionActionType interactionAction, CancellationToken token)
         {
             switch (interactionAction)
             {
                 case InteractionActionType.MineOre:
                     SetTool(Tool.PickAxe);
-                    await RunAnimationToComplete();
+                    await RunAnimationToComplete(token);
                     break;
                 case InteractionActionType.ChopWood:
                     SetTool(Tool.Axe);
-                    await RunAnimationToComplete();
+                    await RunAnimationToComplete(token);
                     break;
                 default:
                     SetTool(Tool.None);
-                    await RunAnimationToComplete();
+                    await RunAnimationToComplete(token);
                     break;
             }
         }
 
-        private async UniTask RunAnimationToComplete()
+        private async UniTask RunAnimationToComplete(CancellationToken token)
         {
             _animator.SetLayerWeight(_actionLayerID, 1f);
             // wait for the animation to start
             await UniTask.WaitUntil(() => IsActionAnimationRunning());
+            if (token.IsCancellationRequested)
+                return;
             //  then wait again for it to stop
             await UniTask.WaitUntil(() => !IsActionAnimationRunning());
+            if (token.IsCancellationRequested)
+                return;
             _animator.SetLayerWeight(_actionLayerID, 0);
             SetTool(Tool.None);
         }

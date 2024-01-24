@@ -133,7 +133,7 @@ namespace Metroidvania.Player
                             _currentInteractable = interactable;
                             //Debug.Log($"Found {interactable} to interact with");
                         }
-                        await _playerAnimationActionHandler.RunActionAnimationAsync(_currentInteractionType);
+                        await _playerAnimationActionHandler.RunActionAnimationAsync(_currentInteractionType, this.GetCancellationTokenOnDestroy());
                         //  if this is a simple interact then remember the interactable so that we can trigger it later
                         return;
                     }
@@ -143,7 +143,7 @@ namespace Metroidvania.Player
             {
                 //  if interactableFound == true, then we don't know how to interact with it, so also play the "shrug" animation
                 //Debug.Log($"No interactable found");
-                await _playerAnimationActionHandler.RunActionAnimationAsync(InteractionActionType.None);
+                await _playerAnimationActionHandler.RunActionAnimationAsync(InteractionActionType.None, this.GetCancellationTokenOnDestroy());
             }
         }
 
