@@ -5,6 +5,7 @@ using Metroidvania.Lighting;
 using Metroidvania.MultiScene;
 using Metroidvania.Player;
 using Metroidvania.UI;
+using Metroidvania.World;
 using UnityEngine;
 
 namespace Metroidvania.GameCore
@@ -18,6 +19,7 @@ namespace Metroidvania.GameCore
         private readonly UICore _uiCore;
         private readonly CameraController _cameraController;
         private readonly DebuggingCore _debuggingCore;
+        private readonly WorldUnlockData _worldUnlockData;
 
         public GameCore(ISceneLoader sceneLoader,
             SceneAnchorCore sceneAnchorCore,
@@ -25,7 +27,8 @@ namespace Metroidvania.GameCore
             PlayerCore playerCore,
             UICore uiCore,
             CameraController cameraController,
-            DebuggingCore debuggingCore)
+            DebuggingCore debuggingCore,
+            WorldUnlockData worldUnlockData)
         {
             _sceneLoader = sceneLoader;
             _sceneAnchorCore = sceneAnchorCore;
@@ -34,6 +37,7 @@ namespace Metroidvania.GameCore
             _uiCore = uiCore;
             _cameraController = cameraController;
             _debuggingCore = debuggingCore;
+            _worldUnlockData = worldUnlockData;
             StartCore().Forget();
         }
 
@@ -41,6 +45,7 @@ namespace Metroidvania.GameCore
         {
             Debug.Log($"Starting GameCore");
             await _sceneLoader.StartCore();
+            await _worldUnlockData.LoadData();
             await _lightingCore.StartCore();
             await _playerCore.StartCore();
             await _uiCore.StartCore();  //  UI Core requires GameCore loaded

@@ -7,6 +7,7 @@ using Metroidvania.MultiScene;
 using Metroidvania.Player;
 using Metroidvania.ResourceTypes;
 using Metroidvania.UI;
+using Metroidvania.World;
 using UnityEngine;
 using Zenject;
 
@@ -29,6 +30,7 @@ namespace Metroidvania.GameCore
             Container.Bind<GameCore>().FromNew().AsSingle().NonLazy();
             Container.Bind<UICore>().FromNew().AsSingle().NonLazy();
             Container.Bind<ResourcePickupGenerator>().FromNew().AsSingle().NonLazy();
+            Container.Bind<WorldUnlockData>().FromNew().AsSingle();
 
             Container.BindInstance(GameLifecycleManager).AsSingle();
             Container.BindInstance(ResourceTypeDB).AsSingle();
