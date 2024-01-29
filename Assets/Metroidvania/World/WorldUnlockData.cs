@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using AYellowpaper.SerializedCollections;
 using Cysharp.Threading.Tasks;
+using Metroidvania.ResourceTypes;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -13,7 +16,7 @@ namespace Metroidvania.World
     public class WorldUnlockData 
     {
         public Dictionary<string, WorldDataZone> Zones = new ();
-        public string SavePath = Path.Combine(Application.persistentDataPath, "WorldData.json");
+        [JsonIgnore] public string SavePath = Path.Combine(Application.persistentDataPath, "WorldData.json");
         
         public async UniTask SaveData()
         {
@@ -67,7 +70,7 @@ namespace Metroidvania.World
             public string ZoneID;
             public bool IsUnlocked;
             
-            public Dictionary<string, WorldUnlockNodeData> UnlockedNodes= new ();
+            public Dictionary<string, WorldUnlockNodeData> UnlockedNodes = new ();
 
             public WorldUnlockNodeData GetOrCreateNode(string nodeID)
             {
@@ -111,5 +114,14 @@ namespace Metroidvania.World
             }
         }
         
+        /// <summary>
+        /// Used to show both Required unlock amounts, and the currently paid amounts
+        /// </summary>
+        public struct WorldUnlockNodeAmounts
+        {
+            public Dictionary<ResourceTypeSO, int> RequiredAmounts2;
+            public SerializedDictionary<ResourceTypeSO, int> RequiredAmounts;
+            public WorldUnlockNodeData PaidAmounts;
+        }
     }
 }

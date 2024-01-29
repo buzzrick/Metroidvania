@@ -1,62 +1,61 @@
 #nullable enable
 
-using System;
+using AYellowpaper.SerializedCollections;
+using Buzzrick.UnityLibs.Attributes;
+using Metroidvania.ResourceTypes;
 using UnityEngine;
-using Zenject;
 
 namespace Metroidvania.World
 {
-    /// <summary>
-    /// Fill this out 
-    /// </summary>
-    public class WorldUnlockNode : MonoBehaviour
+
+    [RequireComponent(typeof(Collider))]
+    public class WorldUnlockNode : WorldUnlockNodeBase
     {
-        [SerializeField] private GameObject[] NodeObjects;
-        [SerializeField] private WorldUnlockNode[] ChildNodes;
-        
-        [SerializeField] public string NodeID;
-        private string _zoneID;
-        private WorldUnlockData _worldUnlockData;
-        private WorldUnlockData.WorldUnlockNodeData _thisNode ;
+        [SerializeField, RequiredField] private Collider _collider;
 
-        public bool IsUnlocked { get; private set; }
-        
-        public void LoadData(WorldUnlockData worldUnlockData, string zoneID)
+        [SerializedDictionary("ResourceType", "Amount Required")] public SerializedDictionary<ResourceTypeSO, int> ResourceAmounts = new();
+
+
+        private void Reset()
         {
-            _worldUnlockData = worldUnlockData;
-            _zoneID = zoneID;
-            _thisNode = worldUnlockData.GetOrCreateZone(zoneID).GetOrCreateNode(NodeID);
+            _collider = GetComponent<Collider>();
+        }
+
+        protected override void CalculateIsUnlocked()
+        {
+            if (!_thisNode.IsUnlocked)
+            {
+                bool isPaid = true;
+                //  recalculate based on paid amounts
+                var amounts = GetUnlockAmounts();
+                {
+                    foreach (var requiredResource in amounts.RequiredAmounts)
+                    {
+                        if (requiredResource.Key == null)
+                        {
+                            Debug.LogError($"Null Resource type on WorldUnlockNode", this);
+                            continue;
+                        }
+
+                        if (amounts.PaidAmounts.GetPaidAmount(requiredResource.Key.name) < requiredResource.Value)
+                        {
+                            isPaid = false;
+                            break;
+                        }
+                    }
+                }
+                _thisNode.IsUnlocked = isPaid;
+            }
             IsUnlocked = _thisNode.IsUnlocked;
-            UpdateChildren();
-        }
-        
-        
-
-        private void SetUnlockedState()
-        {
-            foreach (GameObject node in NodeObjects)
-            {
-                node.SetActive(IsUnlocked);
-            }
-
-            UpdateChildren();
         }
 
-        private void UpdateChildren()
+        public WorldUnlockData.WorldUnlockNodeAmounts GetUnlockAmounts()
         {
-            foreach (WorldUnlockNode child in ChildNodes)
+            return new WorldUnlockData.WorldUnlockNodeAmounts
             {
-                child.LoadData(_worldUnlockData, _zoneID);
-            }
-        }
-
-        public void Unlock()
-        {
-            IsUnlocked = true;
-            foreach (GameObject node in NodeObjects)
-            {
-                node.SetActive(IsUnlocked);
-            }
+                RequiredAmounts = ResourceAmounts,
+                PaidAmounts =  _thisNode,
+            };
         }
     }
 }
