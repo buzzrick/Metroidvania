@@ -11,7 +11,8 @@
         "KinematicCharacterController.ExampleCharacter",
         "Synty",
         "Unity.TextMeshPro",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "AYellowpaper.SerializedCollections"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
