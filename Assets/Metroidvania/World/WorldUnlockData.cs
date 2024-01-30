@@ -60,7 +60,12 @@ namespace Metroidvania.World
                 return newZone;
             }
         }
-        
+
+        public void ResetWorldData()
+        {
+            Zones.Clear();
+        }
+
         /// <summary>
         /// Lists all unlocked nodes in a single Zone
         /// </summary>

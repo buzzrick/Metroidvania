@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Metroidvania.Player
 {
-//    [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(Collider))]
     public class PlayerTriggerDetector : MonoBehaviour
     {
         private PlayerRoot _playerRoot;
@@ -22,8 +22,7 @@ namespace Metroidvania.Player
 
         private void OnTriggerEnter(Collider other)
         {
-            IPlayerEnterTriggerZone triggerZone = other.GetComponent<IPlayerEnterTriggerZone>();
-            if (triggerZone != null)
+            if (other.TryGetComponent<IPlayerEnterTriggerZone>(out var triggerZone))
             {
                 if (!_currentColliders.Contains(other))
                 {
@@ -41,8 +40,7 @@ namespace Metroidvania.Player
 
         private void RaiseOnTriggerExit(Collider other)
         {
-            IPlayerExitTriggerZone triggerZone = other.GetComponent<IPlayerExitTriggerZone>();
-            if (triggerZone != null)
+            if (other.TryGetComponent<IPlayerExitTriggerZone>(out var triggerZone))
             {
                 if (LogTriggers) Debug.Log($"Player Exited trigger {other.name}", other);
                 //ReliableOnTriggerExit.NotifyTriggerExit(other, gameObject);
@@ -56,6 +54,8 @@ namespace Metroidvania.Player
                     triggerZone.OnPlayerExitedZone(_playerRoot);
                 }
             }
+            
+
         }
 
         private void OnTriggerStay(Collider other)

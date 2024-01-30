@@ -14,9 +14,9 @@ namespace Metroidvania.UI
         public int Amount => Resource?.ItemCount ?? 0;
         public PlayerInventoryManager.InventoryItemAmount? Resource { get; private set; }
 
-        [SerializeField, RequiredField] private Image _resourceSprite;
-        [SerializeField, RequiredField] private TMP_Text _amountText;
-        [SerializeField, RequiredField] private RectTransform _rect ;
+        [SerializeField, RequiredField] private Image _resourceSprite = default!;
+        [SerializeField, RequiredField] private TMP_Text _amountText = default!;
+        [SerializeField, RequiredField] private RectTransform _rect = default!;
 
         private void Awake()
         {

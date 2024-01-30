@@ -2,14 +2,17 @@
 
 using AYellowpaper.SerializedCollections;
 using Buzzrick.UnityLibs.Attributes;
+using Metroidvania.Interactables;
+using Metroidvania.Player;
 using Metroidvania.ResourceTypes;
+using System;
 using UnityEngine;
 
 namespace Metroidvania.World
 {
 
     [RequireComponent(typeof(Collider))]
-    public class WorldUnlockNode : WorldUnlockNodeBase
+    public class WorldUnlockNode : WorldUnlockNodeBase, IPlayerEnterTriggerZone, IPlayerExitTriggerZone
     {
         [SerializeField, RequiredField] private Collider _collider;
 
@@ -56,6 +59,28 @@ namespace Metroidvania.World
                 RequiredAmounts = ResourceAmounts,
                 PaidAmounts =  _thisNode,
             };
+        }
+
+        private void ShowUI(bool isEnabled)
+        {
+            Debug.Log($"{(isEnabled ? "Show" : "Hide")} WorldNode({NodeID})");
+        }
+
+        public void OnPlayerExitedZone(PlayerRoot player)
+        {
+            ShowUI(false);
+        }
+
+
+        public void OnPlayerEnteredZone(PlayerRoot player)
+        {
+            if (!IsUnlocked)
+            {
+                this._thisNode.IsUnlocked = true;
+                LoadData(_worldUnlockData, _zoneID);
+
+                ShowUI(true);
+            }
         }
     }
 }

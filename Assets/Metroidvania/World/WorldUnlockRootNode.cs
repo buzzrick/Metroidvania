@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+using Metroidvania.UI;
 using Zenject;
 
 namespace Metroidvania.World
@@ -7,14 +7,27 @@ namespace Metroidvania.World
     {
         private WorldUnlockData _worldData;
         private GameCore.GameCore _gameCore;
+        private UICore _uiCore;
         public string ZoneID;
 
         [Inject]
         private void Initialise(WorldUnlockData worldData,
-            GameCore.GameCore gameCore)
+            GameCore.GameCore gameCore,
+            UICore  uiCore)
         {
             _worldData = worldData;
             _gameCore = gameCore;
+            _uiCore = uiCore;
+        }
+
+        private void OnEnable()
+        {
+            _uiCore.RegisterListener("ResetWorldData", DebugResetWorldData);
+        }
+
+        private void OnDisable()
+        {
+            _uiCore.UnregisterListener("ResetWorldData", DebugResetWorldData);
         }
 
         // Start is called before the first frame update
@@ -25,5 +38,20 @@ namespace Metroidvania.World
             LoadData(_worldData, ZoneID);
             await _worldData.SaveData();
         }
+
+        public async void DebugResetWorldData()
+        {
+            _worldData.ResetWorldData();
+            LoadData(_worldData, ZoneID);
+            await _worldData.SaveData();
+        }
+
+        public override void LoadData(WorldUnlockData worldUnlockData, string zoneID)
+        {
+            //  because this is the root node, this needs to be automatically set active;
+            worldUnlockData.GetOrCreateZone(zoneID).GetOrCreateNode(NodeID).IsUnlocked = true;
+            base.LoadData(worldUnlockData, zoneID);
+        }
+
     }
 }

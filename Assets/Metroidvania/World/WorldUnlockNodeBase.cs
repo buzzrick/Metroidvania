@@ -15,7 +15,7 @@ namespace Metroidvania.World
 
         public bool IsUnlocked { get; protected set; }
 
-        public void LoadData(WorldUnlockData worldUnlockData, string zoneID)
+        public virtual void LoadData(WorldUnlockData worldUnlockData, string zoneID)
         {
             _worldUnlockData = worldUnlockData;
             _zoneID = zoneID;
@@ -45,8 +45,13 @@ namespace Metroidvania.World
         {
             foreach (WorldUnlockNode child in ChildNodes)
             {
-                child.LoadData(_worldUnlockData, _zoneID);
+                if (_thisNode.IsUnlocked)
+                {
+                    child.LoadData(_worldUnlockData, _zoneID);
+                }
+                child.gameObject.SetActive(_thisNode.IsUnlocked);
             }
+
         }
 
         //public void Unlock()
