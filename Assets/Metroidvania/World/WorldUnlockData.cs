@@ -36,7 +36,7 @@ namespace Metroidvania.World
 
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this);
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
 
         public void FromJson(string json)

@@ -5,7 +5,6 @@ using Buzzrick.UnityLibs.Attributes;
 using Metroidvania.Interactables;
 using Metroidvania.Player;
 using Metroidvania.ResourceTypes;
-using System;
 using UnityEngine;
 
 namespace Metroidvania.World
@@ -15,12 +14,14 @@ namespace Metroidvania.World
     public class WorldUnlockNode : WorldUnlockNodeBase, IPlayerEnterTriggerZone, IPlayerExitTriggerZone
     {
         [SerializeField, RequiredField] private Collider _collider;
+        [SerializeField, RequiredField] private MeshRenderer _meshRenderer;
 
         [SerializedDictionary("ResourceType", "Amount Required")] public SerializedDictionary<ResourceTypeSO, int> ResourceAmounts = new();
 
 
         private void Reset()
         {
+            _meshRenderer = GetComponent<MeshRenderer>();
             _collider = GetComponent<Collider>();
         }
 
@@ -50,6 +51,12 @@ namespace Metroidvania.World
                 _thisNode.IsUnlocked = isPaid;
             }
             IsUnlocked = _thisNode.IsUnlocked;
+        }
+
+        public override void LoadData(WorldUnlockData worldUnlockData, string zoneID)
+        {
+            base.LoadData(worldUnlockData, zoneID);
+            _meshRenderer.enabled = !IsUnlocked;
         }
 
         public WorldUnlockData.WorldUnlockNodeAmounts GetUnlockAmounts()

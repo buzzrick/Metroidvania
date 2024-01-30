@@ -866,8 +866,9 @@ MonoBehaviour:
   - {fileID: 884664322}
   - {fileID: 1016567133}
   ChildNodes: []
-  NodeID: Unlock2
+  NodeID: Unlock3
   _collider: {fileID: 1330177282}
+  _meshRenderer: {fileID: 1330177283}
   ResourceAmounts:
     _serializedList:
     - Key: {fileID: 11400000, guid: 9ecc0675c82ace34d9026bacfcf7db7f, type: 2}
@@ -1079,6 +1080,7 @@ MonoBehaviour:
   ChildNodes: []
   NodeID: Unlock2
   _collider: {fileID: 1617320079}
+  _meshRenderer: {fileID: 1617320080}
   ResourceAmounts:
     _serializedList:
     - Key: {fileID: 11400000, guid: 9ecc0675c82ace34d9026bacfcf7db7f, type: 2}
@@ -1408,6 +1410,7 @@ MonoBehaviour:
   - {fileID: 1330177281}
   NodeID: Unlock1
   _collider: {fileID: 1834406957}
+  _meshRenderer: {fileID: 1834406958}
   ResourceAmounts:
     _serializedList:
     - Key: {fileID: 11400000, guid: 9ecc0675c82ace34d9026bacfcf7db7f, type: 2}
@@ -1529,7 +1532,7 @@ MonoBehaviour:
   NodeObjects: []
   ChildNodes:
   - {fileID: 1834406961}
-  NodeID: World1Node1
+  NodeID: RootNode
   ZoneID: World1
 --- !u!4 &1899173351 stripped
 Transform:

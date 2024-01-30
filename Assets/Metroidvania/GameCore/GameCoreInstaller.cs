@@ -31,6 +31,7 @@ namespace Metroidvania.GameCore
             Container.Bind<UICore>().FromNew().AsSingle().NonLazy();
             Container.Bind<ResourcePickupGenerator>().FromNew().AsSingle().NonLazy();
             Container.Bind<WorldUnlockData>().FromNew().AsSingle();
+            Container.Bind<WorldManager>().FromNew().AsSingle().NonLazy();
 
             Container.BindInstance(GameLifecycleManager).AsSingle();
             Container.BindInstance(ResourceTypeDB).AsSingle();
