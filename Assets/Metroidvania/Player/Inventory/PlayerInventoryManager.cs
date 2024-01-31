@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Zenject;
+using Zenject.ReflectionBaking.Mono.Cecil;
 
 namespace Metroidvania.Player.Inventory
 {
@@ -110,6 +111,20 @@ namespace Metroidvania.Player.Inventory
             OnInventoryAmountChanged?.Invoke(inventoryItem);
         }
 
+        /// <summary>
+        /// consumes (pays) the given resource amount
+        /// </summary>
+        /// <param name="resource"></param>
+        /// <param name="payAmount"></param>
+        /// <returns>Returns the amount paid (should be payAmount, unless the currently inventory is less)</returns>
+        public int ConsumeResource(ResourceTypeSO resource, int payAmount)
+        {
+            Debug.Log($"Paying {payAmount} {resource.name}");
+            int availableAmount = GetInventoryCount(resource.name);
+            int finalAmount = Math.Clamp(payAmount, 0, availableAmount);
+            IncrementInventory(resource.name, -finalAmount);
+            return finalAmount;
+        }
 
         [Serializable]
         public class InventoryItemAmount

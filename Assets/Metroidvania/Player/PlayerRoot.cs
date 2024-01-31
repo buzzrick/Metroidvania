@@ -15,6 +15,7 @@ namespace Metroidvania.Player
         private PlayerMovementController _playerMovement;
 
         [Inject] PlayerInventoryManager _playerInventoryManager;
+        public PlayerInventoryManager PlayerInventoryManager => _playerInventoryManager;
 
         private void Awake()
         {

@@ -80,7 +80,8 @@ namespace Metroidvania.UI
                 }
             }
 
-            _inventoryItemList.Insert(_inventoryItemList.Count, amount);
+            //_inventoryItemList.Insert(_inventoryItemList.Count, amount);
+            _inventoryItemList.Insert(0, amount);
 
             for (int i = 0; i < _inventoryItemList.Count; i++)
             {

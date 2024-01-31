@@ -876,6 +876,7 @@ MonoBehaviour:
       Value: 10
     - Key: {fileID: 11400000, guid: 3ef35fce1dd1f444a99bf029737906c0, type: 2}
       Value: 10
+  PaymentChunkSize: 2
 --- !u!65 &1330177282
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1101,6 +1102,7 @@ MonoBehaviour:
       Value: 10
     - Key: {fileID: 11400000, guid: 3ef35fce1dd1f444a99bf029737906c0, type: 2}
       Value: 10
+  PaymentChunkSize: 2
 --- !u!65 &1617320079
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1442,6 +1444,7 @@ MonoBehaviour:
     _serializedList:
     - Key: {fileID: 11400000, guid: 9ecc0675c82ace34d9026bacfcf7db7f, type: 2}
       Value: 10
+  PaymentChunkSize: 2
 --- !u!114 &1834406962
 MonoBehaviour:
   m_ObjectHideFlags: 0
