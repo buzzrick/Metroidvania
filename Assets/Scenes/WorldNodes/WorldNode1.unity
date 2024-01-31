@@ -842,6 +842,7 @@ GameObject:
   - component: {fileID: 1330177283}
   - component: {fileID: 1330177282}
   - component: {fileID: 1330177281}
+  - component: {fileID: 1330177286}
   m_Layer: 0
   m_Name: Unlock3
   m_TagString: Untagged
@@ -867,7 +868,7 @@ MonoBehaviour:
   - {fileID: 1016567133}
   ChildNodes: []
   NodeID: Unlock3
-  _collider: {fileID: 1330177282}
+  _unlockAnimator: {fileID: 1330177286}
   _meshRenderer: {fileID: 1330177283}
   ResourceAmounts:
     _serializedList:
@@ -964,6 +965,18 @@ Transform:
   - {fileID: 185883702}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1330177286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330177280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4688b43327ff47e7a047f5752d78949f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1539212837
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1054,6 +1067,7 @@ GameObject:
   - component: {fileID: 1617320080}
   - component: {fileID: 1617320079}
   - component: {fileID: 1617320078}
+  - component: {fileID: 1617320083}
   m_Layer: 0
   m_Name: Unlock2
   m_TagString: Untagged
@@ -1079,7 +1093,7 @@ MonoBehaviour:
   - {fileID: 934392686}
   ChildNodes: []
   NodeID: Unlock2
-  _collider: {fileID: 1617320079}
+  _unlockAnimator: {fileID: 1617320083}
   _meshRenderer: {fileID: 1617320080}
   ResourceAmounts:
     _serializedList:
@@ -1176,6 +1190,18 @@ Transform:
   - {fileID: 43818800}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1617320083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617320077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4688b43327ff47e7a047f5752d78949f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1638520655
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1293,6 +1319,7 @@ GameObject:
   - component: {fileID: 1834406958}
   - component: {fileID: 1834406957}
   - component: {fileID: 1834406961}
+  - component: {fileID: 1834406962}
   m_Layer: 0
   m_Name: Unlock1
   m_TagString: Untagged
@@ -1409,12 +1436,24 @@ MonoBehaviour:
   - {fileID: 1617320078}
   - {fileID: 1330177281}
   NodeID: Unlock1
-  _collider: {fileID: 1834406957}
+  _unlockAnimator: {fileID: 1834406962}
   _meshRenderer: {fileID: 1834406958}
   ResourceAmounts:
     _serializedList:
     - Key: {fileID: 11400000, guid: 9ecc0675c82ace34d9026bacfcf7db7f, type: 2}
       Value: 10
+--- !u!114 &1834406962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834406956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4688b43327ff47e7a047f5752d78949f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1899173348
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1510,6 +1549,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1899173350}
+    - targetCorrespondingSourceObject: {fileID: 2622045792519238958, guid: 0e06d200a1878d1448c3dbab02e14a0b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1899173352}
   m_SourcePrefab: {fileID: 100100000, guid: 0e06d200a1878d1448c3dbab02e14a0b, type: 3}
 --- !u!1 &1899173349 stripped
 GameObject:
@@ -1533,6 +1576,7 @@ MonoBehaviour:
   ChildNodes:
   - {fileID: 1834406961}
   NodeID: RootNode
+  _unlockAnimator: {fileID: 1899173352}
   ZoneID: World1
 --- !u!4 &1899173351 stripped
 Transform:
@@ -1540,6 +1584,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1899173348}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1899173352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899173349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4688b43327ff47e7a047f5752d78949f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1973300683
 PrefabInstance:
   m_ObjectHideFlags: 0

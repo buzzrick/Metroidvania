@@ -1,20 +1,45 @@
+using System;
+using Buzzrick.UnityLibs.Attributes;
 using UnityEngine;
 
 namespace Metroidvania.World
 {
     public abstract class WorldUnlockNodeBase : MonoBehaviour
     {
-
         [SerializeField] private GameObject[] NodeObjects;
         [SerializeField] private WorldUnlockNode[] ChildNodes;
-
         [SerializeField] public string NodeID;
+        [SerializeField, RequiredField] private UnlockAnimator _unlockAnimator = default!;
+
         protected string _zoneID;
+        
         protected WorldUnlockData _worldUnlockData;
         protected WorldUnlockData.WorldUnlockNodeData _thisNode;
 
-        public bool IsUnlocked { get; protected set; }
+        private bool _isUnlocked;
+        private bool _firstLoad = true;
 
+        public bool IsUnlocked 
+        { 
+            get=> _isUnlocked;
+            protected set
+            {
+                if (_isUnlocked != value)
+                {
+                    OnUnlockedChanging(value);
+                }
+                _isUnlocked = value;
+            }
+        }
+
+        private void OnDisable()
+        {
+            // If this node gets disabled (eg: during a reset), we want to reset the animation
+            _unlockAnimator.SetLocked();
+        }
+
+        public GameObject[] GetObjects() => NodeObjects;
+        
         public virtual void LoadData(WorldUnlockData worldUnlockData, string zoneID)
         {
             _worldUnlockData = worldUnlockData;
@@ -25,6 +50,8 @@ namespace Metroidvania.World
             UpdateChildren();
         }
 
+        protected virtual void OnUnlockedChanging(bool isUnlocked) {}
+        
         protected virtual void CalculateIsUnlocked()
         {
             IsUnlocked = _thisNode.IsUnlocked;
@@ -33,11 +60,15 @@ namespace Metroidvania.World
 
         private void SetUnlockedState()
         {
-            foreach (GameObject node in NodeObjects)
+            if (_firstLoad)
             {
-                node.SetActive(IsUnlocked);
+                _unlockAnimator.SetNode(this);
+                _firstLoad = false;
             }
-
+            else
+            {
+                _unlockAnimator.Animate(IsUnlocked);
+            }
             UpdateChildren();
         }
 
@@ -51,7 +82,6 @@ namespace Metroidvania.World
                 }
                 child.gameObject.SetActive(_thisNode.IsUnlocked);
             }
-
         }
 
         //public void Unlock()

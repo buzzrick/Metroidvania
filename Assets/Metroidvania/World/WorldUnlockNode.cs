@@ -11,18 +11,21 @@ namespace Metroidvania.World
 {
 
     [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(UnlockAnimator))]
     public class WorldUnlockNode : WorldUnlockNodeBase, IPlayerEnterTriggerZone, IPlayerExitTriggerZone
     {
-        [SerializeField, RequiredField] private Collider _collider;
-        [SerializeField, RequiredField] private MeshRenderer _meshRenderer;
+        [SerializeField, RequiredField] private MeshRenderer _meshRenderer = default!;
 
         [SerializedDictionary("ResourceType", "Amount Required")] public SerializedDictionary<ResourceTypeSO, int> ResourceAmounts = new();
 
+        /// <summary>
+        /// Don't Animate on first load
+        /// </summary>
+        private bool _firstLoad;
 
         private void Reset()
         {
             _meshRenderer = GetComponent<MeshRenderer>();
-            _collider = GetComponent<Collider>();
         }
 
         protected override void CalculateIsUnlocked()
@@ -50,13 +53,18 @@ namespace Metroidvania.World
                 }
                 _thisNode.IsUnlocked = isPaid;
             }
+            
             IsUnlocked = _thisNode.IsUnlocked;
         }
 
         public override void LoadData(WorldUnlockData worldUnlockData, string zoneID)
         {
             base.LoadData(worldUnlockData, zoneID);
+            
+
             _meshRenderer.enabled = !IsUnlocked;
+            
+            _firstLoad = false;
         }
 
         public WorldUnlockData.WorldUnlockNodeAmounts GetUnlockAmounts()
@@ -83,10 +91,18 @@ namespace Metroidvania.World
         {
             if (!IsUnlocked)
             {
-                this._thisNode.IsUnlocked = true;
-                LoadData(_worldUnlockData, _zoneID);
+                UnlockNode();
 
                 ShowUI(true);
+            }
+        }
+        
+        private void UnlockNode()
+        {
+            if (!IsUnlocked)
+            {
+                _thisNode.IsUnlocked = true;
+                LoadData(_worldUnlockData, _zoneID);
             }
         }
     }
