@@ -2,10 +2,12 @@
 
 using AYellowpaper.SerializedCollections;
 using Buzzrick.UnityLibs.Attributes;
+using Cysharp.Threading.Tasks;
 using Metroidvania.Interactables;
 using Metroidvania.Player;
 using Metroidvania.ResourceTypes;
 using UnityEngine;
+using Zenject;
 
 namespace Metroidvania.World
 {
@@ -25,7 +27,14 @@ namespace Metroidvania.World
         private bool _firstLoad;
         private int _updateTicker;
         private PlayerRoot? _player;
+        private WorldUnlockRequirementsUIController _requirementsUIController = default!;
 
+        [Inject]
+        private void Initialise(WorldUnlockRequirementsUIController requirementsUIController)
+        {
+            _requirementsUIController = requirementsUIController;
+        }
+        
         private void Reset()
         {
             _meshRenderer = GetComponent<MeshRenderer>();
@@ -46,13 +55,21 @@ namespace Metroidvania.World
             return new WorldUnlockData.WorldUnlockNodeAmounts
             {
                 RequiredAmounts = ResourceAmounts,
-                PaidAmounts =  _thisNode,
+                PaidAmounts =  _nodeData,
             };
         }
 
         private void ShowUI(bool isEnabled)
         {
             Debug.Log($"{(isEnabled ? "Show" : "Hide")} WorldNode({NodeID})");
+            if (isEnabled)
+            {
+                _requirementsUIController.ShowRequirements(this).Forget();
+            }
+            else
+            {
+                _requirementsUIController.Hide().Forget();
+            }
         }
 
         public void OnPlayerExitedZone(PlayerRoot player)
@@ -93,7 +110,7 @@ namespace Metroidvania.World
 
         protected override void CalculateIsUnlocked()
         {
-            if (!_thisNode.IsUnlocked)
+            if (!_nodeData.IsUnlocked)
             {
                 bool isPaid = true;
                 //  recalculate based on paid amounts
@@ -114,16 +131,16 @@ namespace Metroidvania.World
                         }
                     }
                 }
-                _thisNode.IsUnlocked = isPaid;
+                _nodeData.IsUnlocked = isPaid;
             }
 
-            IsUnlocked = _thisNode.IsUnlocked;
+            IsUnlocked = _nodeData.IsUnlocked;
         }
 
 
         private void PayResources(PlayerRoot player)
         {
-            if (!_thisNode.IsUnlocked)
+            if (!_nodeData.IsUnlocked)
             {
                 Player.Inventory.PlayerInventoryManager playerInventory = player.PlayerInventoryManager;
                 //  recalculate based on paid amounts
@@ -149,7 +166,7 @@ namespace Metroidvania.World
                             payAmount = PaymentChunkSize % paymentRemaining;
                         }
                         int amountPaid = player.PlayerInventoryManager.ConsumeResource(requiredResource.Key, payAmount);
-                        _thisNode.AddPaidAmount(requiredResource.Key.name, amountPaid);
+                        _nodeData.AddPaidAmount(requiredResource.Key.name, amountPaid);
                         if (amountPaid < paymentRemaining)
                         {
                             isPaid = false;
@@ -162,6 +179,7 @@ namespace Metroidvania.World
                     CalculateIsUnlocked();
                     //  LoadData will correctly unlock the node if required
                     LoadData(_worldUnlockData, _zoneID);
+                    ShowUI(false);
                 }
             }
         }
@@ -171,7 +189,7 @@ namespace Metroidvania.World
         {
             if (!IsUnlocked)
             {
-                _thisNode.IsUnlocked = true;
+                _nodeData.IsUnlocked = true;
                 LoadData(_worldUnlockData, _zoneID);
             }
         }

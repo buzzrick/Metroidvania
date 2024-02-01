@@ -41,6 +41,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Metroidvania/UI/UIView.unity
     guid: 83839619e3fd2e645b29bb91eefbb64c
+  - enabled: 1
+    path: Assets/Scenes/WorldNodes/WorldNode1.unity
+    guid: b3bdff91bbd646f458ac274691f038b6
+  - enabled: 1
+    path: Assets/Metroidvania/World/WorldUnlockRequirementsUIView.unity
+    guid: 489f91d3a616b7f459df0ed03ac75b7d
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 5e8d29354a0c1454a8d6b187bb144398,
       type: 2}

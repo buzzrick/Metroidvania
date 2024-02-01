@@ -119,7 +119,7 @@ namespace Metroidvania.Player.Inventory
         /// <returns>Returns the amount paid (should be payAmount, unless the currently inventory is less)</returns>
         public int ConsumeResource(ResourceTypeSO resource, int payAmount)
         {
-            Debug.Log($"Paying {payAmount} {resource.name}");
+            //Debug.Log($"Paying {payAmount} {resource.name}");
             int availableAmount = GetInventoryCount(resource.name);
             int finalAmount = Math.Clamp(payAmount, 0, availableAmount);
             IncrementInventory(resource.name, -finalAmount);
