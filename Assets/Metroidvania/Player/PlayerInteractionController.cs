@@ -30,6 +30,8 @@ namespace Metroidvania.Player
         private AudioSource _audioSource;
         public AudioClip SwishSound;
         private ResourcePickupGenerator _resourceGenerator;
+        private PlayerAnimationView _playerAnimationView;
+
         /// <summary>
         /// Used to calculate where spawned ResourcePickups are impulsed towards
         /// </summary>
@@ -50,9 +52,12 @@ namespace Metroidvania.Player
             _audioSource = GetComponent<AudioSource>();
         }
 
-        public void RegisterPlayerAnimationHandler(PlayerAnimationActionsHandler playerAnimationActionHandler)
+        public void RegisterPlayerAnimationHandler(
+            PlayerAnimationActionsHandler playerAnimationActionHandler,
+            PlayerAnimationView playerAnimationView)
         {
             _playerAnimationActionHandler = playerAnimationActionHandler;
+            _playerAnimationView = playerAnimationView;
             _playerAnimationActionHandler.OnAnimationStrike += Handle_OnAnimationStrike;
             _playerAnimationActionHandler.OnAnimationComplete += Handle_OnAnimationComplete;
 
@@ -108,42 +113,47 @@ namespace Metroidvania.Player
         private async UniTask AttemptInteraction(bool isForced)
         {
             bool interactableFound = false;
-            //Debug.Log($"AttemptInteraction");
-            int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, DetectionRadius, _colliders, LayerMask);
-            for (int i = 0; i < colliderCount; i++)
-            {
-                Collider collider = _colliders[i];
-                IPlayerInteractable interactable = collider.GetComponent<IPlayerInteractable>();
-                if (_playerAnimationActionHandler != null)
-                {
-                    //  don't allow multiple actions to play at once
-                    if (_playerAnimationActionHandler.IsActionAnimationRunning())
-                        return;
-                }
 
-                if (interactable != null && interactable.IsInteractionEnabled)
+            //  can't do interactions if you're swimming
+            if (!_playerAnimationView.IsSwimming)
+            {
+                //Debug.Log($"AttemptInteraction");
+                int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, DetectionRadius, _colliders, LayerMask);
+                for (int i = 0; i < colliderCount; i++)
                 {
-                    interactableFound = true;
-                    _currentInteractionType = interactable.GetInteractionType();
-                    //Debug.Log($"Attempting to interact with {collider.name} (Type={_currentInteractionType})");
-                    if (_currentInteractionType != InteractionActionType.None)
+                    Collider collider = _colliders[i];
+                    IPlayerInteractable interactable = collider.GetComponent<IPlayerInteractable>();
+                    if (_playerAnimationActionHandler != null)
                     {
-                        if (_currentInteractionType == InteractionActionType.Interact)
+                        //  don't allow multiple actions to play at once
+                        if (_playerAnimationActionHandler.IsActionAnimationRunning())
+                            return;
+                    }
+
+                    if (interactable != null && interactable.IsInteractionEnabled)
+                    {
+                        interactableFound = true;
+                        _currentInteractionType = interactable.GetInteractionType();
+                        //Debug.Log($"Attempting to interact with {collider.name} (Type={_currentInteractionType})");
+                        if (_currentInteractionType != InteractionActionType.None)
                         {
-                            _currentInteractable = interactable;
-                            //Debug.Log($"Found {interactable} to interact with");
+                            if (_currentInteractionType == InteractionActionType.Interact)
+                            {
+                                _currentInteractable = interactable;
+                                //Debug.Log($"Found {interactable} to interact with");
+                            }
+                            await _playerAnimationActionHandler.RunActionAnimationAsync(_currentInteractionType, this.GetCancellationTokenOnDestroy());
+                            //  if this is a simple interact then remember the interactable so that we can trigger it later
+                            return;
                         }
-                        await _playerAnimationActionHandler.RunActionAnimationAsync(_currentInteractionType, this.GetCancellationTokenOnDestroy());
-                        //  if this is a simple interact then remember the interactable so that we can trigger it later
-                        return;
                     }
                 }
-            }
-            if (isForced || interactableFound)
-            {
-                //  if interactableFound == true, then we don't know how to interact with it, so also play the "shrug" animation
-                //Debug.Log($"No interactable found");
-                await _playerAnimationActionHandler.RunActionAnimationAsync(InteractionActionType.None, this.GetCancellationTokenOnDestroy());
+                if (isForced || interactableFound)
+                {
+                    //  if interactableFound == true, then we don't know how to interact with it, so also play the "shrug" animation
+                    //Debug.Log($"No interactable found");
+                    await _playerAnimationActionHandler.RunActionAnimationAsync(InteractionActionType.None, this.GetCancellationTokenOnDestroy());
+                }
             }
         }
 

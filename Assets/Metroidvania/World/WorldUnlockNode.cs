@@ -35,9 +35,10 @@ namespace Metroidvania.World
             _requirementsUIController = requirementsUIController;
         }
         
-        private void Reset()
+        protected override void Reset()
         {
             _meshRenderer = GetComponent<MeshRenderer>();
+            base.Reset();
         }
 
         public override void LoadData(WorldUnlockData worldUnlockData, string zoneID)
@@ -91,9 +92,6 @@ namespace Metroidvania.World
             }
         }
 
-        private void Update()
-        {
-        }
 
         private void FixedUpdate()
         {

@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using Metroidvania.GameCore;
 using Metroidvania.MultiScene;
+using Metroidvania.Player.Animation;
 using Metroidvania.Player.Inventory;
 using UnityEngine;
 using Zenject;
@@ -15,7 +16,12 @@ namespace Metroidvania.Player
         private PlayerMovementController _playerMovement;
 
         [Inject] PlayerInventoryManager _playerInventoryManager;
+
+        /// <summary>
+        /// Accessors
+        /// </summary>
         public PlayerInventoryManager PlayerInventoryManager => _playerInventoryManager;
+        public PlayerAnimationView PlayerAnimationView => _playerMovement.PlayerAnimationView;
 
         private void Awake()
         {

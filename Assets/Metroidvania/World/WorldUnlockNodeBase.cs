@@ -8,7 +8,7 @@ namespace Metroidvania.World
     {
         [SerializeField] private GameObject[] NodeObjects;
         [SerializeField] private WorldUnlockNode[] ChildNodes;
-        [SerializeField] public string NodeID;
+        public string NodeID => name;
         [SerializeField, RequiredField] private UnlockAnimator _unlockAnimator = default!;
 
         protected string _zoneID;
@@ -39,6 +39,11 @@ namespace Metroidvania.World
         {
             // If this node gets disabled (eg: during a reset), we want to reset the animation
             _unlockAnimator.SetLocked();
+        }
+
+        protected virtual void Reset()
+        {
+            _unlockAnimator = GetComponent<UnlockAnimator>();
         }
 
         public GameObject[] GetObjects() => NodeObjects;

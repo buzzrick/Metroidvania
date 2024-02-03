@@ -10,7 +10,9 @@ namespace Metroidvania.Player.Animation
         private ICharacterMovementDriver _characterMovementDriver;
         [SerializeField] private PlayerInteractionController _playerInteractionController;
         [SerializeField] private GameObject _model;
+        [SerializeField] private Vector3 _swimmingOffset = Vector3.zero;
         private Animator _animator;
+        private int _swimmingLayerID;
         private PlayerAnimationActionsHandler _playerAnimationActionHandler;
         private Transform _root;
         private Transform _headBone;
@@ -19,16 +21,22 @@ namespace Metroidvania.Player.Animation
         private readonly int HashJump = Animator.StringToHash("Jump");
         private readonly int HashGrounded = Animator.StringToHash("Grounded");
         private float mass = 0.1f;  // Mass of each bone
+        private bool _isSwimming;
+        private float _speed;
+
         public Animator GetAnimator() => _animator;
 
         public event Action OnAnimationStriked;
+
+
 
         [Inject]
         private void Initialise(PlayerAnimationActionsHandler.Factory playerAnimationActionFactory)
         {
             _animator = gameObject.GetComponent<Animator>();
+            _swimmingLayerID = _animator.GetLayerIndex("SwimmingLayer");
             _playerAnimationActionHandler = playerAnimationActionFactory.Create(this);
-            _playerInteractionController.RegisterPlayerAnimationHandler(_playerAnimationActionHandler);
+            _playerInteractionController.RegisterPlayerAnimationHandler(_playerAnimationActionHandler, this);
             if (_characterMovementDriver == null)
             {
                 _characterMovementDriver = GetComponentInParent<ICharacterMovementDriver>();
@@ -52,13 +60,36 @@ namespace Metroidvania.Player.Animation
 
         public void SetSpeed(float speed)
         {
+            _speed = speed;
             _animator.SetFloat(HashSpeed, speed);
+            SetSwimmingOffset();
         }
 
         public void SetJumping(bool isJumping)
         {
             //_animator.SetBool(HashJump, isJumping);
         }
+
+        public void SetSwimming(bool isSwimming)
+        {
+            _isSwimming = isSwimming;
+            _animator.SetLayerWeight(_swimmingLayerID, _isSwimming ? 1 : 0);
+            SetSwimmingOffset();
+        }
+
+        private void SetSwimmingOffset()
+        {
+            if (_isSwimming && (_speed > 0.1f))
+            {
+                transform.localPosition = _swimmingOffset;
+            }
+            else
+            {
+                transform.localPosition = Vector3.zero;
+            }
+        }
+
+        public bool IsSwimming => _isSwimming;
 
         public void SetGrounded(bool isGrounded)
         {
