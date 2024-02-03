@@ -12,7 +12,7 @@ namespace Metroidvania.World
         [SerializeField, RequiredField] private UnlockAnimator _unlockAnimator = default!;
 
         protected string _zoneID;
-        
+        private bool _parentIsUnlocked;
         protected WorldUnlockData _worldUnlockData;
         protected WorldUnlockData.WorldUnlockNodeData _nodeData;
 
@@ -48,14 +48,14 @@ namespace Metroidvania.World
 
         public GameObject[] GetObjects() => NodeObjects;
         
-        public virtual void LoadData(WorldUnlockData worldUnlockData, string zoneID)
+        public virtual void LoadData(WorldUnlockData worldUnlockData, string zoneID, bool parentIsUnlocked)
         {
             _worldUnlockData = worldUnlockData;
             _zoneID = zoneID;
+            _parentIsUnlocked = parentIsUnlocked;
             _nodeData = worldUnlockData.GetOrCreateZone(zoneID).GetOrCreateNode(NodeID);
             CalculateIsUnlocked();
             SetUnlockedState();
-            UpdateChildren();
         }
 
         protected virtual void OnUnlockedChanging(bool isUnlocked) {}
@@ -68,6 +68,7 @@ namespace Metroidvania.World
 
         private void SetUnlockedState()
         {
+            gameObject.SetActive(_parentIsUnlocked);
             if (_firstLoad)
             {
                 _unlockAnimator.SetNode(this);
@@ -84,11 +85,7 @@ namespace Metroidvania.World
         {
             foreach (WorldUnlockNode child in ChildNodes)
             {
-                if (_nodeData.IsUnlocked)
-                {
-                    child.LoadData(_worldUnlockData, _zoneID);
-                }
-                child.gameObject.SetActive(_nodeData.IsUnlocked);
+                child.LoadData(_worldUnlockData, _zoneID, _nodeData.IsUnlocked);
             }
         }
 

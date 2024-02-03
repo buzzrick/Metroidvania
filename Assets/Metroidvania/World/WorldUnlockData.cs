@@ -117,6 +117,11 @@ namespace Metroidvania.World
             {
                 PaidAmounts[resourceID] = GetPaidAmount(resourceID) + paidAmount;
             }
+
+            public override string ToString()
+            {
+                return $"UnlockNode({NodeID}) = {IsUnlocked}";
+            }
         }
         
         /// <summary>

@@ -41,13 +41,19 @@ namespace Metroidvania.World
             base.Reset();
         }
 
-        public override void LoadData(WorldUnlockData worldUnlockData, string zoneID)
+        public override void LoadData(WorldUnlockData worldUnlockData, string zoneID, bool parentIsUnlocked)
         {
-            base.LoadData(worldUnlockData, zoneID);
-            
+            base.LoadData(worldUnlockData, zoneID, parentIsUnlocked);
+            gameObject.SetActive(parentIsUnlocked);
+            if (parentIsUnlocked)
+            {
+                _meshRenderer.enabled = !IsUnlocked;
+            }
+            else
+            {
+                _meshRenderer.enabled = false;
+            }
 
-            _meshRenderer.enabled = !IsUnlocked;
-            
             _firstLoad = false;
         }
 
@@ -176,7 +182,7 @@ namespace Metroidvania.World
                 {
                     CalculateIsUnlocked();
                     //  LoadData will correctly unlock the node if required
-                    LoadData(_worldUnlockData, _zoneID);
+                    LoadData(_worldUnlockData, _zoneID, true);
                     ShowUI(false);
                 }
             }
@@ -188,7 +194,7 @@ namespace Metroidvania.World
             if (!IsUnlocked)
             {
                 _nodeData.IsUnlocked = true;
-                LoadData(_worldUnlockData, _zoneID);
+                LoadData(_worldUnlockData, _zoneID, true);
             }
         }
     }
