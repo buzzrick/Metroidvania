@@ -39,6 +39,24 @@ namespace Metroidvania.Player
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""TouchMoveAxis"",
+                    ""type"": ""Value"",
+                    ""id"": ""01e99224-788b-444a-98db-1980f57a0763"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""TouchMoveStart"",
+                    ""type"": ""Button"",
+                    ""id"": ""db510993-6b4a-4ef5-a0ee-7b688c107c1a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""2733f72f-4c5e-4ae1-a0f8-f6ce90e8ac63"",
@@ -306,6 +324,28 @@ namespace Metroidvania.Player
                     ""action"": ""CameraZoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4706a43e-9de1-452d-b443-2d598432b6b7"",
+                    ""path"": ""<Touchscreen>/Press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touch"",
+                    ""action"": ""TouchMoveStart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2af4c61-5808-4c8d-89b6-30fd2d2eabf1"",
+                    ""path"": ""<Touchscreen>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TouchMoveAxis"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -332,12 +372,19 @@ namespace Metroidvania.Player
                     ""isOR"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Touch"",
+            ""bindingGroup"": ""Touch"",
+            ""devices"": []
         }
     ]
 }");
             // World
             m_World = asset.FindActionMap("World", throwIfNotFound: true);
             m_World_MoveAxis = m_World.FindAction("MoveAxis", throwIfNotFound: true);
+            m_World_TouchMoveAxis = m_World.FindAction("TouchMoveAxis", throwIfNotFound: true);
+            m_World_TouchMoveStart = m_World.FindAction("TouchMoveStart", throwIfNotFound: true);
             m_World_Jump = m_World.FindAction("Jump", throwIfNotFound: true);
             m_World_Crouch = m_World.FindAction("Crouch", throwIfNotFound: true);
             m_World_CameraRotate = m_World.FindAction("CameraRotate", throwIfNotFound: true);
@@ -404,6 +451,8 @@ namespace Metroidvania.Player
         private readonly InputActionMap m_World;
         private List<IWorldActions> m_WorldActionsCallbackInterfaces = new List<IWorldActions>();
         private readonly InputAction m_World_MoveAxis;
+        private readonly InputAction m_World_TouchMoveAxis;
+        private readonly InputAction m_World_TouchMoveStart;
         private readonly InputAction m_World_Jump;
         private readonly InputAction m_World_Crouch;
         private readonly InputAction m_World_CameraRotate;
@@ -413,6 +462,8 @@ namespace Metroidvania.Player
             private @PlayerControls m_Wrapper;
             public WorldActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
             public InputAction @MoveAxis => m_Wrapper.m_World_MoveAxis;
+            public InputAction @TouchMoveAxis => m_Wrapper.m_World_TouchMoveAxis;
+            public InputAction @TouchMoveStart => m_Wrapper.m_World_TouchMoveStart;
             public InputAction @Jump => m_Wrapper.m_World_Jump;
             public InputAction @Crouch => m_Wrapper.m_World_Crouch;
             public InputAction @CameraRotate => m_Wrapper.m_World_CameraRotate;
@@ -429,6 +480,12 @@ namespace Metroidvania.Player
                 @MoveAxis.started += instance.OnMoveAxis;
                 @MoveAxis.performed += instance.OnMoveAxis;
                 @MoveAxis.canceled += instance.OnMoveAxis;
+                @TouchMoveAxis.started += instance.OnTouchMoveAxis;
+                @TouchMoveAxis.performed += instance.OnTouchMoveAxis;
+                @TouchMoveAxis.canceled += instance.OnTouchMoveAxis;
+                @TouchMoveStart.started += instance.OnTouchMoveStart;
+                @TouchMoveStart.performed += instance.OnTouchMoveStart;
+                @TouchMoveStart.canceled += instance.OnTouchMoveStart;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
@@ -448,6 +505,12 @@ namespace Metroidvania.Player
                 @MoveAxis.started -= instance.OnMoveAxis;
                 @MoveAxis.performed -= instance.OnMoveAxis;
                 @MoveAxis.canceled -= instance.OnMoveAxis;
+                @TouchMoveAxis.started -= instance.OnTouchMoveAxis;
+                @TouchMoveAxis.performed -= instance.OnTouchMoveAxis;
+                @TouchMoveAxis.canceled -= instance.OnTouchMoveAxis;
+                @TouchMoveStart.started -= instance.OnTouchMoveStart;
+                @TouchMoveStart.performed -= instance.OnTouchMoveStart;
+                @TouchMoveStart.canceled -= instance.OnTouchMoveStart;
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
@@ -495,9 +558,20 @@ namespace Metroidvania.Player
                 return asset.controlSchemes[m_ControllerSchemeIndex];
             }
         }
+        private int m_TouchSchemeIndex = -1;
+        public InputControlScheme TouchScheme
+        {
+            get
+            {
+                if (m_TouchSchemeIndex == -1) m_TouchSchemeIndex = asset.FindControlSchemeIndex("Touch");
+                return asset.controlSchemes[m_TouchSchemeIndex];
+            }
+        }
         public interface IWorldActions
         {
             void OnMoveAxis(InputAction.CallbackContext context);
+            void OnTouchMoveAxis(InputAction.CallbackContext context);
+            void OnTouchMoveStart(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnCrouch(InputAction.CallbackContext context);
             void OnCameraRotate(InputAction.CallbackContext context);

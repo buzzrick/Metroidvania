@@ -15,6 +15,24 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "TouchMoveAxis",
+                    "type": "Value",
+                    "id": "01e99224-788b-444a-98db-1980f57a0763",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "TouchMoveStart",
+                    "type": "Button",
+                    "id": "db510993-6b4a-4ef5-a0ee-7b688c107c1a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "2733f72f-4c5e-4ae1-a0f8-f6ce90e8ac63",
@@ -282,6 +300,28 @@
                     "action": "CameraZoom",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "4706a43e-9de1-452d-b443-2d598432b6b7",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touch",
+                    "action": "TouchMoveStart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f2af4c61-5808-4c8d-89b6-30fd2d2eabf1",
+                    "path": "<Touchscreen>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchMoveAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
@@ -308,6 +348,11 @@
                     "isOR": false
                 }
             ]
+        },
+        {
+            "name": "Touch",
+            "bindingGroup": "Touch",
+            "devices": []
         }
     ]
 }

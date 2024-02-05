@@ -1,6 +1,10 @@
 ﻿using KinematicCharacterController;
 using KinematicCharacterController.Examples;
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.EnhancedTouch;
+using Zenject;
 
 namespace Metroidvania.Player
 {
@@ -12,6 +16,8 @@ namespace Metroidvania.Player
         private Transform _cameraTransform;
         PlayerCharacterInputs characterInputs = new PlayerCharacterInputs();
 
+        private Vector2 _touchMoveDelta = Vector2.zero;
+
         private void Awake()
         {
             _playerControls = new PlayerControls();
@@ -21,6 +27,32 @@ namespace Metroidvania.Player
             _playerControls.World.Jump.performed += ctx => characterInputs.JumpDown = true;
             _playerControls.World.Crouch.performed += ctx => characterInputs.CrouchDown = true; 
             _playerControls.World.Crouch.canceled += ctx => characterInputs.CrouchUp = true;
+
+            _playerControls.World.TouchMoveStart.performed += TouchMoveStart;
+            _playerControls.World.TouchMoveStart.canceled += TouchMoveEnd;
+            _playerControls.World.TouchMoveAxis.performed += TouchMoveAxis;
+
+
+#if UNITY_EDITOR
+            TouchSimulation.Enable();
+#endif
+        }
+
+
+
+        private void TouchMoveAxis(InputAction.CallbackContext context)
+        {
+            _touchMoveDelta += context.ReadValue<Vector2>();
+        }
+
+        private void TouchMoveStart(InputAction.CallbackContext context)
+        {
+            _touchMoveDelta = Vector2.zero; //  reset the start position
+        }
+
+        private void TouchMoveEnd(InputAction.CallbackContext context)
+        {
+            _touchMoveDelta = Vector2.zero; //  reset the start position
         }
 
         private void Update()
@@ -77,6 +109,11 @@ namespace Metroidvania.Player
         {
             Vector2 moveAxis = _playerControls.World.MoveAxis.ReadValue<Vector2>();
 
+            if (moveAxis.sqrMagnitude < 0.01f) 
+            {
+                moveAxis = _touchMoveDelta;
+            }
+
             // Build the CharacterInputs struct
             characterInputs.MoveAxisForward = moveAxis.y;
             characterInputs.MoveAxisRight = moveAxis.x;
@@ -89,6 +126,7 @@ namespace Metroidvania.Player
             characterInputs.JumpDown = false;
             characterInputs.CrouchDown = false;
             characterInputs.CrouchUp = false;
+
         }
     }
 }
