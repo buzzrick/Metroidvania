@@ -3,6 +3,7 @@
 using AYellowpaper.SerializedCollections;
 using Buzzrick.UnityLibs.Attributes;
 using Cysharp.Threading.Tasks;
+using Metroidvania.Configuration;
 using Metroidvania.Interactables;
 using Metroidvania.Player;
 using Metroidvania.ResourceTypes;
@@ -24,15 +25,18 @@ namespace Metroidvania.World
         /// <summary>
         /// Don't Animate on first load
         /// </summary>
-        private bool _firstLoad;
+        private bool _firstLoadForAnimate;
         private int _updateTicker;
         private PlayerRoot? _player;
         private WorldUnlockRequirementsUIController _requirementsUIController = default!;
+        private GameConfiguration _gameConfiguration = default!;
 
         [Inject]
-        private void Initialise(WorldUnlockRequirementsUIController requirementsUIController)
+        private void Initialise(WorldUnlockRequirementsUIController requirementsUIController, 
+            GameConfiguration gameConfiguration)
         {
             _requirementsUIController = requirementsUIController;
+            _gameConfiguration = gameConfiguration;
         }
         
         protected override void Reset()
@@ -54,7 +58,7 @@ namespace Metroidvania.World
                 _meshRenderer.enabled = false;
             }
 
-            _firstLoad = false;
+            _firstLoadForAnimate = false;
         }
 
         public WorldUnlockData.WorldUnlockNodeAmounts GetUnlockAmounts()
@@ -146,11 +150,11 @@ namespace Metroidvania.World
         {
             if (!_nodeData.IsUnlocked)
             {
+                bool isPaid = true;
                 Player.Inventory.PlayerInventoryManager playerInventory = player.PlayerInventoryManager;
                 //  recalculate based on paid amounts
                 var amounts = GetUnlockAmounts();
 
-                bool isPaid = true;
                 foreach (var requiredResource in amounts.RequiredAmounts)
                 {
                     if (requiredResource.Key == null)
@@ -164,16 +168,23 @@ namespace Metroidvania.World
                     int paymentRemaining = paymentRequired - currentlyPaid;
                     if (paymentRemaining > 0)
                     {
-                        int payAmount = paymentRemaining;
-                        if (payAmount > PaymentChunkSize)
+                        if (_gameConfiguration.FreeWorldUnlocks)
                         {
-                            payAmount = PaymentChunkSize % paymentRemaining;
+                            _nodeData.AddPaidAmount(requiredResource.Key.name, paymentRemaining);
                         }
-                        int amountPaid = player.PlayerInventoryManager.ConsumeResource(requiredResource.Key, payAmount);
-                        _nodeData.AddPaidAmount(requiredResource.Key.name, amountPaid);
-                        if (amountPaid < paymentRemaining)
+                        else
                         {
-                            isPaid = false;
+                            int payAmount = paymentRemaining;
+                            if (payAmount > PaymentChunkSize)
+                            {
+                                payAmount = PaymentChunkSize % paymentRemaining;
+                            }
+                            int amountPaid = player.PlayerInventoryManager.ConsumeResource(requiredResource.Key, payAmount);
+                            _nodeData.AddPaidAmount(requiredResource.Key.name, amountPaid);
+                            if (amountPaid < paymentRemaining)
+                            {
+                                isPaid = false;
+                            }
                         }
                     }
                 }

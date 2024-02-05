@@ -1,5 +1,6 @@
 using Buzzrick.UnityLibs.Attributes;
 using Metroidvania.Cameras;
+using Metroidvania.Configuration;
 using Metroidvania.Debugging;
 using Metroidvania.Interactables.ResourcePickups;
 using Metroidvania.Lighting;
@@ -18,6 +19,7 @@ namespace Metroidvania.GameCore
         [SerializeField, RequiredField] private CameraController CameraControllerInstance;
         [SerializeField, RequiredField] private ResourceTypeDB ResourceTypeDB;
         [SerializeField, RequiredField] private GameLifecycleManager GameLifecycleManager;
+        [SerializeField, RequiredField] private GameConfiguration GameConfigurationInstance;
 
         public override void InstallBindings()
         {
@@ -33,6 +35,7 @@ namespace Metroidvania.GameCore
             Container.Bind<WorldUnlockData>().FromNew().AsSingle();
             Container.Bind<WorldUnlockRequirementsUIController>().FromNew().AsSingle();
             Container.Bind<WorldManager>().FromNew().AsSingle().NonLazy();
+            Container.BindInstance(GameConfigurationInstance).AsSingle();
 
             Container.BindInstance(GameLifecycleManager).AsSingle();
             Container.BindInstance(ResourceTypeDB).AsSingle();

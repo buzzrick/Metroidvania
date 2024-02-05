@@ -12,7 +12,8 @@
         "Synty",
         "Unity.TextMeshPro",
         "Unity.InputSystem",
-        "AYellowpaper.SerializedCollections"
+        "AYellowpaper.SerializedCollections",
+        "NaughtyAttributes.Core"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
