@@ -16,4 +16,4 @@ MonoBehaviour:
   ResourcePickupPrefab: {fileID: 8157950103990092827, guid: 62f979295b2f2f342bb5cf71d93e1394,
     type: 3}
   InteractionAction: 1
-  HarvestSound: {fileID: 8300000, guid: c9673359731ec70419e8485e7285b07c, type: 3}
+  HarvestSound: {fileID: 8300000, guid: faa2c925203b218498a108686b069c4b, type: 3}

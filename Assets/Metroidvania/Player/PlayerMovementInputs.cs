@@ -109,6 +109,7 @@ namespace Metroidvania.Player
         {
             Vector2 moveAxis = _playerControls.World.MoveAxis.ReadValue<Vector2>();
 
+            //  If we don't have physical movement input, then try using Touch movement axis
             if (moveAxis.sqrMagnitude < 0.01f) 
             {
                 moveAxis = _touchMoveDelta;
