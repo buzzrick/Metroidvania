@@ -231,6 +231,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "dev.chsxf.autoscene": {
+      "version": "https://github.com/chsxf/AutoScene.git#1.3.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "b6ada4b2bb0b33f724f1f5b07bc7adede246c9f2"
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,

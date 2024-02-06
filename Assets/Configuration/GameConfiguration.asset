@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: GameConfiguration
   m_EditorClassIdentifier: 
   _debugOptionsEnabled: 1
-  _freeWorldUnlocks: 1
+  _freeWorldUnlocks: 0

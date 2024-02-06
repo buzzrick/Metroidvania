@@ -6,6 +6,8 @@ using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityEngine;
 using System.Linq;
 using PsychoticLab;
+using Metroidvania.Configuration;
+using System;
 
 namespace Assets.Metroidvania.Debugging.DebugMenu
 {
@@ -13,6 +15,7 @@ namespace Assets.Metroidvania.Debugging.DebugMenu
     {
         private PlayerMovementStatsSO[] _movementStats;
         private PlayerCore _playerCore;
+        private GameConfiguration _gameConfiguration;
         private CharacterRandomizer _characterRandomiser;
         private PlayerMovementController_NoIK _characterToControl;
 
@@ -27,13 +30,18 @@ namespace Assets.Metroidvania.Debugging.DebugMenu
             });
 
 
-            PickerCellModel movementPicker = new PickerCellModel();
-            movementPicker.Text = "Movement Type";
-            movementPicker.SetOptions(GetMovementTitlesList(), GetCurrentMovementTypeNum());
-            movementPicker.Clicked += HandleMovementPicker_Clicked;
-            movementPicker.Confirmed += HandleMovementPicker_Confirmed;
-            movementPicker.ActiveOptionChanged += HandleMovementPicker_ActiveOptionChanged;
-            AddPicker(movementPicker);
+            //  obsolete with new playercontroller:
+
+            //PickerCellModel movementPicker = new PickerCellModel();
+            //movementPicker.Text = "Movement Type";
+            //movementPicker.SetOptions(GetMovementTitlesList(), GetCurrentMovementTypeNum());
+            //movementPicker.Clicked += HandleMovementPicker_Clicked;
+            //movementPicker.Confirmed += HandleMovementPicker_Confirmed;
+            //movementPicker.ActiveOptionChanged += HandleMovementPicker_ActiveOptionChanged;
+            //AddPicker(movementPicker);
+
+
+            AddSwitch(_gameConfiguration.FreeWorldUnlocksDebugging, "Free Unlocks", null, null, null, null, null, ToggleFreeWorldUnlocks);
 
 
             ////  as a list of buttons
@@ -50,6 +58,12 @@ namespace Assets.Metroidvania.Debugging.DebugMenu
             Reload();
 
             yield break;
+        }
+
+        private void ToggleFreeWorldUnlocks(bool newValue)
+        {
+            _gameConfiguration.FreeWorldUnlocksDebugging = newValue;
+            //_gameConfiguration.FreeWorldUnlocksDebugging = !_gameConfiguration.FreeWorldUnlocksDebugging;
         }
 
         private void HandleMovementPicker_ActiveOptionChanged(int movementID)
@@ -90,10 +104,11 @@ namespace Assets.Metroidvania.Debugging.DebugMenu
             return 0;
         }
 
-        public void Setup(PlayerMovementStatsSO[] movementStats, PlayerCore playerCore)
+        public void Setup(PlayerMovementStatsSO[] movementStats, PlayerCore playerCore, GameConfiguration gameConfiguration)
         {
             _movementStats = movementStats;
             _playerCore = playerCore;
+            _gameConfiguration = gameConfiguration;
             _characterRandomiser = playerCore.GetPlayerRoot().GetComponentInChildren<CharacterRandomizer>();
             _characterToControl = playerCore.GetPlayerRoot().GetComponent<PlayerMovementController_NoIK>();
         }

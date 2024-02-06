@@ -1,5 +1,6 @@
 ﻿using Assets.Metroidvania.Debugging.DebugMenu;
 using Cysharp.Threading.Tasks;
+using Metroidvania.Configuration;
 using Metroidvania.GameCore;
 using Metroidvania.MultiScene;
 using Metroidvania.Player;
@@ -13,11 +14,14 @@ namespace Metroidvania.Debugging
     {
         public PlayerMovementStatsSO[] MovementStats;
         private PlayerCore _playerCore;
+        private GameConfiguration _gameConfiguration;
 
         [Inject]
-        private void Initialise(PlayerCore playerCore)
+        private void Initialise(PlayerCore playerCore,
+            GameConfiguration gameConfiguration)
         {
             _playerCore = playerCore;
+            _gameConfiguration = gameConfiguration;
         }
 
         public UniTask CleanupSelf()
@@ -39,7 +43,7 @@ namespace Metroidvania.Debugging
             var rootPage = DebugSheet.Instance.GetOrCreateInitialPage();
 
             rootPage.AddPageLinkButton<DebugPlayerMenu>("Player Character",
-                onLoad: page => page.Setup(MovementStats, _playerCore));
+                onLoad: page => page.Setup(MovementStats, _playerCore, _gameConfiguration));
             // You must call Reload() after adding cells.
             rootPage.Reload();
         }
