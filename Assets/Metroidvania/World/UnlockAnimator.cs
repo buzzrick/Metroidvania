@@ -80,7 +80,7 @@ namespace Metroidvania.World
         
         public void SetLocked()
         {
-            Debug.Log($"Setting Locked");
+            Debug.Log($"Setting Locked {name}", this);
             _isUnlocked = false;
             foreach (var scaleObjectKV in _defaultScales)
             {
@@ -90,7 +90,7 @@ namespace Metroidvania.World
 
         public void SetUnlocked()
         {
-            Debug.Log($"Setting Unlocked");
+            Debug.Log($"Setting Unlocked {name}", this);
             _isUnlocked = true;
             foreach (var scaleObjectKV in _defaultScales)
             {

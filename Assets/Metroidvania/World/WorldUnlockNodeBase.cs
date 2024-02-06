@@ -19,7 +19,6 @@ namespace Metroidvania.World
         private bool _isUnlocked;
         private bool _firstLoad = true;
 
-        public string ZoneID => _zoneID;
         public WorldUnlockData.WorldUnlockNodeData NodeData => _nodeData;
 
         public bool IsUnlocked 
