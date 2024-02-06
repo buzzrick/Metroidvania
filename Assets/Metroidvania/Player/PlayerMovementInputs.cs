@@ -12,11 +12,14 @@ namespace Metroidvania.Player
     {
         public PlayerMovementController PlayerMovementController;
         public PlayerCameraController PlayerCameraController;
+        private int _screenWidth;
         private PlayerControls _playerControls;
         private Transform _cameraTransform;
         PlayerCharacterInputs characterInputs = new PlayerCharacterInputs();
 
         private Vector2 _touchMoveDelta = Vector2.zero;
+        private float _touchScalar;
+        private const float TouchScalarMultiplier = 5f;
 
         private void Awake()
         {
@@ -32,12 +35,19 @@ namespace Metroidvania.Player
             _playerControls.World.TouchMoveStart.canceled += TouchMoveEnd;
             _playerControls.World.TouchMoveAxis.performed += TouchMoveAxis;
 
-
+            CalculateTouchScalar();
 #if UNITY_EDITOR
             TouchSimulation.Enable();
 #endif
         }
 
+
+        private void CalculateTouchScalar()
+        {
+            _touchScalar = 1f / Screen.width * TouchScalarMultiplier;
+
+            Debug.Log($"Found TouchScalar = {_touchScalar}");
+        }
 
 
         private void TouchMoveAxis(InputAction.CallbackContext context)
@@ -112,7 +122,11 @@ namespace Metroidvania.Player
             //  If we don't have physical movement input, then try using Touch movement axis
             if (moveAxis.sqrMagnitude < 0.01f) 
             {
-                moveAxis = _touchMoveDelta;
+
+                moveAxis = _touchMoveDelta * _touchScalar;
+
+                if (moveAxis.sqrMagnitude > 0.01f)
+                    Debug.Log($"TouchMove Delta:{_touchMoveDelta}, Scalar:{_touchScalar}, Final:{moveAxis}");
             }
 
             // Build the CharacterInputs struct
