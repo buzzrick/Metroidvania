@@ -4425,7 +4425,7 @@ MonoBehaviour:
   ObstructionCheckRadius: 0.2
   ObstructionLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1073743351
   ObstructionSharpness: 10000
   IgnoredColliders: []
 --- !u!54 &1403159906

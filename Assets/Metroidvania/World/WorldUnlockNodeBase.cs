@@ -51,6 +51,10 @@ namespace Metroidvania.World
         {
             _worldUnlockData = worldUnlockData;
             _zoneID = zoneID;
+            if (!_parentIsUnlocked) //  if the parent was previously locked then treat this as the first load
+            {
+                _firstLoad = true;
+            }
             _parentIsUnlocked = parentIsUnlocked;
             _nodeData = worldUnlockData.GetOrCreateZone(zoneID).GetOrCreateNode(NodeID);
             CalculateIsUnlocked();
@@ -67,15 +71,23 @@ namespace Metroidvania.World
 
         private void SetUnlockedState()
         {
-            gameObject.SetActive(_parentIsUnlocked);
-            if (_firstLoad)
+            if (_parentIsUnlocked)
             {
-                _unlockAnimator.SetNode(this);
-                _firstLoad = false;
+                gameObject.SetActive(true);
+                if (_firstLoad)
+                {
+                    _unlockAnimator.SetNode(this);
+                    _firstLoad = false;
+                    _unlockAnimator.SetUnlockedImmediate(IsUnlocked);
+                }
+                else
+                {
+                    _unlockAnimator.Animate(IsUnlocked);
+                }
             }
             else
             {
-                _unlockAnimator.Animate(IsUnlocked);
+                gameObject.SetActive(false);
             }
             UpdateChildren();
         }
@@ -97,5 +109,14 @@ namespace Metroidvania.World
         //    }
         //}
 
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            foreach (WorldUnlockNode child in ChildNodes)
+            {
+                Gizmos.DrawLine(transform.position, child.transform.position);
+            }
+        }
     }
 }

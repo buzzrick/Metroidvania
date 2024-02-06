@@ -61,12 +61,8 @@ namespace Metroidvania.World
         public void SetNode(WorldUnlockNodeBase node)
         {
             _node = node;
-            _defaultScales.Clear(); 
             //  store the starting scales for all of the objects 
-            foreach (var scaleObject in _node.GetObjects())
-            {
-                _defaultScales.Add(scaleObject, scaleObject.transform.localScale);             
-            }
+            GatherDefaultScales();
             
             if (_node.IsUnlocked)
             {
@@ -78,13 +74,40 @@ namespace Metroidvania.World
             }
         }
         
+        private void GatherDefaultScales()
+        {
+            if (_defaultScales.Count == 0)
+            {
+                foreach (var scaleObject in _node.GetObjects())
+                {
+                    _defaultScales.Add(scaleObject, scaleObject.transform.localScale);
+                }
+            }
+        }
+
         public void SetLocked()
         {
-            Debug.Log($"Setting Locked {name}", this);
-            _isUnlocked = false;
+            if (isActiveAndEnabled)
+            {
+                Debug.Log($"Setting Locked {name}", this);
+                _isUnlocked = false;
+                foreach (var scaleObjectKV in _defaultScales)
+                {
+                    scaleObjectKV.Key.transform.localScale = Vector3.zero;
+                }
+            }
+        }
+
+        /// <summary>
+        /// set the unlocked state immediately
+        /// </summary>
+        /// <param name="isUnlocked"></param>
+        public void SetUnlockedImmediate(bool isUnlocked)
+        {
             foreach (var scaleObjectKV in _defaultScales)
             {
-                scaleObjectKV.Key.transform.localScale = Vector3.zero;
+                scaleObjectKV.Key.transform.localScale =
+                    isUnlocked ? scaleObjectKV.Value : Vector3.zero;
             }
         }
 
@@ -122,12 +145,18 @@ namespace Metroidvania.World
 
         public void AnimateToLocked()
         {
-            if (_isUnlocked)
+            //  immediate mode - don't animate locking, just do it immediately
+            foreach (var scaleObjectKV in _defaultScales)
             {
-                _isAnimatingToLocked = true;
-                _isAnimatingToUnlocked = false;
-                _timer = 0f;
+                scaleObjectKV.Key.transform.localScale = Vector3.zero;
             }
+
+            //if (_isUnlocked)
+            //{
+            //    _isAnimatingToLocked = true;
+            //    _isAnimatingToUnlocked = false;
+            //    _timer = 0f;
+            //}
         }
     }
 }
