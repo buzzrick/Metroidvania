@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Zenject;
-using Zenject.ReflectionBaking.Mono.Cecil;
 
 namespace Metroidvania.Player.Inventory
 {

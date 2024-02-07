@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using KinematicCharacterController;
 using UnityEditor;
-using KinematicCharacterController;
+using UnityEngine;
 
 public class PauseStateHandler
 {

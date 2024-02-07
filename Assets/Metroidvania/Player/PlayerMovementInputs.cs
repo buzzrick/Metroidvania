@@ -122,11 +122,9 @@ namespace Metroidvania.Player
             //  If we don't have physical movement input, then try using Touch movement axis
             if (moveAxis.sqrMagnitude < 0.01f) 
             {
-
                 moveAxis = _touchMoveDelta * _touchScalar;
-
-                if (moveAxis.sqrMagnitude > 0.01f)
-                    Debug.Log($"TouchMove Delta:{_touchMoveDelta}, Scalar:{_touchScalar}, Final:{moveAxis}");
+                // if (moveAxis.sqrMagnitude > 0.01f)
+                //     Debug.Log($"TouchMove Delta:{_touchMoveDelta}, Scalar:{_touchScalar}, Final:{moveAxis}");
             }
 
             // Build the CharacterInputs struct
