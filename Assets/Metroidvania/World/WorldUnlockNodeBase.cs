@@ -1,4 +1,4 @@
-using System;
+#nullable enable
 using Buzzrick.UnityLibs.Attributes;
 using UnityEngine;
 
@@ -9,15 +9,15 @@ namespace Metroidvania.World
         [SerializeField] private GameObject[] NodeObjects;
         [SerializeField] private WorldUnlockNode[] ChildNodes;
         public string NodeID => name;
-        [SerializeField, RequiredField] private UnlockAnimator _unlockAnimator = default!;
+        [SerializeField, RequiredField] private UnlockAnimator? _unlockAnimator;
 
         protected string _zoneID;
-        private bool _parentIsUnlocked;
         protected WorldUnlockData _worldUnlockData;
         protected WorldUnlockData.WorldUnlockNodeData _nodeData;
+        protected WorldUnlockData.WorldUnlockNodeData? _parentNodeData;
+        public bool ParentIsUnlocked => _parentNodeData?.IsUnlocked ?? true; //  if there's no parent, then it's unlocked
 
         private bool _isUnlocked;
-        private bool _firstLoad = true;
 
         public WorldUnlockData.WorldUnlockNodeData NodeData => _nodeData;
 
@@ -34,12 +34,6 @@ namespace Metroidvania.World
             }
         }
 
-        private void OnDisable()
-        {
-            // If this node gets disabled (eg: during a reset), we want to reset the animation
-            _unlockAnimator.SetLocked();
-        }
-
         protected virtual void Reset()
         {
             _unlockAnimator = GetComponent<UnlockAnimator>();
@@ -47,18 +41,14 @@ namespace Metroidvania.World
 
         public GameObject[] GetObjects() => NodeObjects;
         
-        public virtual void LoadData(WorldUnlockData worldUnlockData, string zoneID, bool parentIsUnlocked)
+        public virtual void LoadData(string zoneID, WorldUnlockData worldUnlockData, WorldUnlockData.WorldUnlockNodeData? parentNodeData, bool firstLoad)
         {
             _worldUnlockData = worldUnlockData;
+            _parentNodeData = parentNodeData;
             _zoneID = zoneID;
-            if (!_parentIsUnlocked) //  if the parent was previously locked then treat this as the first load
-            {
-                _firstLoad = true;
-            }
-            _parentIsUnlocked = parentIsUnlocked;
             _nodeData = worldUnlockData.GetOrCreateZone(zoneID).GetOrCreateNode(NodeID);
             CalculateIsUnlocked();
-            SetUnlockedState();
+            SetUnlockedState(firstLoad);
         }
 
         protected virtual void OnUnlockedChanging(bool isUnlocked) {}
@@ -69,34 +59,24 @@ namespace Metroidvania.World
         }
 
 
-        private void SetUnlockedState()
+        private void SetUnlockedState(bool firstLoad)
         {
-            if (_parentIsUnlocked)
+            if (firstLoad)
             {
-                gameObject.SetActive(true);
-                if (_firstLoad)
-                {
-                    _unlockAnimator.SetNode(this);
-                    _firstLoad = false;
-                    _unlockAnimator.SetUnlockedImmediate(IsUnlocked);
-                }
-                else
-                {
-                    _unlockAnimator.Animate(IsUnlocked);
-                }
+                _unlockAnimator.SetNode(this);
             }
             else
             {
-                gameObject.SetActive(false);
+                _unlockAnimator.Animate();
             }
-            UpdateChildren();
+            UpdateChildren(firstLoad);
         }
 
-        protected void UpdateChildren()
+        protected void UpdateChildren(bool firstLoad)
         {
             foreach (WorldUnlockNode child in ChildNodes)
             {
-                child.LoadData(_worldUnlockData, _zoneID, _nodeData.IsUnlocked);
+                child.LoadData(_zoneID, _worldUnlockData, _nodeData, firstLoad);
             }
         }
 

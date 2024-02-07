@@ -45,22 +45,6 @@ namespace Metroidvania.World
             base.Reset();
         }
 
-        public override void LoadData(WorldUnlockData worldUnlockData, string zoneID, bool parentIsUnlocked)
-        {
-            base.LoadData(worldUnlockData, zoneID, parentIsUnlocked);
-            gameObject.SetActive(parentIsUnlocked);
-            if (parentIsUnlocked)
-            {
-                _meshRenderer.enabled = !IsUnlocked;
-            }
-            else
-            {
-                _meshRenderer.enabled = false;
-            }
-
-            _firstLoadForAnimate = false;
-        }
-
         public WorldUnlockData.WorldUnlockNodeAmounts GetUnlockAmounts()
         {
             return new WorldUnlockData.WorldUnlockNodeAmounts
@@ -193,19 +177,9 @@ namespace Metroidvania.World
                 {
                     CalculateIsUnlocked();
                     //  LoadData will correctly unlock the node if required
-                    LoadData(_worldUnlockData, _zoneID, true);
+                    LoadData(_zoneID, _worldUnlockData, _parentNodeData, false);
                     ShowUI(false);
                 }
-            }
-        }
-
-
-        private void UnlockNode()
-        {
-            if (!IsUnlocked)
-            {
-                _nodeData.IsUnlocked = true;
-                LoadData(_worldUnlockData, _zoneID, true);
             }
         }
     }

@@ -35,14 +35,14 @@ namespace Metroidvania.World
         {
             //await _gameCore.StartCore();
 
-            LoadData(_worldData, ZoneID, true);
+            LoadData(ZoneID, _worldData, null, true);
             await _worldData.SaveData();
         }
 
         public async void DebugResetWorldData()
         {
             _worldData.ResetWorldData();
-            LoadData(_worldData, ZoneID, true);
+            LoadData(ZoneID, _worldData, null, true);
             await _worldData.SaveData();
         }
 
@@ -52,11 +52,11 @@ namespace Metroidvania.World
         /// <param name="worldUnlockData"></param>
         /// <param name="zoneID"></param>
         /// <param name="parentIsActive">Never false for the root node</param>
-        public override void LoadData(WorldUnlockData worldUnlockData, string zoneID, bool parentIsActive)
+        public override void LoadData(string zoneID, WorldUnlockData worldUnlockData, WorldUnlockData.WorldUnlockNodeData parentData, bool firstLoad)
         {
             //  because this is the root node, this needs to be automatically set active;
             worldUnlockData.GetOrCreateZone(zoneID).GetOrCreateNode(NodeID).IsUnlocked = true;
-            base.LoadData(worldUnlockData, zoneID, true);
+            base.LoadData(zoneID, worldUnlockData, parentData, firstLoad);
         }
 
     }

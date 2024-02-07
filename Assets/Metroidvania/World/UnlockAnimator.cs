@@ -11,49 +11,33 @@ namespace Metroidvania.World
     {
         private float _timer;
         private const float ANIMATION_TIME = 0.5f;
-        private bool _isAnimatingToLocked;
         private bool _isAnimatingToUnlocked;
 
         private WorldUnlockNodeBase? _node;
         private Dictionary<GameObject, Vector3> _defaultScales = new Dictionary<GameObject, Vector3>();
-        private bool _isUnlocked;
+        private MeshRenderer _unlockZoneMesh;
+        private bool IsUnlocked => _node!.IsUnlocked;
 
+        private bool ParentIsUnlocked => _node?.ParentIsUnlocked ?? true; //  if there's no parent, then it's unlocked
+        
         private void Update()
         {
-            if (_isAnimatingToLocked || _isAnimatingToUnlocked)
+            if (_isAnimatingToUnlocked)
             {
                 _timer += Time.deltaTime;
-                if (_timer >= ANIMATION_TIME)
+                if (_timer >= ANIMATION_TIME)   //  timer complete
                 {
-                    if (_isAnimatingToLocked)
-                    {
-                        SetLocked();
-                    }
-                    else
-                    {
-                        SetUnlocked();
-                    }
-                    _isAnimatingToLocked = false;
+                    SetImmediate();
                     _isAnimatingToUnlocked = false;
-                    Debug.Log($"Animation Complete:{name}, {_isUnlocked}");
+                    Debug.Log($"Animation Complete:{name}, {IsUnlocked}");
                 }
                 else
                 {
                     float percent = _timer / ANIMATION_TIME;
-                    if (_isAnimatingToLocked)
+                    foreach (var scaleObjectKV in _defaultScales)
                     {
-                        foreach (var scaleObjectKV in _defaultScales)
-                        {
-                            scaleObjectKV.Key.transform.localScale = Vector3.Lerp(scaleObjectKV.Value, Vector3.zero, percent);
-                        }                        
-                    }
-                    else
-                    {
-                        foreach (var scaleObjectKV in _defaultScales)
-                        {
-                            scaleObjectKV.Key.transform.localScale = Vector3.Lerp(Vector3.zero, scaleObjectKV.Value, percent);
-                        }                        
-                    }
+                        scaleObjectKV.Key.transform.localScale = Vector3.Lerp(Vector3.zero, scaleObjectKV.Value, percent);
+                    }                        
                 }
             }
         }
@@ -63,21 +47,15 @@ namespace Metroidvania.World
             _node = node;
             //  store the starting scales for all of the objects 
             GatherDefaultScales();
-            
-            if (_node.IsUnlocked)
-            {
-                SetUnlocked();
-            }
-            else
-            {
-                SetLocked();
-            }
+            SetImmediate();
         }
         
         private void GatherDefaultScales()
         {
+            //  only need to do this once
             if (_defaultScales.Count == 0)
             {
+                _unlockZoneMesh = GetComponent<MeshRenderer>();
                 foreach (var scaleObject in _node.GetObjects())
                 {
                     _defaultScales.Add(scaleObject, scaleObject.transform.localScale);
@@ -85,78 +63,66 @@ namespace Metroidvania.World
             }
         }
 
-        public void SetLocked()
+        /// <summary>
+        /// set the unlocked state immediately
+        /// </summary>
+        public void SetImmediate()
         {
-            if (isActiveAndEnabled)
+            EnableUnlockZoneMesh();
+
+            EnableNodeObjects();
+            foreach (var scaleObjectKV in _defaultScales)
             {
-                Debug.Log($"Setting Locked {name}", this);
-                _isUnlocked = false;
-                foreach (var scaleObjectKV in _defaultScales)
+                scaleObjectKV.Key.transform.localScale =
+                    IsUnlocked ? scaleObjectKV.Value : Vector3.zero;
+            }
+        }
+
+        private void EnableUnlockZoneMesh()
+        {
+            if (_unlockZoneMesh != null)
+            {
+                //  Show the unlocked Zone if our parent is unlocked and we are still locked
+                _unlockZoneMesh.enabled = ParentIsUnlocked && !_node!.IsUnlocked;
+            }
+        }
+
+
+        public void Animate()
+        {
+            EnableNodeObjects();
+            if (ParentIsUnlocked)
+            {
+                if (IsUnlocked)
                 {
-                    scaleObjectKV.Key.transform.localScale = Vector3.zero;
+                    AnimateToUnlocked();
+                }
+                else
+                {
+                    //  setting locked is immediate
+                    SetImmediate();
                 }
             }
         }
 
-        /// <summary>
-        /// set the unlocked state immediately
-        /// </summary>
-        /// <param name="isUnlocked"></param>
-        public void SetUnlockedImmediate(bool isUnlocked)
+        private void EnableNodeObjects()
         {
-            foreach (var scaleObjectKV in _defaultScales)
+            //  objects are enabled if our parent is unlocked, and we are also unlocked
+            bool isEnabled = ParentIsUnlocked && _node!.IsUnlocked;
+            foreach (GameObject nodeObject in _node!.GetObjects())    
             {
-                scaleObjectKV.Key.transform.localScale =
-                    isUnlocked ? scaleObjectKV.Value : Vector3.zero;
+                nodeObject.SetActive(isEnabled);
             }
         }
 
-        public void SetUnlocked()
+        private void AnimateToUnlocked()
         {
-            Debug.Log($"Setting Unlocked {name}", this);
-            _isUnlocked = true;
-            foreach (var scaleObjectKV in _defaultScales)
+            if (!_isAnimatingToUnlocked)
             {
-                scaleObjectKV.Key.transform.localScale = scaleObjectKV.Value;
-            }
-        }
-
-        public void Animate(bool isUnlocked)
-        {
-            if (isUnlocked)
-            {
-                AnimateToUnlocked();
-            }
-            else
-            {
-                AnimateToLocked();
-            }
-        }
-        
-        public void AnimateToUnlocked()
-        {
-            if (!_isUnlocked)
-            {
-                _isAnimatingToLocked = false;
+                EnableUnlockZoneMesh();
                 _isAnimatingToUnlocked = true;
                 _timer = 0f;
             }
-        }
-
-        public void AnimateToLocked()
-        {
-            //  immediate mode - don't animate locking, just do it immediately
-            foreach (var scaleObjectKV in _defaultScales)
-            {
-                scaleObjectKV.Key.transform.localScale = Vector3.zero;
-            }
-
-            //if (_isUnlocked)
-            //{
-            //    _isAnimatingToLocked = true;
-            //    _isAnimatingToUnlocked = false;
-            //    _timer = 0f;
-            //}
         }
     }
 }
