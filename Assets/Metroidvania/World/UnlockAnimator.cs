@@ -15,7 +15,8 @@ namespace Metroidvania.World
 
         private WorldUnlockNodeBase? _node;
         private Dictionary<GameObject, Vector3> _defaultScales = new Dictionary<GameObject, Vector3>();
-        private MeshRenderer _unlockZoneMesh;
+        private MeshRenderer? _unlockZoneMesh;
+        private Collider? _collider;
         private bool IsUnlocked => _node!.IsUnlocked;
 
         private bool ParentIsUnlocked => _node?.ParentIsUnlocked ?? true; //  if there's no parent, then it's unlocked
@@ -56,6 +57,7 @@ namespace Metroidvania.World
             if (_defaultScales.Count == 0)
             {
                 _unlockZoneMesh = GetComponent<MeshRenderer>();
+                _collider = GetComponent<Collider>();
                 foreach (var scaleObject in _node.GetObjects())
                 {
                     _defaultScales.Add(scaleObject, scaleObject.transform.localScale);
@@ -84,6 +86,11 @@ namespace Metroidvania.World
             {
                 //  Show the unlocked Zone if our parent is unlocked and we are still locked
                 _unlockZoneMesh.enabled = ParentIsUnlocked && !_node!.IsUnlocked;
+            }
+
+            if (_collider != null)
+            {
+                _collider.enabled = ParentIsUnlocked && !_node!.IsUnlocked;
             }
         }
 

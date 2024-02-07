@@ -17,7 +17,6 @@ namespace Metroidvania.World
     [RequireComponent(typeof(UnlockAnimator))]
     public class WorldUnlockNode : WorldUnlockNodeBase, IPlayerEnterTriggerZone, IPlayerExitTriggerZone
     {
-        [SerializeField, RequiredField] private MeshRenderer _meshRenderer = default!;
         [SerializedDictionary("ResourceType", "Amount Required")] public SerializedDictionary<ResourceTypeSO, int> ResourceAmounts = new();
         [Tooltip("How much of each resource should be paid per frame")]
         public int PaymentChunkSize = 10;
@@ -39,12 +38,6 @@ namespace Metroidvania.World
             _gameConfiguration = gameConfiguration;
         }
         
-        protected override void Reset()
-        {
-            _meshRenderer = GetComponent<MeshRenderer>();
-            base.Reset();
-        }
-
         public WorldUnlockData.WorldUnlockNodeAmounts GetUnlockAmounts()
         {
             return new WorldUnlockData.WorldUnlockNodeAmounts
