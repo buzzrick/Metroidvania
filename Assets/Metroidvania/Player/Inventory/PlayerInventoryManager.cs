@@ -1,3 +1,4 @@
+using AYellowpaper.SerializedCollections;
 using Cysharp.Threading.Tasks;
 using Metroidvania.ResourceTypes;
 using System;
@@ -123,6 +124,33 @@ namespace Metroidvania.Player.Inventory
             int finalAmount = Math.Clamp(payAmount, 0, availableAmount);
             IncrementInventory(resource.name, -finalAmount);
             return finalAmount;
+        }
+
+        public bool TryConsumeResources(SerializedDictionary<ResourceTypeSO, int> amounts)
+        {
+            foreach (var item in amounts)
+            {
+                if (GetOrCreateInventoryItemAmount(item.Key).ItemCount < item.Value)
+                {
+                    return false;
+                }
+            }
+
+            //  If we get here, then we've confirmed we can afford the costs.
+            foreach (var item in amounts)
+            {
+                ConsumeResource(item.Key, item.Value);
+            }
+            return true;
+        }
+
+        public void AddResources(SerializedDictionary<ResourceTypeSO, int> amounts)
+        {
+            //  If we get here, then we've confirmed we can afford the costs.
+            foreach (var item in amounts)
+            {
+                IncrementInventory(item.Key, item.Value);
+            }
         }
 
         [Serializable]

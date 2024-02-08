@@ -3,9 +3,13 @@ using AYellowpaper.SerializedCollections;
 using Buzzrick.UnityLibs.Attributes;
 using Cysharp.Threading.Tasks;
 using Metroidvania.MultiScene;
+using Metroidvania.Player;
+using Metroidvania.Player.Inventory;
 using Metroidvania.ResourceTypes;
 using Metroidvania.World;
 using UnityEngine;
+using UnityEngine.UI;
+using Zenject;
 
 namespace Metroidvania.Interactables.WorldObjects.Machine
 {
@@ -14,13 +18,24 @@ namespace Metroidvania.Interactables.WorldObjects.Machine
         [SerializeField, RequiredField] private Canvas _canvas = default!;
         [SerializeField, RequiredField] private UnlockItemCostsDisplay[] _machineInputDisplays = default!;
         [SerializeField, RequiredField] private UnlockItemCostsDisplay[] _machineOutputDisplays = default!;
+        [SerializeField, RequiredField] private Button CreateButton = default!;
         private ProductionMachine _displayedMachine;
         private Camera _mainCamera;
+
+        public event Action? OnCreateRequested;
 
         private void Awake()
         {
             _mainCamera = Camera.main;
+            _canvas.worldCamera = _mainCamera;
+            CreateButton.onClick.AddListener(HandleCreateButton);
         }
+
+        private void HandleCreateButton()
+        {
+            OnCreateRequested?.Invoke();
+        }
+
 
         public UniTask CleanupSelf()
         {

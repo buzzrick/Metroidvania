@@ -12,6 +12,7 @@ namespace Metroidvania.Interactables.WorldObjects.Machine
     {
         [SerializedDictionary("ResourceType", "Amount Required")] public SerializedDictionary<ResourceTypeSO, int> InputAmounts = new();
         [SerializedDictionary("ResourceType", "Amount Required")] public SerializedDictionary<ResourceTypeSO, int> OutputAmounts = new();
+        [SerializeField] 
         private ProductionMachineUIController _uiController = default!;
 
         [Inject]
@@ -22,7 +23,7 @@ namespace Metroidvania.Interactables.WorldObjects.Machine
         
         public void OnPlayerEnteredZone(PlayerRoot player)
         {
-            _uiController.ShowUI(this).Forget();
+            _uiController.ShowUI(this, player).Forget();
         }
 
         public void OnPlayerExitedZone(PlayerRoot player)

@@ -34,12 +34,12 @@ namespace Metroidvania.World
 
         private void OnEnable()
         {
-            _playerCore.GetPlayerRoot().PlayerInventoryManager.OnInventoryAmountChanged += RecalculateResourceCosts;
+            _playerCore.GetInventoryManager().OnInventoryAmountChanged += RecalculateResourceCosts;
         }
 
         private void OnDisable()
         {
-            _playerCore.GetPlayerRoot().PlayerInventoryManager.OnInventoryAmountChanged -= RecalculateResourceCosts;
+            _playerCore.GetInventoryManager().OnInventoryAmountChanged -= RecalculateResourceCosts;
         }
 
         private void RecalculateResourceCosts(PlayerInventoryManager.InventoryItemAmount obj)

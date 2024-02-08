@@ -1,6 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
 using Metroidvania.GameCore;
 using Metroidvania.MultiScene;
+using Metroidvania.Player.Inventory;
+using System;
 using UnityEngine;
 
 namespace Metroidvania.Player
@@ -56,5 +58,7 @@ namespace Metroidvania.Player
         {
             await _playerRoot.StartCore();
         }
+
+        public PlayerInventoryManager GetInventoryManager() => GetPlayerRoot().PlayerInventoryManager;
     }
 }
