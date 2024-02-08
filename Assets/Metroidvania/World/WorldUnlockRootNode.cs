@@ -1,23 +1,30 @@
+#nullable enable
+using Metroidvania.Player;
 using Metroidvania.UI;
+using UnityEngine;
 using Zenject;
 
 namespace Metroidvania.World
 {
     public class WorldUnlockRootNode : WorldUnlockNodeBase
     {
-        private WorldUnlockData _worldData;
-        private GameCore.GameCore _gameCore;
-        private UICore _uiCore;
-        public string ZoneID;
+        private WorldUnlockData _worldData = default!;
+        private GameCore.GameCore _gameCore = default!;
+        private PlayerCore _playerCore = default!;
+        private UICore? _uiCore;
+        public string ZoneID = "ZoneID";
+        public Vector3 PlayerStartPosition = Vector3.zero;
 
         [Inject]
         private void Initialise(WorldUnlockData worldData,
             GameCore.GameCore gameCore,
-            UICore  uiCore)
+            UICore  uiCore,
+            PlayerCore playerCore)
         {
             _worldData = worldData;
             _gameCore = gameCore;
             _uiCore = uiCore;
+            _playerCore = playerCore;
         }
 
         private void OnEnable()
@@ -44,6 +51,8 @@ namespace Metroidvania.World
             _worldData.ResetWorldData();
             LoadData(ZoneID, _worldData, null, true);
             await _worldData.SaveData();
+            _playerCore.GetPlayerRoot().SetWorldPosition(PlayerStartPosition);
+            // _playerCore.GetPlayerRoot().PlayerInventoryManager.ResetInventory();
         }
 
         /// <summary>
