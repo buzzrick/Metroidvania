@@ -2,6 +2,7 @@ using Metroidvania.Interactables.ResourcePickups;
 using Metroidvania.Player.Inventory;
 using UnityEngine;
 using Buzzrick.UnityLibs;
+using CandyCoded.HapticFeedback;
 using Zenject;
 
 namespace Metroidvania.Player
@@ -48,6 +49,7 @@ namespace Metroidvania.Player
                     _playerInventoryManager.IncrementInventory(pickup.ResourceType, pickup.Amount);
                     GameObject.Destroy(other.gameObject);
                     _pickupAudio.Play();
+                    HapticFeedback.LightFeedback();
                 }
             }
         }

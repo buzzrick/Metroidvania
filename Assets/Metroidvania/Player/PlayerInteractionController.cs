@@ -4,6 +4,7 @@ using Metroidvania.Interactables.ResourcePickups;
 using Metroidvania.Interactables.WorldObjects;
 using Metroidvania.Player.Animation;
 using System.Threading;
+using CandyCoded.HapticFeedback;
 using UnityEngine;
 using Zenject;
 
@@ -223,6 +224,10 @@ namespace Metroidvania.Player
                 if (!correctResourceFound)
                 {
                     _audioSource.PlayOneShot(SwishSound);
+                }
+                else 
+                {
+                    HapticFeedback.MediumFeedback();
                 }
             }
 
