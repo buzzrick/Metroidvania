@@ -216,7 +216,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 357541766}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CanvasOffset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -249,7 +249,7 @@ GameObject:
   m_Component:
   - component: {fileID: 369768278}
   - component: {fileID: 369768279}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: WorldUnlockRequirementsUIView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
