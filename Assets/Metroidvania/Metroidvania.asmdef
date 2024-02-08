@@ -13,7 +13,8 @@
         "Unity.TextMeshPro",
         "Unity.InputSystem",
         "AYellowpaper.SerializedCollections",
-        "NaughtyAttributes.Core"
+        "NaughtyAttributes.Core",
+        "CandyCoded.HapticFeedback"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

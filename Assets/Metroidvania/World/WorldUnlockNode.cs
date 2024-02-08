@@ -2,6 +2,7 @@
 
 using AYellowpaper.SerializedCollections;
 using Buzzrick.UnityLibs.Attributes;
+using CandyCoded.HapticFeedback;
 using Cysharp.Threading.Tasks;
 using Metroidvania.Configuration;
 using Metroidvania.Interactables;
@@ -172,11 +173,7 @@ namespace Metroidvania.World
                     }
                 }
 
-                //  if we made a payment, then vibrate
-                if (paymentMade)
-                {
-                    Handheld.Vibrate();
-                }
+                
 
                 
                 //  Only recalculate if we think we've paid the full amount
@@ -186,6 +183,13 @@ namespace Metroidvania.World
                     //  LoadData will correctly unlock the node if required
                     LoadData(_zoneID, _worldUnlockData, _parentNodeData, false);
                     ShowUI(false);
+                    HapticFeedback.HeavyFeedback();
+                }
+                //  if we made a payment, then vibrate
+                else if (paymentMade)
+                {
+                    HapticFeedback.LightFeedback();
+                    //Handheld.Vibrate();
                 }
             }
         }
