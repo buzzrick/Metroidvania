@@ -132,6 +132,7 @@ namespace Metroidvania.World
                 //  recalculate based on paid amounts
                 var amounts = GetUnlockAmounts();
 
+                bool paymentMade = false;
                 foreach (var requiredResource in amounts.RequiredAmounts)
                 {
                     if (requiredResource.Key == null)
@@ -148,6 +149,7 @@ namespace Metroidvania.World
                         if (_gameConfiguration.FreeWorldUnlocks)
                         {
                             _nodeData.AddPaidAmount(requiredResource.Key.name, paymentRemaining);
+                            paymentMade = true;
                         }
                         else
                         {
@@ -162,9 +164,21 @@ namespace Metroidvania.World
                             {
                                 isPaid = false;
                             }
+                            if (amountPaid > 0)
+                            {
+                                paymentMade = true;
+                            }
                         }
                     }
                 }
+
+                //  if we made a payment, then vibrate
+                if (paymentMade)
+                {
+                    Handheld.Vibrate();
+                }
+
+                
                 //  Only recalculate if we think we've paid the full amount
                 if (isPaid)
                 {
