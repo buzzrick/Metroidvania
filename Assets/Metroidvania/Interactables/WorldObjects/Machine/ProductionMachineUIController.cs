@@ -43,21 +43,31 @@ namespace Metroidvania.Interactables.WorldObjects.Machine
             _uiView = await _sceneLoader.LoadUISceneAsync<ProductionMachineUIView>(SceneName, true);
             await _uiView.ShowRequirements(_displayedMachine);
             _uiView.OnCreateRequested += HandleOnCreateRequested;
+            RecalculateResourceAmounts();
         }
 
-        private void HandleOnCreateRequested()
+        private void RecalculateResourceAmounts()
         {
-            if (ProcessResources())
+            bool canAfford1 = _playerInventory.CanAffordResources(_displayedMachine.InputAmounts, 1);
+            bool canAfford10 = _playerInventory.CanAffordResources(_displayedMachine.InputAmounts, 10);
+            bool canAfford100 = _playerInventory.CanAffordResources(_displayedMachine.InputAmounts, 100);
+            _uiView.UpdatePurchaseButtons(canAfford1, canAfford10, canAfford100);
+        }
+        
+        private void HandleOnCreateRequested(int count)
+        {
+            if (ProcessResources(count))
             {
                 HapticFeedback.HeavyFeedback();
             }
         }
 
-        private bool ProcessResources()
+        private bool ProcessResources(int count)
         {
-            if (_playerInventory.TryConsumeResources(_displayedMachine.InputAmounts))
+            if (_playerInventory.TryConsumeResources(_displayedMachine.InputAmounts, count))
             {
-                _playerInventory.AddResources(_displayedMachine.OutputAmounts);
+                _playerInventory.AddResources(_displayedMachine.OutputAmounts, count);
+                RecalculateResourceAmounts();
                 return true;
             }
             return false;

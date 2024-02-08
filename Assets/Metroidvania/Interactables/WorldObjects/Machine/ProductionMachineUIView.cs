@@ -18,22 +18,24 @@ namespace Metroidvania.Interactables.WorldObjects.Machine
         [SerializeField, RequiredField] private Canvas _canvas = default!;
         [SerializeField, RequiredField] private UnlockItemCostsDisplay[] _machineInputDisplays = default!;
         [SerializeField, RequiredField] private UnlockItemCostsDisplay[] _machineOutputDisplays = default!;
-        [SerializeField, RequiredField] private Button CreateButton = default!;
+        [SerializeField, RequiredField] private Button Purchase_x1 = default!;
+        [SerializeField, RequiredField] private Button Purchase_x10 = default!;
+        [SerializeField, RequiredField] private Button Purchase_x100 = default!;
+        
         private ProductionMachine _displayedMachine;
         private Camera _mainCamera;
 
-        public event Action? OnCreateRequested;
+        public event Action<int>? OnCreateRequested;
 
         private void Awake()
         {
             _mainCamera = Camera.main;
             _canvas.worldCamera = _mainCamera;
-            CreateButton.onClick.AddListener(HandleCreateButton);
         }
 
-        private void HandleCreateButton()
+        public void CreateResources(int count)
         {
-            OnCreateRequested?.Invoke();
+            OnCreateRequested?.Invoke(count);
         }
 
 
@@ -92,6 +94,13 @@ namespace Metroidvania.Interactables.WorldObjects.Machine
                         $"ProductionMachine UI only supports {maxResources} input resources at the moment");
                 }
             }
+        }
+
+        public void UpdatePurchaseButtons(bool canAfford1, bool canAfford10, bool canAfford100)
+        {
+            Purchase_x1.gameObject.SetActive(canAfford1);
+            Purchase_x10.gameObject.SetActive(canAfford10);
+            Purchase_x100.gameObject.SetActive(canAfford100);
         }
     }
 }

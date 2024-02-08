@@ -126,30 +126,39 @@ namespace Metroidvania.Player.Inventory
             return finalAmount;
         }
 
-        public bool TryConsumeResources(SerializedDictionary<ResourceTypeSO, int> amounts)
+        public bool TryConsumeResources(SerializedDictionary<ResourceTypeSO, int> amounts, int multiplier = 1)
+        {
+            if (!CanAffordResources(amounts, multiplier))
+            {
+                return false;
+            }
+
+            //  If we get here, then we've confirmed we can afford the costs.
+            foreach (var item in amounts)
+            {
+                ConsumeResource(item.Key, item.Value * multiplier);
+            }
+            return true;
+        }
+        
+        public bool CanAffordResources(SerializedDictionary<ResourceTypeSO, int> amounts, int multiplier = 1)
         {
             foreach (var item in amounts)
             {
-                if (GetOrCreateInventoryItemAmount(item.Key).ItemCount < item.Value)
+                if (GetOrCreateInventoryItemAmount(item.Key).ItemCount < (item.Value * multiplier))
                 {
                     return false;
                 }
             }
-
-            //  If we get here, then we've confirmed we can afford the costs.
-            foreach (var item in amounts)
-            {
-                ConsumeResource(item.Key, item.Value);
-            }
             return true;
         }
 
-        public void AddResources(SerializedDictionary<ResourceTypeSO, int> amounts)
+        public void AddResources(SerializedDictionary<ResourceTypeSO, int> amounts, int multiplier = 1)
         {
             //  If we get here, then we've confirmed we can afford the costs.
             foreach (var item in amounts)
             {
-                IncrementInventory(item.Key, item.Value);
+                IncrementInventory(item.Key, item.Value * multiplier);
             }
         }
 
