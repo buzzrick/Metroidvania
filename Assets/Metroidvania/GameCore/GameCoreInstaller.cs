@@ -3,6 +3,7 @@ using Metroidvania.Cameras;
 using Metroidvania.Configuration;
 using Metroidvania.Debugging;
 using Metroidvania.Interactables.ResourcePickups;
+using Metroidvania.Interactables.WorldObjects.Machine;
 using Metroidvania.Lighting;
 using Metroidvania.MultiScene;
 using Metroidvania.Player;
@@ -35,6 +36,7 @@ namespace Metroidvania.GameCore
             Container.Bind<WorldUnlockData>().FromNew().AsSingle();
             Container.Bind<WorldUnlockRequirementsUIController>().FromNew().AsSingle();
             Container.Bind<WorldManager>().FromNew().AsSingle().NonLazy();
+            Container.Bind<ProductionMachineUIController>().FromNew().AsSingle();
             Container.BindInstance(GameConfigurationInstance).AsSingle();
 
             Container.BindInstance(GameLifecycleManager).AsSingle();

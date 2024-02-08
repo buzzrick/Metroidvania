@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using AYellowpaper.SerializedCollections;
 using Cysharp.Threading.Tasks;
-using Metroidvania.Cameras;
 using Metroidvania.GameCore;
 using Metroidvania.MultiScene;
 using Metroidvania.ResourceTypes;
