@@ -14,10 +14,9 @@ namespace Assets.Metroidvania.Debugging.DebugMenu
     public class DebugPlayerMenu : DebugPageBase
     {
         private PlayerMovementStatsSO[] _movementStats;
-        private PlayerCore _playerCore;
-        private GameConfiguration _gameConfiguration;
         private CharacterRandomizer _characterRandomiser;
         private PlayerMovementController_NoIK _characterToControl;
+        private PlayerCore _playerCore;
 
         protected override string Title { get; } = "Set Movement Type";
 
@@ -41,9 +40,6 @@ namespace Assets.Metroidvania.Debugging.DebugMenu
             //AddPicker(movementPicker);
 
 
-            AddSwitch(_gameConfiguration.FreeWorldUnlocksDebugging, "Free Unlocks", null, null, null, null, null, ToggleFreeWorldUnlocks);
-
-
             ////  as a list of buttons
             //foreach (var movementType in _movementStats)
             //{
@@ -58,12 +54,6 @@ namespace Assets.Metroidvania.Debugging.DebugMenu
             Reload();
 
             yield break;
-        }
-
-        private void ToggleFreeWorldUnlocks(bool newValue)
-        {
-            _gameConfiguration.FreeWorldUnlocksDebugging = newValue;
-            //_gameConfiguration.FreeWorldUnlocksDebugging = !_gameConfiguration.FreeWorldUnlocksDebugging;
         }
 
         private void HandleMovementPicker_ActiveOptionChanged(int movementID)
@@ -104,11 +94,10 @@ namespace Assets.Metroidvania.Debugging.DebugMenu
             return 0;
         }
 
-        public void Setup(PlayerMovementStatsSO[] movementStats, PlayerCore playerCore, GameConfiguration gameConfiguration)
+        public void Setup(PlayerMovementStatsSO[] movementStats, PlayerCore playerCore)
         {
             _movementStats = movementStats;
             _playerCore = playerCore;
-            _gameConfiguration = gameConfiguration;
             _characterRandomiser = playerCore.GetPlayerRoot().GetComponentInChildren<CharacterRandomizer>();
             _characterToControl = playerCore.GetPlayerRoot().GetComponent<PlayerMovementController_NoIK>();
         }

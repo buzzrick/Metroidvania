@@ -153,6 +153,12 @@ namespace Metroidvania.Player.Inventory
             }
         }
 
+        public async UniTask ResetInventory()
+        {
+            InventoryList.Clear();
+            await SaveData();
+        }
+
         [Serializable]
         public class InventoryItemAmount
         {

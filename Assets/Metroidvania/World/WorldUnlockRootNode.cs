@@ -1,4 +1,5 @@
 #nullable enable
+using Cysharp.Threading.Tasks;
 using Metroidvania.Player;
 using Metroidvania.UI;
 using UnityEngine;
@@ -29,32 +30,35 @@ namespace Metroidvania.World
 
         private void OnEnable()
         {
-            _uiCore.RegisterListener("ResetWorldData", DebugResetWorldData);
+            _uiCore.RegisterListener("ResetPosition", TeleportPlayerToStartPosition);
         }
 
         private void OnDisable()
         {
-            _uiCore.UnregisterListener("ResetWorldData", DebugResetWorldData);
+            _uiCore.UnregisterListener("ResetPosition", TeleportPlayerToStartPosition);
         }
 
         // Start is called before the first frame update
         private async void Start()
         {
             //await _gameCore.StartCore();
-
             LoadData(ZoneID, _worldData, null, true);
             await _worldData.SaveData();
+            TeleportPlayerToStartPosition();
         }
 
-        public async void DebugResetWorldData()
+        public void DebugResetWorldData()
         {
             _worldData.ResetWorldData();
-            LoadData(ZoneID, _worldData, null, true);
-            await _worldData.SaveData();
-            _playerCore.GetPlayerRoot().SetWorldPosition(PlayerStartPosition);
             // _playerCore.GetPlayerRoot().PlayerInventoryManager.ResetInventory();
+            Start();
         }
 
+        private void TeleportPlayerToStartPosition()
+        {
+            _playerCore.GetPlayerRoot().SetWorldPosition(PlayerStartPosition);
+        }
+        
         /// <summary>
         /// 
         /// </summary>
