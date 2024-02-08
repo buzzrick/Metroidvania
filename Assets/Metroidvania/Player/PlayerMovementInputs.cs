@@ -19,7 +19,7 @@ namespace Metroidvania.Player
 
         private Vector2 _touchMoveDelta = Vector2.zero;
         private float _touchScalar;
-        private const float TouchScalarMultiplier = 5f;
+        private const float TouchScalarMultiplier = 2.5f;
 
         private void Awake()
         {
