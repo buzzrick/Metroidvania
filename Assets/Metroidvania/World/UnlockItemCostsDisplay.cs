@@ -15,11 +15,19 @@ namespace Metroidvania.World
     {
         [SerializeField, RequiredField] private Image _resourceIcon = default!; 
         [SerializeField, RequiredField] private TMP_Text _resourceCountsText = default!;
+        public bool OnlyShowRequiredAmounts;
         
         public void SetResourceCosts(ResourceTypeSO resourceType, int requiredAmount, int paidAmount)
         {
             _resourceIcon.sprite = resourceType.ResourceSprite;
-            _resourceCountsText.text = $"<align=center>{paidAmount}/{requiredAmount}</align>";
+            if (OnlyShowRequiredAmounts )
+            {
+                _resourceCountsText.text = $"<align=center>{requiredAmount}</align>";
+            }
+            else
+            {
+                _resourceCountsText.text = $"<align=center>{paidAmount}/{requiredAmount}</align>";
+            }
         }
 
         private void Reset()

@@ -451,6 +451,11 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 2026389434567410858, guid: 83fdfd2da6cb245448950d37963810ec,
+        type: 3}
+      propertyPath: OnlyShowRequiredAmounts
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2907294834005287822, guid: 83fdfd2da6cb245448950d37963810ec,
         type: 3}
       propertyPath: m_Name
@@ -1128,6 +1133,11 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 2026389434567410858, guid: 83fdfd2da6cb245448950d37963810ec,
+        type: 3}
+      propertyPath: OnlyShowRequiredAmounts
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2907294834005287822, guid: 83fdfd2da6cb245448950d37963810ec,
         type: 3}
       propertyPath: m_Name
@@ -1505,6 +1515,11 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 2026389434567410858, guid: 83fdfd2da6cb245448950d37963810ec,
+        type: 3}
+      propertyPath: OnlyShowRequiredAmounts
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2907294834005287822, guid: 83fdfd2da6cb245448950d37963810ec,
         type: 3}
       propertyPath: m_Name
@@ -1780,6 +1795,11 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 2026389434567410858, guid: 83fdfd2da6cb245448950d37963810ec,
+        type: 3}
+      propertyPath: OnlyShowRequiredAmounts
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2907294834005287822, guid: 83fdfd2da6cb245448950d37963810ec,
         type: 3}
       propertyPath: m_Name
@@ -1906,5 +1926,5 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 369768278}
   - {fileID: 520641433}
+  - {fileID: 369768278}
