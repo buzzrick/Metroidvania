@@ -80,7 +80,7 @@ namespace Metroidvania.World
                 _unlockItemCostsDisplays[i].gameObject.SetActive(true);
                 
                 i++;
-                if (i > 2)
+                if (i > 3)
                 {
                     throw new NotImplementedException(
                         "World Unlock Requirements UI only supports 3 resources at the moment");
