@@ -21,6 +21,8 @@ namespace Metroidvania.Player
         private float _touchScalar;
         private const float TouchScalarMultiplier = 2.5f;
 
+        public bool IsInputActive { get; private set; }
+
         private void Awake()
         {
             _playerControls = new PlayerControls();
@@ -36,6 +38,7 @@ namespace Metroidvania.Player
             _playerControls.World.TouchMoveAxis.performed += TouchMoveAxis;
 
             CalculateTouchScalar();
+            IsInputActive = false;
 #if UNITY_EDITOR
             TouchSimulation.Enable();
 #endif
@@ -126,6 +129,8 @@ namespace Metroidvania.Player
                 // if (moveAxis.sqrMagnitude > 0.01f)
                 //     Debug.Log($"TouchMove Delta:{_touchMoveDelta}, Scalar:{_touchScalar}, Final:{moveAxis}");
             }
+
+            IsInputActive = (moveAxis != Vector2.zero);
 
             // Build the CharacterInputs struct
             characterInputs.MoveAxisForward = moveAxis.y;

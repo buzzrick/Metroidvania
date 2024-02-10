@@ -2,7 +2,6 @@
 using Metroidvania.GameCore;
 using Metroidvania.MultiScene;
 using Metroidvania.Player.Inventory;
-using System;
 using UnityEngine;
 
 namespace Metroidvania.Player
@@ -12,6 +11,7 @@ namespace Metroidvania.Player
         private readonly ISceneLoader _sceneLoader;
         private readonly GameLifecycleManager _gameLifecycleManager;
         private PlayerRoot _playerRoot;
+        public bool IsPlayerMoving => _playerRoot.IsPlayerMoving;
 
         public PlayerCore(ISceneLoader sceneLoader,
             GameLifecycleManager gameLifecycleManager)

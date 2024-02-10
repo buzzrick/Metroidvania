@@ -11,6 +11,7 @@ namespace Metroidvania.Cameras
     public class CameraZone : MonoBehaviour, IPlayerEnterTriggerZone, IPlayerExitTriggerZone
     {
         public string CameraName;
+        public CameraNames Camera = CameraNames.None;
         [Tooltip("The scene which should be set active to load the correct LightSettings when in this trigger zone")]
         public string ActiveLightingScene;
         [Tooltip("The set of lights that should be active when in this trigger zone")]

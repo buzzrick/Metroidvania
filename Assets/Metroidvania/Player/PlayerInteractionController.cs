@@ -163,13 +163,13 @@ namespace Metroidvania.Player
         /// </summary>
         private void Handle_OnAnimationStrike()
         {
-            Debug.Log($"OnAnimationStrike");
+            //Debug.Log($"OnAnimationStrike");
             DetectRewards();
         }
 
         private void Handle_OnAnimationComplete()
         {
-            Debug.Log($"OnAnimationComplete");
+            //Debug.Log($"OnAnimationComplete");
             DetectRewards();
         }
 
@@ -178,7 +178,7 @@ namespace Metroidvania.Player
         {
             if (_currentInteractionType == InteractionActionType.None)
             {
-                Debug.Log($"No Interactable");
+                //Debug.Log($"No Interactable");
                 return;
             }
             else if(_currentInteractionType == InteractionActionType.Interact)
@@ -191,7 +191,7 @@ namespace Metroidvania.Player
             }
             else
             {
-                Debug.Log($"Resource Interactable");
+                //Debug.Log($"Resource Interactable");
                 //  re-calculate the objects that we're facing in case we have rotated or moved elsewhere
                 int colliderCount = Physics.OverlapSphereNonAlloc(transform.position, DetectionRadius, _colliders, LayerMask);
                 bool correctResourceFound = false;
@@ -200,7 +200,7 @@ namespace Metroidvania.Player
                 {
                     Collider collider = _colliders[i];
                     IResourceNode resource = collider.GetComponent<IResourceNode>();
-                    if (resource.GetInteractionType() == _currentInteractionType)
+                    if (resource != null && resource.GetInteractionType() == _currentInteractionType)
                     {
                         var reward = resource.GetResource();
                         if (reward.resourceType.HarvestSound != null)

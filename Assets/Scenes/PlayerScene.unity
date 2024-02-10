@@ -4270,6 +4270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UseOldPlayerMovementController: 0
+  _playerMovementInputs: {fileID: 1403159904}
   _cameraTarget: {fileID: 1343940055}
 --- !u!114 &1403159900
 MonoBehaviour:

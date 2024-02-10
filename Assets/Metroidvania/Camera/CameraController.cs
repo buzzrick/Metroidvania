@@ -21,6 +21,8 @@ namespace Metroidvania.Cameras
         private PlayerCore _playerCore;
         private PlayerRoot _playerRoot;
         private Transform _cameraTarget;
+        private CameraZone _lastBoostedCamera;
+        private bool _pendingRecalculation;
 
         [Inject]
         private void Initialise(PlayerCore playerCore)
@@ -28,6 +30,17 @@ namespace Metroidvania.Cameras
             _playerCore = playerCore;
             _brain.enabled = false;
         }
+
+
+        public UniTask StartCore()
+        {
+            _playerRoot = _playerCore.GetPlayerRoot();
+            _cameraTarget = _playerRoot.CameraTarget;
+            ResetCameraTargets();
+            _brain.enabled = true;
+            return UniTask.CompletedTask;
+        }
+
 
         private void Awake()
         {
@@ -42,6 +55,14 @@ namespace Metroidvania.Cameras
                     _mainCameraPriority = camera.Priority;
                     _mainCamera = camera;
                 }
+            }
+        }
+
+        private void Update()
+        {
+            if (_pendingRecalculation)
+            {
+                RecalculateCurrentCamera();
             }
         }
 
@@ -62,6 +83,10 @@ namespace Metroidvania.Cameras
             if (_boostedCameras.Contains(cameraZone))
             {
                 _boostedCameras.Remove(cameraZone);
+                if (_boostedCameras.Count == 0)
+                {
+                    _lastBoostedCamera = cameraZone;
+                }
 
                 RecalculateCurrentCamera();
             }
@@ -75,11 +100,36 @@ namespace Metroidvania.Cameras
 
         private void RecalculateCurrentCamera()
         {
-            ResetCameraPriorities();
-            foreach (CameraZone boostedCamera in _boostedCameras)
+            if (_playerCore.IsPlayerMoving)
             {
-                GetCamera(boostedCamera.CameraName).Priority = _mainCameraPriority + 10;
+                _pendingRecalculation = true;
+                return;
             }
+
+            ResetCameraPriorities();
+            int boostedPriority = _mainCameraPriority + 10;
+            if (_boostedCameras.Count > 0)
+            {
+                foreach (CameraZone boostedCamera in _boostedCameras)
+                {
+                    SetCameraPriority(boostedCamera, boostedPriority);
+                }
+            }
+            else if (_lastBoostedCamera != null)
+            {
+                SetCameraPriority(_lastBoostedCamera, boostedPriority);
+            }
+            _pendingRecalculation = false;
+        }
+
+        private void SetCameraPriority(CameraZone cameraZone, int priority)
+        {
+            string cameraName = cameraZone.CameraName;
+            if (cameraZone.Camera != CameraNames.None)
+            {
+                cameraName = cameraZone.Camera.ToString();
+            }
+            GetCamera(cameraName).Priority = priority;
         }
 
         private void ResetCameraPriorities()
@@ -98,15 +148,5 @@ namespace Metroidvania.Cameras
                 camera.Follow = _playerRoot.transform;
             }
         }
-
-        public UniTask StartCore()
-        {
-            _playerRoot = _playerCore.GetPlayerRoot();
-            _cameraTarget = _playerRoot.CameraTarget;
-            ResetCameraTargets();
-            _brain.enabled = true;
-            return UniTask.CompletedTask;
-        }
-
     }
 }

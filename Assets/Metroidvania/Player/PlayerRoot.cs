@@ -15,13 +15,15 @@ namespace Metroidvania.Player
         PlayerMovementController_NoIK _playerMovementOld;
         PlayerTriggerDetector _playerTriggerDetector;
         public bool UseOldPlayerMovementController = false;
+        [SerializeField, RequiredField] PlayerMovementInputs _playerMovementInputs;
         private PlayerMovementController _playerMovement;
         [SerializeField, RequiredField] private Transform _cameraTarget = default!;
         public Transform CameraTarget => _cameraTarget;
 
         [Inject] private PlayerInventoryManager _playerInventoryManager = default!;
-        
 
+        public bool IsPlayerMoving => _playerMovementInputs.IsInputActive;
+        
         /// <summary>
         /// Accessors
         /// </summary>
@@ -41,6 +43,7 @@ namespace Metroidvania.Player
                 _playerMovement.Enable(false);
             }
             _playerTriggerDetector = GetComponent<PlayerTriggerDetector>();
+            _playerMovementInputs ??= GetComponent<PlayerMovementInputs>();
         }
 
         public bool IsStarted { get; private set; }
