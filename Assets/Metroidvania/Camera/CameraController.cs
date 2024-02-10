@@ -20,6 +20,7 @@ namespace Metroidvania.Cameras
         private Dictionary<string, int> _defaultCameraPriorities = new();
         private PlayerCore _playerCore;
         private PlayerRoot _playerRoot;
+        private Transform _cameraTarget;
 
         [Inject]
         private void Initialise(PlayerCore playerCore)
@@ -93,7 +94,7 @@ namespace Metroidvania.Cameras
         {
             foreach (var camera in _cameras)
             {
-                camera.LookAt = _playerRoot.transform;
+                camera.LookAt = _cameraTarget;
                 camera.Follow = _playerRoot.transform;
             }
         }
@@ -101,6 +102,7 @@ namespace Metroidvania.Cameras
         public UniTask StartCore()
         {
             _playerRoot = _playerCore.GetPlayerRoot();
+            _cameraTarget = _playerRoot.CameraTarget;
             ResetCameraTargets();
             _brain.enabled = true;
             return UniTask.CompletedTask;

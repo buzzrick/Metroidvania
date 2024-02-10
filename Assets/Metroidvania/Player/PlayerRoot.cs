@@ -1,4 +1,6 @@
-﻿using Cysharp.Threading.Tasks;
+﻿#nullable enable
+using Buzzrick.UnityLibs.Attributes;
+using Cysharp.Threading.Tasks;
 using Metroidvania.GameCore;
 using Metroidvania.MultiScene;
 using Metroidvania.Player.Animation;
@@ -14,8 +16,11 @@ namespace Metroidvania.Player
         PlayerTriggerDetector _playerTriggerDetector;
         public bool UseOldPlayerMovementController = false;
         private PlayerMovementController _playerMovement;
+        [SerializeField, RequiredField] private Transform _cameraTarget = default!;
+        public Transform CameraTarget => _cameraTarget;
 
-        [Inject] PlayerInventoryManager _playerInventoryManager;
+        [Inject] private PlayerInventoryManager _playerInventoryManager = default!;
+        
 
         /// <summary>
         /// Accessors
