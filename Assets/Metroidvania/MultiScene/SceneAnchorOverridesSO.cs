@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Metroidvania.MultiScene
 {
-    [CreateAssetMenu(fileName = "SceneAnchorOverrides", menuName = "Metriodvania/SceneAnchorOverrides")]
+    [CreateAssetMenu(fileName = "SceneAnchorOverrides", menuName = "Metroidvania/SceneAnchorOverrides")]
     public class SceneAnchorOverridesSO : ScriptableObject
     {
         public string OverrideAnchorSceneName;
