@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ResourceTypeDB
   m_EditorClassIdentifier: 
   ResourceTypes:
+  - {fileID: 11400000, guid: 8d0013fe1e461f44f8dc541fedcc51ef, type: 2}
   - {fileID: 11400000, guid: 3c09b37e7bd6c1e4eaef4836730ac080, type: 2}
   - {fileID: 11400000, guid: 3ef35fce1dd1f444a99bf029737906c0, type: 2}
   - {fileID: 11400000, guid: 9ecc0675c82ace34d9026bacfcf7db7f, type: 2}
