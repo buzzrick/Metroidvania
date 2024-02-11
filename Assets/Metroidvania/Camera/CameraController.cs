@@ -107,17 +107,16 @@ namespace Metroidvania.Cameras
             }
 
             ResetCameraPriorities();
-            int boostedPriority = _mainCameraPriority + 10;
             if (_boostedCameras.Count > 0)
             {
                 foreach (CameraZone boostedCamera in _boostedCameras)
                 {
-                    SetCameraPriority(boostedCamera, boostedPriority);
+                    SetCameraPriority(boostedCamera, _mainCameraPriority + boostedCamera.CameraPriority);
                 }
             }
             else if (_lastBoostedCamera != null)
             {
-                SetCameraPriority(_lastBoostedCamera, boostedPriority);
+                SetCameraPriority(_lastBoostedCamera, _mainCameraPriority + _lastBoostedCamera.CameraPriority);
             }
             _pendingRecalculation = false;
         }

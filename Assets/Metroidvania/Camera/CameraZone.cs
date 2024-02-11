@@ -12,6 +12,7 @@ namespace Metroidvania.Cameras
     {
         public string CameraName;
         public CameraNames Camera = CameraNames.None;
+        public int CameraPriority = 10;
         [Tooltip("The scene which should be set active to load the correct LightSettings when in this trigger zone")]
         public string ActiveLightingScene;
         [Tooltip("The set of lights that should be active when in this trigger zone")]
