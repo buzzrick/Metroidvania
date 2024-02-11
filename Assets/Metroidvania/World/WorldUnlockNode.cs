@@ -6,6 +6,7 @@ using CandyCoded.HapticFeedback;
 using Cysharp.Threading.Tasks;
 using Metroidvania.Configuration;
 using Metroidvania.Interactables;
+using Metroidvania.MultiScene;
 using Metroidvania.Player;
 using Metroidvania.ResourceTypes;
 using UnityEngine;
@@ -22,10 +23,6 @@ namespace Metroidvania.World
         [Tooltip("How much of each resource should be paid per frame")]
         public int PaymentChunkSize = 10;
 
-        /// <summary>
-        /// Don't Animate on first load
-        /// </summary>
-        private bool _firstLoadForAnimate;
         private int _updateTicker;
         private PlayerRoot? _player;
         private WorldUnlockRequirementsUIController _requirementsUIController = default!;
@@ -50,7 +47,7 @@ namespace Metroidvania.World
 
         private void ShowUI(bool isEnabled)
         {
-            Debug.Log($"{(isEnabled ? "Show" : "Hide")} WorldNode({NodeID})");
+            //Debug.Log($"{(isEnabled ? "Show" : "Hide")} WorldNode({NodeID})");
             if (isEnabled)
             {
                 _requirementsUIController.ShowRequirements(this).Forget();

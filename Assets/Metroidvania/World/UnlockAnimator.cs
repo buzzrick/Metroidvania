@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -116,9 +117,24 @@ namespace Metroidvania.World
         {
             //  objects are enabled if our parent is unlocked, and we are also unlocked
             bool isEnabled = ParentIsUnlocked && _node!.IsUnlocked;
+
+            //Debug.Log($"Enabling NodeObjects {name}=>{isEnabled}", this);
             foreach (GameObject nodeObject in _node!.GetObjects())    
             {
                 nodeObject.SetActive(isEnabled);
+            }
+
+            if (_node.ChildScene != null)
+            {
+                Debug.Log($"Setting WorldUnlockScene {isEnabled}");
+                if (isEnabled)
+                {
+                    _node.ChildScene.LoadChildNode().Forget();
+                }
+                else
+                {
+                    _node.ChildScene.UnloadChildNode().Forget();
+                }
             }
         }
 

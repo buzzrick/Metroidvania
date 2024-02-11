@@ -8,6 +8,7 @@ namespace Metroidvania.World
     {
         [SerializeField] private GameObject[] NodeObjects;
         [SerializeField] private WorldUnlockNode[] ChildNodes;
+        public WorldUnlockScene? ChildScene;
         public string NodeID => name;
         [SerializeField, RequiredField] private UnlockAnimator? _unlockAnimator;
 
@@ -63,11 +64,11 @@ namespace Metroidvania.World
         {
             if (firstLoad)
             {
-                _unlockAnimator.SetNode(this);
+                _unlockAnimator!.SetNode(this);
             }
             else
             {
-                _unlockAnimator.Animate();
+                _unlockAnimator!.Animate();
             }
             UpdateChildren(firstLoad);
         }
