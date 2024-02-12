@@ -1,3 +1,4 @@
+#nullable enable
 using AYellowpaper.SerializedCollections;
 using Cysharp.Threading.Tasks;
 using Metroidvania.ResourceTypes;
@@ -13,9 +14,10 @@ namespace Metroidvania.Player.Inventory
     public class PlayerInventoryManager
     {
         [SerializeField] private List<InventoryItemAmount> InventoryList = new();
-        private ResourceTypeDB _resourceTypeDB;
+        private ResourceTypeDB _resourceTypeDB = default!;
 
-        public event Action<InventoryItemAmount> OnInventoryAmountChanged;
+        public event Action<InventoryItemAmount>? OnInventoryAmountChanged;
+        public event Action? OnInventoryReset;
 
         private static string SavePath;
 
@@ -165,6 +167,7 @@ namespace Metroidvania.Player.Inventory
         public async UniTask ResetInventory()
         {
             InventoryList.Clear();
+            OnInventoryReset?.Invoke();
             await SaveData();
         }
 

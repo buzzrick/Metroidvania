@@ -49,41 +49,44 @@ namespace Metroidvania.UI
 
         private void OnEnable()
         {
-            _playerInventoryManager.OnInventoryAmountChanged += Handle_OnInventoryAmountChanged; ;
-
+            _playerInventoryManager.OnInventoryAmountChanged += Handle_OnInventoryAmountChanged; 
+            _playerInventoryManager.OnInventoryReset += Handle_OnInventoryReset;
         }
+
+
         private void OnDisable()
         {
             _playerInventoryManager.OnInventoryAmountChanged -= Handle_OnInventoryAmountChanged;
+            _playerInventoryManager.OnInventoryReset -= Handle_OnInventoryReset;
         }
 
+        private void Handle_OnInventoryReset()
+        {
+            _inventoryItemList.Clear();
+            RedrawItems();
+        }
 
         private void Handle_OnInventoryAmountChanged(PlayerInventoryManager.InventoryItemAmount amount)
         {
-            //  TODO:  this reshuffling doesn't correctly put the newest item at the top of the list.
-            //   And it's a bit janky and obtuse.
-
-            // In the future I recomment just having an array,
-            //  -   walking down the list until you find the same resource (or the end of the list)
-            //  -   and then shuffling everything down every item above that point
-            //  -   finally insert the new item at the top of the list
-            //
             //  pull any existing item of this type out of the list.
             PlayerInventoryManager.InventoryItemAmount? removeItem = null;
             foreach (var item in _inventoryItemList)
             {
                 if (item.ResourceType == amount.ResourceType)
                 {
-                    removeItem = item;
                     _inventoryItemList.Remove(item);
                     break;
                 }
             }
-
-            //_inventoryItemList.Insert(_inventoryItemList.Count, amount);
+            //  add the updated item at the top of the list
             _inventoryItemList.Insert(0, amount);
 
-            for (int i = 0; i < _inventoryItemList.Count; i++)
+            RedrawItems();
+        }
+
+        private void RedrawItems()
+        {
+            for (int i = 0; i < _inventoryItemAmountPanels.Length; i++)
             {
                 if (_inventoryItemList.Count > i)
                 {
@@ -94,7 +97,6 @@ namespace Metroidvania.UI
                     _inventoryItemAmountPanels[i].SetResource(null);
                 }
             }
-
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Metroidvania.Player
                     {
                         return;
                     }
-                    Debug.Log($"Player found {pickup.Amount} {pickup.ResourceType.name}");
+                    //Debug.Log($"Player found {pickup.Amount} {pickup.ResourceType.name}");
                     _playerInventoryManager.IncrementInventory(pickup.ResourceType, pickup.Amount);
                     GameObject.Destroy(other.gameObject);
                     _pickupAudio.Play();
