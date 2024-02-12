@@ -38,14 +38,18 @@ namespace Metroidvania.Player
         /// </summary>
         [SerializeField] private Transform _parentTransform;
 
+        private Transform _resourcePickupParent;
+
         [Inject]
         private void Initialise(ResourcePickupGenerator resourceGenerator)
         {
             _resourceGenerator = resourceGenerator;
-            if (_parentTransform == null) 
+            if (_parentTransform == null)
             {
                 _parentTransform = transform.parent.transform;
             }
+
+            _resourcePickupParent = new GameObject().transform;
         }
 
         private void Awake()
@@ -214,7 +218,7 @@ namespace Metroidvania.Player
                         _resourceGenerator.GeneratePickup(
                             reward.resourceType, 
                             reward.amount, 
-                            collider.transform,
+                            _resourcePickupParent, //collider.transform,
                             transform.position,  // collider.ClosestPoint(transform.position),  // ClosestPoint requires Convex mesh collider, so just use the interaction position
                             _parentTransform.position);
                     }
