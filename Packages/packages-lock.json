@@ -231,13 +231,6 @@
       },
       "url": "https://packages.unity.com"
     },
-    "dev.chsxf.autoscene": {
-      "version": "https://github.com/chsxf/AutoScene.git#1.3.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "b6ada4b2bb0b33f724f1f5b07bc7adede246c9f2"
-    },
     "xyz.candycoded.hapticfeedback": {
       "version": "https://github.com/CandyCoded/HapticFeedback.git#v1.0.3",
       "depth": 0,
