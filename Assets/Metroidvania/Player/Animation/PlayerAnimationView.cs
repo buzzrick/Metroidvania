@@ -61,7 +61,7 @@ namespace Metroidvania.Player.Animation
         public void SetSpeed(float speed)
         {
             _speed = speed;
-            _animator.SetFloat(HashSpeed, speed);
+            _animator.SetFloat(HashSpeed,Mathf.Clamp(speed, 0f, 1f));
             SetSwimmingOffset();
         }
 
@@ -99,7 +99,12 @@ namespace Metroidvania.Player.Animation
         public void Strike()
         {
             //Debug.Log("Strike!");
-            OnAnimationStriked?.Invoke();
+            OnAnimationStriked?.Invoke();   //  fired from chop animations
+        }
+
+        public void FootR()
+        {
+            Debug.Log($"FootR");    //  fired from sickle animation
         }
 
         public void DisableRagdoll()
