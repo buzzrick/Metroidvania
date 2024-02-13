@@ -3,8 +3,9 @@
     public enum InteractionActionType
     {
         None,
-        MineOre,
-        ChopWood,
-        Interact,
+        Pickaxe,
+        Axe,
+        Sickle,
+        Interact = 100,
     }
 }

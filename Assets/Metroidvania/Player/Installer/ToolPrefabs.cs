@@ -8,5 +8,6 @@ namespace Metroidvania.Player.Installer
     {
         public GameObject AxePrefab;
         public GameObject PickAxePrefab;
+        public GameObject SicklePrefab;
     }
 }

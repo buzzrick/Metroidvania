@@ -17,12 +17,14 @@ namespace Metroidvania.Player.Animation
         private ToolPrefabs _toolPrefabs;
         public readonly int HashActionInteract = Animator.StringToHash("ActionInteract");
         public readonly int HashActionChopDiagonal = Animator.StringToHash("ActionChopDiagonal");
+        public readonly int HashActionSickle = Animator.StringToHash("ActionSickle");
         public readonly int HashActionMining = Animator.StringToHash("ActionMining");
         public readonly int HashActionUnsure = Animator.StringToHash("ActionUnsure");
 
         private Transform _leftHandTransform;
         private GameObject _pickAxeTool;
         private GameObject _axeTool;
+        private GameObject _sickleTool;
         private bool _isActive = false;
 
         public event Action OnAnimationComplete;
@@ -33,6 +35,7 @@ namespace Metroidvania.Player.Animation
             None,
             PickAxe,
             Axe,
+            Sickle
         }
 
         public PlayerAnimationActionsHandler(PlayerAnimationView playerAnimationView, ToolPrefabs toolPrefabs)
@@ -55,6 +58,7 @@ namespace Metroidvania.Player.Animation
             _leftHandTransform = _animator.GetBoneTransform(HumanBodyBones.RightHand);
             _pickAxeTool = GameObject.Instantiate(_toolPrefabs.PickAxePrefab, _leftHandTransform);
             _axeTool = GameObject.Instantiate(_toolPrefabs.AxePrefab, _leftHandTransform);
+            _sickleTool = GameObject.Instantiate(_toolPrefabs.SicklePrefab, _leftHandTransform);
 
             SetTool(Tool.None);
 
@@ -70,6 +74,7 @@ namespace Metroidvania.Player.Animation
         {
             _pickAxeTool.SetActive(tool == Tool.PickAxe);
             _axeTool.SetActive(tool == Tool.Axe);
+            _sickleTool.SetActive(tool == Tool.Sickle);
         }
 
         public async UniTask RunActionAnimationAsync(InteractionActionType interactionType, CancellationToken token)
@@ -79,11 +84,14 @@ namespace Metroidvania.Player.Animation
                 case InteractionActionType.None:
                     _animator.SetTrigger(HashActionUnsure);
                     break;
-                case InteractionActionType.MineOre:
+                case InteractionActionType.Pickaxe:
                     _animator.SetTrigger(HashActionMining);
                     break;
-                case InteractionActionType.ChopWood:
+                case InteractionActionType.Axe:
                     _animator.SetTrigger(HashActionChopDiagonal);
+                    break;
+                case InteractionActionType.Sickle:
+                    _animator.SetTrigger(HashActionSickle);
                     break;
                 case InteractionActionType.Interact:
                     _animator.SetTrigger(HashActionInteract);
@@ -118,12 +126,16 @@ namespace Metroidvania.Player.Animation
         {
             switch (interactionAction)
             {
-                case InteractionActionType.MineOre:
+                case InteractionActionType.Pickaxe:
                     SetTool(Tool.PickAxe);
                     await RunAnimationToComplete(token);
                     break;
-                case InteractionActionType.ChopWood:
+                case InteractionActionType.Axe:
                     SetTool(Tool.Axe);
+                    await RunAnimationToComplete(token);
+                    break;
+                case InteractionActionType.Sickle:
+                    SetTool(Tool.Sickle);
                     await RunAnimationToComplete(token);
                     break;
                 default:

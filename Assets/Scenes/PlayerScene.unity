@@ -3866,6 +3866,8 @@ MonoBehaviour:
       type: 3}
     PickAxePrefab: {fileID: 2663682342233745248, guid: 46a03a904f99b3042a0b84b04347dede,
       type: 3}
+    SicklePrefab: {fileID: 2663682342233745248, guid: 1d1f2aec77d28294782a0ca603db2583,
+      type: 3}
 --- !u!1 &851234406
 GameObject:
   m_ObjectHideFlags: 0

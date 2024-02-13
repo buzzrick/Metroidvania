@@ -15,5 +15,5 @@ MonoBehaviour:
   ResourceSprite: {fileID: 21300000, guid: 72cada523c2d0e84c8c74106aac94fd3, type: 3}
   ResourcePickupPrefab: {fileID: 8747788158143363027, guid: 4600d529af3332740bfcd51bdb215554,
     type: 3}
-  InteractionAction: 2
+  InteractionAction: 3
   HarvestSound: {fileID: 8300000, guid: 086db8a82ea4e2d47b2cb0ff591882f8, type: 3}
