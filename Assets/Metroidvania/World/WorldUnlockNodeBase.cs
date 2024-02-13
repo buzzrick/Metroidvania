@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using Buzzrick.UnityLibs.Attributes;
 using UnityEngine;
 
@@ -90,13 +91,24 @@ namespace Metroidvania.World
         //    }
         //}
 
+        private static Color ChildGizmoColor = new Color(1f, 0.5f, 0f, 1f); 
 
         private void OnDrawGizmos()
         {
-            Gizmos.color = Color.yellow;
+            //Gizmos.color = Color.yellow;
+            Gizmos.color = ChildGizmoColor;
             foreach (WorldUnlockNode child in ChildNodes)
             {
                 Gizmos.DrawLine(transform.position, child.transform.position);
+            }
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.green;
+            foreach (var node in NodeObjects)
+            {
+                Gizmos.DrawLine(transform.position, node.transform.position);
             }
         }
     }
