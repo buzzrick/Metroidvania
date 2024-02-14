@@ -124,6 +124,9 @@ namespace Metroidvania.Player.Animation
             }
         }
 
+        public PlayerAnimationTool GetToolForInteraction(InteractionActionType interactionAction) =>
+            _playerAnimationActionHandler.GetToolForInteraction(interactionAction);
+        
         public IEnumerator EnableRagdoll(float delay, Vector3 force)
         {
             yield return new WaitForSeconds(delay);

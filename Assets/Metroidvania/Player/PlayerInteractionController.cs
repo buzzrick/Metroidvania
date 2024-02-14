@@ -5,6 +5,7 @@ using Metroidvania.Interactables.WorldObjects;
 using Metroidvania.Player.Animation;
 using System.Threading;
 using CandyCoded.HapticFeedback;
+using Metroidvania.Player.Inventory;
 using UnityEngine;
 using Zenject;
 
@@ -17,6 +18,7 @@ namespace Metroidvania.Player
         public LayerMask LayerMask;    
         private Collider[] _colliders = new Collider[10];
         private PlayerAnimationActionsHandler _playerAnimationActionHandler;
+        private PlayerInventoryManager _playerInventoryManager = default!;
         private bool _isAutomatic;
         private CancellationTokenSource _tokenSource;
         private CancellationToken _onDestroyToken;
@@ -41,9 +43,11 @@ namespace Metroidvania.Player
         private Transform _resourcePickupParent;
 
         [Inject]
-        private void Initialise(ResourcePickupGenerator resourceGenerator)
+        private void Initialise(ResourcePickupGenerator resourceGenerator, 
+            PlayerInventoryManager playerInventoryManager)
         {
             _resourceGenerator = resourceGenerator;
+            _playerInventoryManager = playerInventoryManager;
             if (_parentTransform == null)
             {
                 _parentTransform = transform.parent.transform;
@@ -147,6 +151,13 @@ namespace Metroidvania.Player
                                 _currentInteractable = interactable;
                                 //Debug.Log($"Found {interactable} to interact with");
                             }
+                            
+                            if (!IsInteractionUnlocked(_currentInteractionType))
+                            {
+                                //  nerf the interactions if we don't have the tool
+                                _currentInteractionType = InteractionActionType.None;
+                            }
+                            
                             await _playerAnimationActionHandler.RunActionAnimationAsync(_currentInteractionType, this.GetCancellationTokenOnDestroy());
                             //  if this is a simple interact then remember the interactable so that we can trigger it later
                             return;
@@ -162,6 +173,25 @@ namespace Metroidvania.Player
             }
         }
 
+        private bool IsToolUnlocked(InteractionActionType actionType)
+        {
+            PlayerAnimationTool tool = _playerAnimationView.GetToolForInteraction(actionType);
+            return _playerInventoryManager.IsToolUnlocked(tool);  
+        } 
+        
+        public bool IsInteractionUnlocked(InteractionActionType interactionActionType)
+        {
+            switch (interactionActionType)
+            {
+                case InteractionActionType.Pickaxe:
+                case InteractionActionType.Axe:
+                case InteractionActionType.Sickle:
+                    return IsToolUnlocked(interactionActionType);
+                    break;
+            }
+            return true;
+        }
+        
         /// <summary>
         /// triggered when the interaction animation hit's it's "Strike" callback. Here we generate the rewards
         /// </summary>

@@ -13,7 +13,7 @@ namespace Metroidvania.Interactables.ToolPickups
     [RequireComponent(typeof(Collider))]
     public class ToolPickup : MonoBehaviour, IPlayerEnterTriggerZone
     {
-        public PlayerAnimationActionsHandler.Tool ToolType;
+        public PlayerAnimationTool ToolType;
         [SerializeField, RequiredField] private Collider _collider = default!;
         [SerializeField, RequiredField] private MeshRenderer _meshRenderer = default!;
         private bool _isActive;

@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90a44c16e758a343b65409c447354db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ToolType: 2
+  ToolType: 1
   _collider: {fileID: 8820209810866119053}
   _meshRenderer: {fileID: 2005208332901525380}
 --- !u!23 &2005208332901525380 stripped

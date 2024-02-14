@@ -17,7 +17,7 @@ namespace Metroidvania.Player.Inventory
         [SerializeField] private List<InventoryItemAmount> InventoryList = new();
         
         //  Todo: convert to dictionary with unlock level (requires JSON.NET serialization)
-        [SerializeField] private List<PlayerAnimationActionsHandler.Tool> OwnedTools = new();
+        [SerializeField] private List<PlayerAnimationTool> OwnedTools = new();
         private ResourceTypeDB _resourceTypeDB = default!;
 
         public event Action<InventoryItemAmount>? OnInventoryAmountChanged;
@@ -184,12 +184,12 @@ namespace Metroidvania.Player.Inventory
             public int ItemCount;
         }
 
-        public bool IsToolUnlocked(PlayerAnimationActionsHandler.Tool toolType)
+        public bool IsToolUnlocked(PlayerAnimationTool toolType)
         {
             return OwnedTools.Contains(toolType);
         }
         
-        public void SetToolUnlocked(PlayerAnimationActionsHandler.Tool toolType, bool isOwned)
+        public void SetToolUnlocked(PlayerAnimationTool toolType, bool isOwned)
         {
             if (IsToolUnlocked(toolType) != isOwned)
             {
