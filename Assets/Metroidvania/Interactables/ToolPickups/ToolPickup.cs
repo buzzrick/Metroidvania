@@ -36,9 +36,7 @@ namespace Metroidvania.Interactables.ToolPickups
             ResetActiveStatus();
         }
 
-
-
-        public void ResetActiveStatus()
+        private void ResetActiveStatus()
         {
             _isActive = !_playerInventoryManager.IsToolUnlocked(ToolType);
             _collider.enabled = _isActive;
