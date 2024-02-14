@@ -3,6 +3,7 @@ using Metroidvania.Player.Installer;
 using Metroidvania.ResourceTypes;
 using System;
 using System.Threading;
+using Metroidvania.Player.Inventory;
 using UnityEngine;
 using Zenject;
 
@@ -10,11 +11,14 @@ namespace Metroidvania.Player.Animation
 {
     public class PlayerAnimationActionsHandler
     {
-        private PlayerAnimationView _playerAnimationView;
+        private readonly PlayerCore _playerCore;
+        private PlayerInventoryManager _playerInventoryManager;
+        private readonly PlayerAnimationView _playerAnimationView;
+        private readonly ActiveAnimatorDetector _actionAnimationDetector;
+        private readonly ToolPrefabs _toolPrefabs;
+        
         private Animator _animator;
         private int _actionLayerID;
-        private ActiveAnimatorDetector _actionAnimationDetector;
-        private ToolPrefabs _toolPrefabs;
         public readonly int HashActionInteract = Animator.StringToHash("ActionInteract");
         public readonly int HashActionChopDiagonal = Animator.StringToHash("ActionChopDiagonal");
         public readonly int HashActionSickle = Animator.StringToHash("ActionSickle");
@@ -38,8 +42,9 @@ namespace Metroidvania.Player.Animation
             Sickle
         }
 
-        public PlayerAnimationActionsHandler(PlayerAnimationView playerAnimationView, ToolPrefabs toolPrefabs)
+        public PlayerAnimationActionsHandler(PlayerCore playerCore, PlayerAnimationView playerAnimationView, ToolPrefabs toolPrefabs)
         {
+            _playerCore = playerCore;
             _playerAnimationView = playerAnimationView;
             _playerAnimationView.OnAnimationStriked += HandleOnAnimationStriked;
             _animator = _playerAnimationView.GetAnimator();
@@ -79,6 +84,12 @@ namespace Metroidvania.Player.Animation
 
         public async UniTask RunActionAnimationAsync(InteractionActionType interactionType, CancellationToken token)
         {
+            if (!IsInteractionUnlocked(interactionType))
+            {
+                //  nerf the interactions if we don't have the tool
+                interactionType = InteractionActionType.None;
+            }
+            
             switch (interactionType)
             {
                 case InteractionActionType.None:
@@ -124,26 +135,44 @@ namespace Metroidvania.Player.Animation
 
         private async UniTask SetToolForAnimation(InteractionActionType interactionAction, CancellationToken token)
         {
+            Tool tool = GetToolForInteraction(interactionAction);
+            SetTool(tool);
+            await RunAnimationToComplete(token);
+        }
+        
+        private Tool GetToolForInteraction(InteractionActionType interactionAction)
+        {
             switch (interactionAction)
             {
                 case InteractionActionType.Pickaxe:
-                    SetTool(Tool.PickAxe);
-                    await RunAnimationToComplete(token);
-                    break;
+                    return Tool.PickAxe;
                 case InteractionActionType.Axe:
-                    SetTool(Tool.Axe);
-                    await RunAnimationToComplete(token);
-                    break;
+                    return Tool.Axe;
                 case InteractionActionType.Sickle:
-                    SetTool(Tool.Sickle);
-                    await RunAnimationToComplete(token);
-                    break;
+                    return Tool.Sickle;
                 default:
-                    SetTool(Tool.None);
-                    await RunAnimationToComplete(token);
-                    break;
+                    return Tool.None;
             }
         }
+
+        private bool IsInteractionUnlocked(InteractionActionType interactionActionType)
+        {
+            switch (interactionActionType)
+            {
+                case InteractionActionType.Pickaxe:
+                case InteractionActionType.Axe:
+                case InteractionActionType.Sickle:
+                    return IsToolUnlocked(GetToolForInteraction(interactionActionType));
+                    break;
+            }
+            return true;
+        }
+        private bool IsToolUnlocked(Tool tool)
+        {
+            //  this is only queried when required (lazy loaded) otherwise the PlayerView may not have been loaded yet
+            _playerInventoryManager ??= _playerCore.GetInventoryManager();  
+            return _playerInventoryManager.IsToolUnlocked(tool);  
+        } 
 
         private async UniTask RunAnimationToComplete(CancellationToken token)
         {

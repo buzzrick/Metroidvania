@@ -8,8 +8,9 @@
 
 ## Todo
 
-
-
+Tool pickup UI feedback
+Tool Upgrades
+Swimming fatigue and reset
 
 ## Bugs
 

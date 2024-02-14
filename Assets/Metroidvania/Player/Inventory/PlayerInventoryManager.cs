@@ -5,6 +5,7 @@ using Metroidvania.ResourceTypes;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Metroidvania.Player.Animation;
 using UnityEngine;
 using Zenject;
 
@@ -14,6 +15,9 @@ namespace Metroidvania.Player.Inventory
     public class PlayerInventoryManager
     {
         [SerializeField] private List<InventoryItemAmount> InventoryList = new();
+        
+        //  Todo: convert to dictionary with unlock level (requires JSON.NET serialization)
+        [SerializeField] private List<PlayerAnimationActionsHandler.Tool> OwnedTools = new();
         private ResourceTypeDB _resourceTypeDB = default!;
 
         public event Action<InventoryItemAmount>? OnInventoryAmountChanged;
@@ -167,6 +171,7 @@ namespace Metroidvania.Player.Inventory
         public async UniTask ResetInventory()
         {
             InventoryList.Clear();
+            OwnedTools.Clear();
             OnInventoryReset?.Invoke();
             await SaveData();
         }
@@ -177,6 +182,26 @@ namespace Metroidvania.Player.Inventory
             public string ResourceTypeID;
             [NonSerialized] public ResourceTypeSO ResourceType;
             public int ItemCount;
+        }
+
+        public bool IsToolUnlocked(PlayerAnimationActionsHandler.Tool toolType)
+        {
+            return OwnedTools.Contains(toolType);
+        }
+        
+        public void SetToolUnlocked(PlayerAnimationActionsHandler.Tool toolType, bool isOwned)
+        {
+            if (IsToolUnlocked(toolType) != isOwned)
+            {
+                if (isOwned)
+                {
+                    OwnedTools.Add(toolType);
+                }
+                else
+                {
+                    OwnedTools.Remove(toolType);
+                }
+            }
         }
     }
 
