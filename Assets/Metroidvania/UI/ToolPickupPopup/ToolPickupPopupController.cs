@@ -13,6 +13,8 @@ namespace Metroidvania.UI.ToolPickupPopup
         private readonly ISceneLoader _sceneLoader;
         private MessageBusBase<ToolLevel> _toolPickupBus;
 
+        private bool _isPopupActive;
+        
         public ToolPickupPopupController(ISceneLoader sceneLoader,
             [Inject(Id = "ToolPickedUp")] MessageBusBase<ToolLevel> toolPickupBus)
         {
@@ -28,9 +30,12 @@ namespace Metroidvania.UI.ToolPickupPopup
 
         private async void Handle_OnToolPickupEvent(ToolLevel toolLevel)
         {
+            await UniTask.WaitWhile(() => _isPopupActive);
+            _isPopupActive = true;
             ToolPickupPopupView view = await _sceneLoader.LoadUISceneAsync<ToolPickupPopupView>("ToolPickupPopup", true);
             await view.ShowToolPickup(toolLevel);
             await _sceneLoader.UnloadSceneAsync("ToolPickupPopup", view);
+            _isPopupActive = false;
         }
 
         public UniTask StartCore()
