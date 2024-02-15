@@ -1,6 +1,5 @@
 #nullable enable
 
-using System;
 using Buzzrick.UnityLibs.Attributes;
 using Metroidvania.Player;
 using Metroidvania.Player.Animation;

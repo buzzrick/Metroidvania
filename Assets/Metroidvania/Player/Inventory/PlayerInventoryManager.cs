@@ -8,6 +8,7 @@ using System.IO;
 using Metroidvania.Player.Animation;
 using UnityEngine;
 using Zenject;
+using Metroidvania.MessageBus;
 
 namespace Metroidvania.Player.Inventory
 {
@@ -19,16 +20,18 @@ namespace Metroidvania.Player.Inventory
         //  Todo: convert to dictionary with unlock level (requires JSON.NET serialization)
         [SerializeField] private List<PlayerAnimationTool> OwnedTools = new();
         private ResourceTypeDB _resourceTypeDB = default!;
+        private MessageBusBase<ToolLevel> _toolPickupBus = default!;
 
         public event Action<InventoryItemAmount>? OnInventoryAmountChanged;
         public event Action? OnInventoryReset;
 
         private static string SavePath;
 
-        [Inject]
-        private void Initialise(ResourceTypeDB resourceTypeDB)
+        public PlayerInventoryManager(ResourceTypeDB resourceTypeDB,
+            [Inject(Id = "ToolPickedUp")] MessageBusBase<ToolLevel> toolPickupBus)
         {
             _resourceTypeDB = resourceTypeDB;
+            _toolPickupBus = toolPickupBus;
             SavePath = Path.Combine(Application.persistentDataPath, "PlayerInventory.json");
         }
 
@@ -196,10 +199,21 @@ namespace Metroidvania.Player.Inventory
                 if (isOwned)
                 {
                     OwnedTools.Add(toolType);
+                    _toolPickupBus.RaiseEvent(new()
+                    {
+                        Tool = toolType,
+                        Level = 1
+                    });
+
                 }
                 else
                 {
                     OwnedTools.Remove(toolType);
+                    _toolPickupBus.RaiseEvent(new()
+                    {
+                        Tool = toolType,
+                        Level = 0
+                    });
                 }
             }
         }

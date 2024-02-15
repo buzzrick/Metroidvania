@@ -14,8 +14,8 @@ namespace Metroidvania.Interactables.WorldObjects.Machine
         private static string SceneName = "ProductionMachineUIView";
         private readonly ISceneLoader _sceneLoader;
         private ProductionMachine? _displayedMachine;
-        private PlayerRoot _playerRoot;
-        private PlayerInventoryManager _playerInventory;
+        private PlayerRoot? _playerRoot;
+        private PlayerInventoryManager? _playerInventory;
 
         public ProductionMachineUIController(
             ISceneLoader sceneLoader)
@@ -48,10 +48,10 @@ namespace Metroidvania.Interactables.WorldObjects.Machine
 
         private void RecalculateResourceAmounts()
         {
-            bool canAfford1 = _playerInventory.CanAffordResources(_displayedMachine.InputAmounts, 1);
+            bool canAfford1 = _playerInventory!.CanAffordResources(_displayedMachine!.InputAmounts, 1);
             bool canAfford10 = _playerInventory.CanAffordResources(_displayedMachine.InputAmounts, 10);
             bool canAfford100 = _playerInventory.CanAffordResources(_displayedMachine.InputAmounts, 100);
-            _uiView.UpdatePurchaseButtons(canAfford1, canAfford10, canAfford100);
+            _uiView!.UpdatePurchaseButtons(canAfford1, canAfford10, canAfford100);
         }
         
         private void HandleOnCreateRequested(int count)
@@ -64,7 +64,7 @@ namespace Metroidvania.Interactables.WorldObjects.Machine
 
         private bool ProcessResources(int count)
         {
-            if (_playerInventory.TryConsumeResources(_displayedMachine.InputAmounts, count))
+            if (_playerInventory!.TryConsumeResources(_displayedMachine!.InputAmounts, count))
             {
                 _playerInventory.AddResources(_displayedMachine.OutputAmounts, count);
                 RecalculateResourceAmounts();

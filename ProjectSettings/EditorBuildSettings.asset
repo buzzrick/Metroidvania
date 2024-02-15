@@ -53,6 +53,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Metroidvania/World/ProductionMachineUIView.unity
     guid: b797db8b035169a4f87393523b97a513
+  - enabled: 1
+    path: Assets/Metroidvania/UI/ToolPickupPopup/ToolPickupPopup.unity
+    guid: 9a508614f5b1c2c4b9b06d8d2d3207dd
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 5e8d29354a0c1454a8d6b187bb144398,
       type: 2}
