@@ -11,6 +11,9 @@
 Tool pickup UI feedback
 Tool Upgrades
 Swimming fatigue and reset
+better camera angle handling
+colorized Gameobjects in heirarchy (eg: color or icon for UnlockNodes)
+
 
 ## Bugs
 
