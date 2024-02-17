@@ -1,14 +1,13 @@
 #nullable enable
 
 using AYellowpaper.SerializedCollections;
-using Buzzrick.UnityLibs.Attributes;
 using CandyCoded.HapticFeedback;
 using Cysharp.Threading.Tasks;
 using Metroidvania.Configuration;
 using Metroidvania.Interactables;
-using Metroidvania.MultiScene;
 using Metroidvania.Player;
 using Metroidvania.ResourceTypes;
+using NaughtyAttributes;
 using UnityEngine;
 using Zenject;
 
@@ -190,5 +189,19 @@ namespace Metroidvania.World
                 }
             }
         }
+
+
+
+
+#if UNITY_EDITOR
+
+        //[HideIf("IsPrefabObject")]
+        [Button(enabledMode: EButtonEnableMode.Editor)]
+        private void LinkToPrefab()
+        {
+            WorldUnlockNode nodePrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<WorldUnlockNode>(PrefabPath);
+            ConvertToPrefab(this, nodePrefab);
+        }
+#endif
     }
 }

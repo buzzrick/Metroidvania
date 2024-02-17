@@ -117,9 +117,9 @@ namespace Metroidvania.World
 
 #if UNITY_EDITOR
 
-        private const string PrefabPath = "Assets/Metroidvania/World/WorldUnlockNodePrefab.prefab";
+        protected const string PrefabPath = "Assets/Metroidvania/World/WorldUnlockNodePrefab.prefab";
 
-        [Button]
+        [Button(enabledMode: EButtonEnableMode.Editor)]
         private void GenerateChildNode()
         {
             string newName = GenerateNextNodeName(name);
@@ -128,6 +128,8 @@ namespace Metroidvania.World
             WorldUnlockNode newObject = Instantiate(nodePrefab, transform.position + Vector3.forward, Quaternion.identity, transform);
             newObject.name = newName;
             newObject.transform.SetParent(transform.parent);
+
+            ConvertToPrefab(newObject, nodePrefab);
 
             GameObject childObjects = new GameObject($"{newName}Objects");
             childObjects.transform.SetParent(newObject.transform);
@@ -144,11 +146,52 @@ namespace Metroidvania.World
             newChildNodes[ChildNodes.Length] = newObject;
             ChildNodes = newChildNodes;
 
-            //newObject.transform.localPosition = transform.position + Vector3.forward;
-            //newObject.AddComponent<BoxCollider>();
-
             Debug.Log($"Create Node: {newName}");
         }
+
+
+        protected void ConvertToPrefab(WorldUnlockNode worldObject, WorldUnlockNode nodePrefab)
+        {
+            //  check if we are already a prefab object
+            if (IsPrefabObject(worldObject))
+            {
+                Debug.Log($"This object is already a Prefab object");
+                return;
+            }
+
+            UnityEditor.ConvertToPrefabInstanceSettings settings = new UnityEditor.ConvertToPrefabInstanceSettings();
+            settings.changeRootNameToAssetName = false; // Change root GameObject name to match prefab
+            settings.componentsNotMatchedBecomesOverride = true; // Add unmatched components
+            settings.gameObjectsNotMatchedBecomesOverride = true; // Add unmatched GameObjects
+            settings.recordPropertyOverridesOfMatches = true;   //  Keep property settings
+
+            GameObject prefab = nodePrefab.gameObject;
+
+            UnityEditor.PrefabUtility.ConvertToPrefabInstance(worldObject.gameObject, prefab, settings, UnityEditor.InteractionMode.UserAction);
+
+            Debug.Log($"Linked to Prefab");
+        }
+
+        /// <summary>
+        /// Detects if we are already a prefab object
+        /// </summary>
+        /// <returns></returns>
+        public bool IsPrefabObject(MonoBehaviour monoBehaviour)
+        {
+            var prefabInstanceStatus = UnityEditor.PrefabUtility.GetPrefabInstanceStatus(monoBehaviour);
+            switch (prefabInstanceStatus)
+            {
+                case UnityEditor.PrefabInstanceStatus.NotAPrefab:
+                case UnityEditor.PrefabInstanceStatus.MissingAsset:
+                    return false;
+                //case PrefabInstanceStatus.Connected:
+                //case PrefabInstanceStatus.Disconnected:
+                default:
+                    return true;
+            }
+
+        }
+
 
         private static Regex LastCharacters = new Regex("\\d+$");
         private string GenerateNextNodeName(string nodeName)
