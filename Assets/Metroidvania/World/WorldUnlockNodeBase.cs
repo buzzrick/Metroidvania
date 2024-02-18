@@ -2,6 +2,7 @@
 using Buzzrick.UnityLibs.Attributes;
 using NaughtyAttributes;
 using System.Text.RegularExpressions;
+using Metroidvania.ResourceTypes;
 using UnityEngine;
 
 namespace Metroidvania.World
@@ -129,15 +130,18 @@ namespace Metroidvania.World
             newObject.name = newName;
             newObject.transform.SetParent(transform.parent);
 
+            // Set a default Unlock cost of 10 wood (otherwise it'll automatically get unlocked due to having no cost( as the default).
+            newObject.ResourceAmounts.Add(ResourceTypeDB.EditorInstance().GetResourceType("Wood"), 10);
             ConvertToPrefab(newObject, nodePrefab);
 
+            // Create a child object to hold the node objects
             GameObject childObjects = new GameObject($"{newName}Objects");
             childObjects.transform.SetParent(newObject.transform);
             childObjects.transform.position = newObject.transform.position;
             childObjects.transform.SetParent(transform.parent);
-
             newObject.NodeObjects = new GameObject[] { childObjects };
 
+            // Add the new node to the list of child nodes
             WorldUnlockNode[] newChildNodes = new WorldUnlockNode[ChildNodes.Length + 1];
             for (int i = 0; i < ChildNodes.Length; i++)
             {
@@ -145,7 +149,7 @@ namespace Metroidvania.World
             }
             newChildNodes[ChildNodes.Length] = newObject;
             ChildNodes = newChildNodes;
-
+            
             Debug.Log($"Create Node: {newName}");
         }
 

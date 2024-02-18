@@ -37,6 +37,17 @@ namespace Metroidvania.ResourceTypes
             }
             ResourceTypes = resourceTypes.ToArray();
         }
+        
+        public static ResourceTypeDB EditorInstance()
+        {
+            var resourceTypeDBGuids = UnityEditor.AssetDatabase.FindAssets("t:ResourceTypeDB");
+            if (resourceTypeDBGuids.Length == 0)
+            {
+                throw new InvalidDataException("Unable to find ResourceTypeDB");
+            }
+            string assetPath = UnityEditor.AssetDatabase.GUIDToAssetPath(resourceTypeDBGuids[0]);
+            return UnityEditor.AssetDatabase.LoadAssetAtPath<ResourceTypeDB>(assetPath);
+        }
 #endif
     }
 
