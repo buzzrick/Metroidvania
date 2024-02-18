@@ -3,10 +3,14 @@
     public enum CameraNames 
     {
         None = 0,
-        ThirdPersonRotationCamera,
-        ThirdPersonNorthCamera,
-        ThirdPersonSouthCamera,
-        ThirdPersonEastCamera,
-        ThirdPersonWestCamera
+        RotationCamera,
+        CameraNorth,
+        CameraNorthEast,
+        CameraEast,
+        CameraSouthEast,
+        CameraSouth,
+        CameraSouthWest,
+        CameraWest,
+        CameraNorthWest,
     }
 }
