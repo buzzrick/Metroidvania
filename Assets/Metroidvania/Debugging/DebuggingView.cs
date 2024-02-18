@@ -6,6 +6,7 @@ using Metroidvania.GameCore;
 using Metroidvania.MultiScene;
 using Metroidvania.Player;
 using Metroidvania.World;
+using Tayx.Graphy;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityEngine;
 using Zenject;
@@ -50,14 +51,31 @@ namespace Metroidvania.Debugging
 
             rootPage.AddSwitch(_gameConfiguration.FreeWorldUnlocksDebugging, "Free Unlocks", null, null, null, null, null, ToggleFreeWorldUnlocks);
             rootPage.AddButton("Reset World Data", clicked: ResetWorldData);
+            rootPage.AddButton("Toggle Graphy", clicked: ToggleGraphy);
             
             rootPage.AddPageLinkButton<DebugPlayerMenu>("Player Character",
                 onLoad: page => page.Setup(MovementStats, _playerCore));
             // You must call Reload() after adding cells.
             rootPage.Reload();
         }
+
         
-        
+        private bool _graphyEnabled = false;
+        private void ToggleGraphy()
+        {
+            if (_graphyEnabled)
+            {
+                GraphyManager.Instance.Disable();
+                _graphyEnabled = false;
+            }
+            else
+            {
+                GraphyManager.Instance.Enable();
+                _graphyEnabled = true;
+            }
+        }
+
+
         private void ToggleFreeWorldUnlocks(bool newValue)
         {
             _gameConfiguration.FreeWorldUnlocksDebugging = newValue;

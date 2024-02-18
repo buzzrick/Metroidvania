@@ -14,7 +14,8 @@
         "Unity.InputSystem",
         "AYellowpaper.SerializedCollections",
         "NaughtyAttributes.Core",
-        "CandyCoded.HapticFeedback"
+        "CandyCoded.HapticFeedback",
+        "Tayx.Graphy"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
