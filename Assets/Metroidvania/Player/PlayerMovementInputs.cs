@@ -128,6 +128,10 @@ namespace Metroidvania.Player
                 moveAxis = _touchMoveDelta * _touchScalar;
                 // if (moveAxis.sqrMagnitude > 0.01f)
                 //     Debug.Log($"TouchMove Delta:{_touchMoveDelta}, Scalar:{_touchScalar}, Final:{moveAxis}");
+                if (moveAxis.sqrMagnitude < 0.01f)
+                {
+                    moveAxis = Vector2.zero;
+                }
             }
 
             IsInputActive = (moveAxis != Vector2.zero);
