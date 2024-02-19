@@ -57,6 +57,7 @@ namespace Metroidvania.World
             //  only need to do this once
             if (_defaultScales.Count == 0)
             {
+                // Debug.Log($"Gathering DefaultScales for :{name}", gameObject);
                 _unlockZoneMesh = GetComponent<MeshRenderer>();
                 _collider = GetComponent<Collider>();
                 foreach (var scaleObject in _node.GetObjects())

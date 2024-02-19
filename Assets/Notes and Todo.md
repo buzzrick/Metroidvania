@@ -8,7 +8,6 @@
 
 ## Todo
 
-Tool pickup UI feedback
 Tool Upgrades
 Swimming fatigue and reset
 better camera angle handling
@@ -18,3 +17,9 @@ colorized Gameobjects in heirarchy (eg: color or icon for UnlockNodes)
 ## Bugs
 
  - Popups persist after resource is harvested
+ - Touch move sometimes keeps moving after touch release
+
+
+# tweaks
+
+Second bridge to island - more wood/rock, less rope
