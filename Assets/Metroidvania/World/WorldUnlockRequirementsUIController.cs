@@ -33,7 +33,7 @@ namespace Metroidvania.World
         public async UniTask ShowRequirements(WorldUnlockNode unlockNode)
         {
             //  hide any existing UI
-            await Hide();
+            await Hide(null);
             
             _displayedNode = unlockNode;
             _displayedNodeData = unlockNode.NodeData;
@@ -43,12 +43,17 @@ namespace Metroidvania.World
             await _uiView.ShowRequirements(unlockNode);
         }
 
-        public async UniTask Hide()
+        public async UniTask Hide(WorldUnlockNode? unlockNode)
         {
             if (_uiView != null)
             {
-                await _sceneLoader.UnloadSceneAsync(SceneName, _uiView);
-                _uiView = null;
+                //  only hide the UI if we have been given the currently displayed node
+                //  or null to always hide the UI
+                if ( unlockNode == null || unlockNode == _displayedNode)
+                {
+                    await _sceneLoader.UnloadSceneAsync(SceneName, _uiView);
+                    _uiView = null;
+                }
             }
         }
     }

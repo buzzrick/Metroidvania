@@ -1,5 +1,6 @@
 #nullable enable
 
+using System;
 using AYellowpaper.SerializedCollections;
 using CandyCoded.HapticFeedback;
 using Cysharp.Threading.Tasks;
@@ -34,7 +35,12 @@ namespace Metroidvania.World
             _requirementsUIController = requirementsUIController;
             _gameConfiguration = gameConfiguration;
         }
-        
+
+        private void OnDisable()
+        {
+            ShowUI(false);
+        }
+
         public WorldUnlockData.WorldUnlockNodeAmounts GetUnlockAmounts()
         {
             return new WorldUnlockData.WorldUnlockNodeAmounts
@@ -53,7 +59,7 @@ namespace Metroidvania.World
             }
             else
             {
-                _requirementsUIController.Hide().Forget();
+                _requirementsUIController.Hide(this).Forget();
             }
         }
 
@@ -69,10 +75,7 @@ namespace Metroidvania.World
             if (!IsUnlocked)
             {
                 _player = player;
-
                 ShowUI(true);
-                //UnlockNode();     //  todo : move this into a global debugging ScriptableObject
-
             }
         }
 
@@ -168,9 +171,6 @@ namespace Metroidvania.World
                         }
                     }
                 }
-
-                
-
                 
                 //  Only recalculate if we think we've paid the full amount
                 if (isPaid)

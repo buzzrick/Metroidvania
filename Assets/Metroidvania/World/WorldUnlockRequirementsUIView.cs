@@ -63,9 +63,8 @@ namespace Metroidvania.World
             _requiredResourceTotals = unlockNode.ResourceAmounts;
             
             transform.position = unlockNode.transform.position;
-            // rotate the _canvas to face the camera
-            _canvas.transform.LookAt(_mainCamera.transform);
-
+            RotateBillboard();
+            
             //  Hide all of the unlock item costs displays
             foreach (var displayItem in _unlockItemCostsDisplays)
             {
@@ -91,6 +90,11 @@ namespace Metroidvania.World
         }
 
         private void Update()
+        {
+            RotateBillboard();
+        }
+
+        private void RotateBillboard()
         {
             // rotate the _canvas to face the camera
             Quaternion cameraRotation = _mainCamera.transform.rotation;
