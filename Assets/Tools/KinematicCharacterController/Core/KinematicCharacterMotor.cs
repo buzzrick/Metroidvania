@@ -453,7 +453,7 @@ namespace KinematicCharacterController
         /// The character's velocity resulting from direct movement
         /// </summary>
         [NonSerialized]
-        public Vector3 BaseVelocity;
+        public Vector3 BaseVelocity = new Vector3();
 
         // Private
         private RaycastHit[] _internalCharacterHits = new RaycastHit[MaxHitsBudget];
@@ -1153,6 +1153,7 @@ namespace KinematicCharacterController
             }
 
             // Handle velocity
+            // Debug.Log($"CharacterController = {(CharacterController == null ? "NULL" : CharacterController.ToString())}");
             CharacterController.UpdateVelocity(ref BaseVelocity, deltaTime);
 
             //this.CharacterController.UpdateVelocity(ref BaseVelocity, deltaTime);
