@@ -2,7 +2,7 @@
 using Cysharp.Threading.Tasks;
 using Metroidvania.Debugging;
 using Metroidvania.MultiScene;
-using Metroidvania.Player;
+using Metroidvania.Characters.Player;
 using Metroidvania.UI;
 using UnityEngine;
 using Zenject;

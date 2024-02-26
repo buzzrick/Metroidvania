@@ -21,5 +21,3 @@ colorized Gameobjects in heirarchy (eg: color or icon for UnlockNodes)
 
 
 # tweaks
-
-Second bridge to island - more wood/rock, less rope

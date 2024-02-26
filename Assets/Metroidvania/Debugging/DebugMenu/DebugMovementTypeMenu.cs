@@ -1,5 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
-using Metroidvania.Player;
+using Metroidvania.Characters.Player;
 using System.Collections;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;

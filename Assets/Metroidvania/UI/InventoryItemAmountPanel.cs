@@ -1,6 +1,6 @@
 #nullable enable
 using Buzzrick.UnityLibs.Attributes;
-using Metroidvania.Player.Inventory;
+using Metroidvania.Characters.Player.Inventory;
 using Metroidvania.ResourceTypes;
 using TMPro;
 using UnityEngine;

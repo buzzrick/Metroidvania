@@ -1,5 +1,5 @@
 using Metroidvania.Interactables;
-using Metroidvania.Player;
+using Metroidvania.Characters.Player;
 using UnityEngine;
 
 namespace Assets.Metroidvania.World

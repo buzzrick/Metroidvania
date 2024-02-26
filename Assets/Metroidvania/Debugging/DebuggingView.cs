@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 using Metroidvania.Configuration;
 using Metroidvania.GameCore;
 using Metroidvania.MultiScene;
-using Metroidvania.Player;
+using Metroidvania.Characters.Player;
 using Metroidvania.World;
 using Tayx.Graphy;
 using UnityDebugSheet.Runtime.Core.Scripts;

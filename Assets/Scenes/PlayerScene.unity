@@ -3593,6 +3593,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d4aa7826050db42bc26b41f47a2301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _model: {fileID: 471024264}
+  _swimmingOffset: {x: 0, y: 0.4, z: 0}
   _playerInteractionController: {fileID: 851234408}
   _model: {fileID: 471024264}
   _swimmingOffset: {x: 0, y: 0.4, z: 0}
@@ -4364,7 +4366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 764344dc63af1ac45929bd98ac0e1e0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerAnimationView: {fileID: 471024266}
+  AnimationView: {fileID: 471024266}
   MaxStableMoveSpeed: 10
   StableMovementSharpness: 15
   OrientationSharpness: 10

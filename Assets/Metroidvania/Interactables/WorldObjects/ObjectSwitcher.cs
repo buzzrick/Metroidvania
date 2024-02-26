@@ -1,5 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
-using Metroidvania.Player.Animation;
+using Metroidvania.Characters.Player.Animation;
 using UnityEngine;
 
 namespace Metroidvania.Interactables.WorldObjects

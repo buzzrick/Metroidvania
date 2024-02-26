@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Metroidvania.GameCore;
-using Metroidvania.Player;
+using Metroidvania.Characters.Player;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;

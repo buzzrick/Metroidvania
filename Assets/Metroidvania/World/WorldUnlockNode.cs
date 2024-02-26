@@ -6,7 +6,7 @@ using CandyCoded.HapticFeedback;
 using Cysharp.Threading.Tasks;
 using Metroidvania.Configuration;
 using Metroidvania.Interactables;
-using Metroidvania.Player;
+using Metroidvania.Characters.Player;
 using Metroidvania.ResourceTypes;
 using NaughtyAttributes;
 using UnityEngine;
@@ -128,7 +128,7 @@ namespace Metroidvania.World
             if (!_nodeData.IsUnlocked)
             {
                 bool isPaid = true;
-                Player.Inventory.PlayerInventoryManager playerInventory = player.PlayerInventoryManager;
+                Characters.Player.Inventory.PlayerInventoryManager playerInventory = player.PlayerInventoryManager;
                 //  recalculate based on paid amounts
                 var amounts = GetUnlockAmounts();
 

@@ -1,5 +1,5 @@
 using Metroidvania.Interactables.ResourcePickups;
-using Metroidvania.Player.Animation;
+using Metroidvania.Characters.Player.Animation;
 using UnityEngine;
 
 namespace Metroidvania.ResourceTypes

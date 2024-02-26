@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Metroidvania.MultiScene;
-using Metroidvania.Player;
+using Metroidvania.Characters.Player;
 using UnityEngine;
 using Zenject;
 

@@ -6,7 +6,7 @@ using Metroidvania.Interactables.ResourcePickups;
 using Metroidvania.Interactables.WorldObjects.Machine;
 using Metroidvania.Lighting;
 using Metroidvania.MultiScene;
-using Metroidvania.Player;
+using Metroidvania.Characters.Player;
 using Metroidvania.ResourceTypes;
 using Metroidvania.UI;
 using Metroidvania.World;

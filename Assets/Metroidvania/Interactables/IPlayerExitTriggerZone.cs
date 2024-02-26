@@ -1,4 +1,4 @@
-﻿using Metroidvania.Player;
+﻿using Metroidvania.Characters.Player;
 
 namespace Metroidvania.Interactables
 {

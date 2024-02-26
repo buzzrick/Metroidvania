@@ -1,9 +1,9 @@
 #nullable enable
 
 using Buzzrick.UnityLibs.Attributes;
-using Metroidvania.Player;
-using Metroidvania.Player.Animation;
-using Metroidvania.Player.Inventory;
+using Metroidvania.Characters.Player;
+using Metroidvania.Characters.Player.Animation;
+using Metroidvania.Characters.Player.Inventory;
 using UnityEngine;
 using Zenject;
 

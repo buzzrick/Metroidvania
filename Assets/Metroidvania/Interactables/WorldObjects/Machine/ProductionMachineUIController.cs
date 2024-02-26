@@ -3,8 +3,8 @@ using CandyCoded.HapticFeedback;
 using Cysharp.Threading.Tasks;
 using Metroidvania.GameCore;
 using Metroidvania.MultiScene;
-using Metroidvania.Player;
-using Metroidvania.Player.Inventory;
+using Metroidvania.Characters.Player;
+using Metroidvania.Characters.Player.Inventory;
 
 namespace Metroidvania.Interactables.WorldObjects.Machine
 {

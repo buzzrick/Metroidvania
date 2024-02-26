@@ -1,4 +1,4 @@
-﻿using Metroidvania.Player.Animation;
+﻿using Metroidvania.Characters.Player.Animation;
 using UnityEngine;
 
 namespace Metroidvania.MessageBus

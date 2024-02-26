@@ -3,7 +3,7 @@ using Metroidvania.Cameras;
 using Metroidvania.Debugging;
 using Metroidvania.Lighting;
 using Metroidvania.MultiScene;
-using Metroidvania.Player;
+using Metroidvania.Characters.Player;
 using Metroidvania.UI;
 using Metroidvania.World;
 using UnityEngine;

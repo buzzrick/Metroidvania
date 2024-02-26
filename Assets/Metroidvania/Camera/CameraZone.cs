@@ -1,6 +1,6 @@
 using Metroidvania.Interactables;
 using Metroidvania.Lighting;
-using Metroidvania.Player;
+using Metroidvania.Characters.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;

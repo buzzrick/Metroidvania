@@ -1,6 +1,6 @@
 ﻿using AYellowpaper.SerializedCollections;
 using Cysharp.Threading.Tasks;
-using Metroidvania.Player;
+using Metroidvania.Characters.Player;
 using Metroidvania.ResourceTypes;
 using UnityEngine;
 using Zenject;

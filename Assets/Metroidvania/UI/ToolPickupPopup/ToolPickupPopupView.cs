@@ -4,7 +4,7 @@ using Buzzrick.UnityLibs.Attributes;
 using Cysharp.Threading.Tasks;
 using Metroidvania.MessageBus;
 using Metroidvania.MultiScene;
-using Metroidvania.Player.Animation;
+using Metroidvania.Characters.Player.Animation;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
