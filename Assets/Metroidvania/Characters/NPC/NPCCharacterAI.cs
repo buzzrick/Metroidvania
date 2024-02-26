@@ -10,6 +10,8 @@ namespace Metroidvania.Characters.NPC
         private AICharacterInputs _inputs;
 
         private float MoveAngle = 0f;
+        private float MoveVelocity = 0f;
+        public float MaxVelocity = 0.5f;
         
         private void Awake()
         {
@@ -22,7 +24,9 @@ namespace Metroidvania.Characters.NPC
         {
             CheckForOutOfBounds();
             MoveAngle  += UnityEngine.Random.Range(-10f, 10f);
-            _inputs.MoveVector = Quaternion.Euler(0f, MoveAngle, 0f) * Vector3.forward;
+            MoveVelocity += UnityEngine.Random.Range(-0.05f, 0.05f);
+            MoveVelocity = Mathf.Clamp(MoveVelocity, 0f, MaxVelocity);
+            _inputs.MoveVector = Quaternion.Euler(0f, MoveAngle, 0f) * Vector3.forward * MoveVelocity;
             _inputs.LookVector = _inputs.MoveVector;    //  look the way that we're moving
             
             _npcCharacterController.SetInputs(ref _inputs);
