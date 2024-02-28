@@ -23,9 +23,10 @@ namespace Metroidvania.Characters.Player
 
         public bool IsInputActive { get; private set; }
 
-        private void Awake()
+        [Inject]
+        private void Initialise(PlayerControls playerControls)
         {
-            _playerControls = new PlayerControls();
+            _playerControls = playerControls;
             _cameraTransform = Camera.main.transform;
             _playerControls.Enable();
 

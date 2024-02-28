@@ -15,6 +15,7 @@ namespace Metroidvania.Characters.Player.Installer
             Container.BindInstance(PlayerAnimationView).AsSingle();
             Container.BindInstance(ToolPrefabs).AsSingle();
             Container.Bind<PlayerInventoryManager>().AsSingle();
+            Container.Bind<PlayerControls>().FromNew().AsSingle();
 
             Container.BindFactory<PlayerAnimationView, PlayerAnimationActionsHandler, PlayerAnimationActionsHandler.Factory>().AsSingle();
         }
