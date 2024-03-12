@@ -90,12 +90,12 @@ namespace Metroidvania.Characters.Player
                     }
 
                     _horizontalVelocity = inputDirectionWorld * movementSpeed;
-                    _characterAnimationView.SetSpeed(_horizontalVelocity.magnitude);
+                    //_characterAnimationView.SetSpeed(_horizontalVelocity.magnitude);
                 }
             }
             else
             {
-                _characterAnimationView.SetSpeed(0f);
+                //_characterAnimationView.SetSpeed(0f);
             }
 
             //  if we're midair, damp our horizontal movement.

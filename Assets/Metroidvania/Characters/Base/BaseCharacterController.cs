@@ -312,7 +312,7 @@ namespace Metroidvania.Characters.Base
             }
 
             AnimationView.SetGrounded(Motor.GroundingStatus.IsStableOnGround);
-            AnimationView.SetSpeed(currentVelocity.magnitude);
+            AnimationView.SetSpeed(currentVelocity.magnitude * 0.1f);
         }
 
 
