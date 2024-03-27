@@ -7,7 +7,7 @@ namespace Metroidvania.Characters.NPC
     {
         [SerializeField, RequiredField] private Animator _animator;
         [SerializeField, RequiredField] private NPCCharacterController _npcCharacterController;
-        [SerializeField, RequiredField] private NPCCharacterAI _npcCharacterAI;
+        //[SerializeField, RequiredField] private NPCCharacterAI _npcCharacterAI;
         
         private void Awake()
         {
