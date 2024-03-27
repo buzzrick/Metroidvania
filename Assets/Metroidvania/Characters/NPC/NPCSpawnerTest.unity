@@ -172,9 +172,11 @@ MonoBehaviour:
   _npcCharacterController: {fileID: 501133535}
   _playerDetector: {fileID: 62713234}
   LinkedBT: {fileID: 62713235}
+  _maxVelocity: 0.5
   _fleeDistance: 5
   _wanderRadius: 10
-  MaxVelocity: 0.5
+  _minIdleTime: 3
+  _maxIdleTime: 10
 --- !u!114 &62713234
 MonoBehaviour:
   m_ObjectHideFlags: 0
