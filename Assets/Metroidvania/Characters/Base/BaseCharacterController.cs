@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Buzzrick.UnityLibs.Attributes;
 using KinematicCharacterController;
 using KinematicCharacterController.Examples;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace Metroidvania.Characters.Base
         protected bool _isEnabled;
 
         public KinematicCharacterMotor Motor => _characterMotor;
-        public BaseAnimationView AnimationView;
+        [RequiredField] public BaseAnimationView AnimationView;
 
         [Header("Stable Movement")]
         public float MaxStableMoveSpeed = 10f;

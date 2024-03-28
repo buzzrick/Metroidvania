@@ -85,13 +85,13 @@ namespace Assets.Metroidvania.Characters.NPC
                 () => 
                 {
                     _idleTimer = Random.Range(_minIdleTime, _maxIdleTime);
-                    Debug.Log($"Standing Idle for {_idleTimer}");
+                    //Debug.Log($"Standing Idle for {_idleTimer}");
                     return BehaviourTree.ENodeStatus.InProgress;
                 },
                 () => 
                 {
                     _idleTimer -= Time.deltaTime;
-                    Debug.Log($"Standing Idle for {_idleTimer}");
+                    //Debug.Log($"Standing Idle for {_idleTimer}");
                     if (_idleTimer > 0f)
                         return BehaviourTree.ENodeStatus.InProgress;
                     else
@@ -109,14 +109,14 @@ namespace Assets.Metroidvania.Characters.NPC
                     //_wanderVelocity = Mathf.Clamp(_wanderVelocity, 0f, MaxVelocity);
                     MoveTowardsTarget(_targetWanderPosition, _wanderVelocity);
 
-                    Debug.Log($"Wander starting");
+                    //Debug.Log($"Wander starting");
                     return BehaviourTree.ENodeStatus.InProgress;
                 },
                 () =>
                 {
                     MoveTowardsTarget(_targetWanderPosition, _wanderVelocity);
 
-                    Debug.Log($"Wander in progress {DistanceToTargetSqr(_targetWanderPosition)}");
+                    //Debug.Log($"Wander in progress {DistanceToTargetSqr(_targetWanderPosition)}");
 
 
                     if (DistanceToTargetSqr(_targetWanderPosition) < 0.05f)
