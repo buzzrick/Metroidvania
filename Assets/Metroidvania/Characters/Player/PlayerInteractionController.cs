@@ -19,6 +19,7 @@ namespace Metroidvania.Characters.Player
         private Collider[] _colliders = new Collider[10];
         private PlayerAnimationActionsHandler _playerAnimationActionHandler;
         private PlayerInventoryManager _playerInventoryManager = default!;
+        private PlayerMovementInputLimiter _inputLimiter;
         private bool _isAutomatic;
         private CancellationTokenSource _tokenSource;
         private CancellationToken _onDestroyToken;
@@ -44,10 +45,12 @@ namespace Metroidvania.Characters.Player
 
         [Inject]
         private void Initialise(ResourcePickupGenerator resourceGenerator, 
-            PlayerInventoryManager playerInventoryManager)
+            PlayerInventoryManager playerInventoryManager,
+            PlayerMovementInputLimiter inputLimiter)
         {
             _resourceGenerator = resourceGenerator;
             _playerInventoryManager = playerInventoryManager;
+            _inputLimiter = inputLimiter;
             if (_parentTransform == null)
             {
                 _parentTransform = transform.parent.transform;
@@ -121,6 +124,12 @@ namespace Metroidvania.Characters.Player
 
         private async UniTask AttemptInteraction(bool isForced)
         {
+            if (!_inputLimiter.IsMovementInputAllowed)
+            {
+                //  don't allow interactions if we're in a cutscene or something
+                return;
+            }
+
             bool interactableFound = false;
 
             //  can't do interactions if you're swimming

@@ -1,6 +1,5 @@
 ﻿using KinematicCharacterController;
 using KinematicCharacterController.Examples;
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
@@ -14,6 +13,7 @@ namespace Metroidvania.Characters.Player
         public PlayerCameraController PlayerCameraController;
         private int _screenWidth;
         private PlayerControls _playerControls;
+        private PlayerMovementInputLimiter _inputLimiter;
         private Transform _cameraTransform;
         PlayerCharacterInputs characterInputs = new PlayerCharacterInputs();
 
@@ -21,12 +21,19 @@ namespace Metroidvania.Characters.Player
         private float _touchScalar;
         private const float TouchScalarMultiplier = 2.5f;
 
+        /// <summary>
+        /// Whether the player is currently providing any input
+        /// </summary>
         public bool IsInputActive { get; private set; }
 
         [Inject]
-        private void Initialise(PlayerControls playerControls)
+        private void Initialise(
+            PlayerControls playerControls,
+            PlayerMovementInputLimiter inputLimiter)
         {
             _playerControls = playerControls;
+            _inputLimiter = inputLimiter;
+
             _cameraTransform = Camera.main.transform;
             _playerControls.Enable();
 
@@ -133,6 +140,11 @@ namespace Metroidvania.Characters.Player
                 {
                     moveAxis = Vector2.zero;
                 }
+            }
+
+            if (!_inputLimiter.IsMovementInputAllowed)
+            {
+                moveAxis = Vector3.zero;
             }
 
             IsInputActive = (moveAxis != Vector2.zero);

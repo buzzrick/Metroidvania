@@ -10,7 +10,7 @@ namespace Metroidvania.Characters.Player
         public PlayerAnimationView PlayerAnimationView => AnimationView as PlayerAnimationView;
 
         /// <summary>
-        /// This is called every frame by ExamplePlayer in order to tell the character what its inputs are
+        /// This is called every frame by PlayerMovementInputs in order to tell the character what its inputs are
         /// </summary>
         public void SetInputs(ref PlayerCharacterInputs inputs)
         {
