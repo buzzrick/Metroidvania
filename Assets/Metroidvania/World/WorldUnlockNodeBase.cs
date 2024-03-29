@@ -4,6 +4,7 @@ using NaughtyAttributes;
 using System.Text.RegularExpressions;
 using Metroidvania.ResourceTypes;
 using UnityEngine;
+using Assets.Metroidvania.Camera;
 
 namespace Metroidvania.World
 {
@@ -12,13 +13,13 @@ namespace Metroidvania.World
         [SerializeField] private GameObject[] NodeObjects;
         [SerializeField] private WorldUnlockNode[] ChildNodes;
         public WorldUnlockScene? ChildScene;
-        public string NodeID => name;
         [SerializeField, RequiredField] private UnlockAnimator? _unlockAnimator;
-
+        public string NodeID => name;
         protected string _zoneID;
         protected WorldUnlockData _worldUnlockData;
         protected WorldUnlockData.WorldUnlockNodeData _nodeData;
         protected WorldUnlockData.WorldUnlockNodeData? _parentNodeData;
+        [SerializeField] protected CutsceneSimple? _unlockCutscene;
         public bool ParentIsUnlocked => _parentNodeData?.IsUnlocked ?? true; //  if there's no parent, then it's unlocked
 
         private bool _isUnlocked;
@@ -82,6 +83,18 @@ namespace Metroidvania.World
             {
                 child.LoadData(_zoneID, _worldUnlockData, _nodeData, firstLoad);
             }
+        }
+
+        protected bool HasUnlockedChildren()
+        {
+            foreach (WorldUnlockNode child in ChildNodes)
+            {
+                if (child.IsUnlocked)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         //public void Unlock()

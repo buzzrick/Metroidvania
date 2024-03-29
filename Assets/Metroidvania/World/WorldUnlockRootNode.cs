@@ -57,6 +57,10 @@ namespace Metroidvania.World
             LoadData(ZoneID, _worldData, null, true);
             await _worldData.SaveData();
             TeleportPlayerToStartPosition();
+            if (!HasUnlockedChildren() && _unlockCutscene != null)
+            {
+                _unlockCutscene.RunCutscene().Forget();
+            }
         }
 
         public void DebugResetWorldData()

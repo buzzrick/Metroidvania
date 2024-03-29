@@ -11,6 +11,7 @@ using Metroidvania.ResourceTypes;
 using NaughtyAttributes;
 using UnityEngine;
 using Zenject;
+using Assets.Metroidvania.Camera;
 
 namespace Metroidvania.World
 {
@@ -22,6 +23,7 @@ namespace Metroidvania.World
         [SerializedDictionary("ResourceType", "Amount Required")] public SerializedDictionary<ResourceTypeSO, int> ResourceAmounts = new();
         [Tooltip("How much of each resource should be paid per frame")]
         public int PaymentChunkSize = 10;
+
 
         private int _updateTicker;
         private PlayerRoot? _player;
@@ -176,6 +178,13 @@ namespace Metroidvania.World
                 if (isPaid)
                 {
                     CalculateIsUnlocked();
+
+                    //  play any cutscene if one is registered
+                    if (IsUnlocked && _unlockCutscene != null)
+                    {
+                        _unlockCutscene.RunCutscene().Forget();
+                    }
+
                     //  LoadData will correctly unlock the node if required
                     LoadData(_zoneID, _worldUnlockData, _parentNodeData, false);
                     ShowUI(false);

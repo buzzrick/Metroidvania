@@ -74,7 +74,6 @@ namespace Metroidvania.Characters.Player
             _playerAnimationActionHandler.OnAnimationComplete += Handle_OnAnimationComplete;
 
             _onDestroyToken = this.GetCancellationTokenOnDestroy();
-            
         }
 
 
