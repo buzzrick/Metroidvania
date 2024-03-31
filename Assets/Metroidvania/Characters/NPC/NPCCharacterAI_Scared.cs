@@ -30,14 +30,17 @@ namespace Assets.Metroidvania.Characters.NPC
         private bool _shouldFlee;
 
         private Vector3 _startPosition;         //  center of random wander radius
+        private float _wanderRadiusSqr;         //  the wander radius squared
         private Vector3 _targetWanderPosition;  //  the current random target position to wander to
         private float _wanderVelocity;          //  the speed at which we are wandering
-        private Vector3 _wanderVector;          
+        private Vector3 _wanderVector;
+        private float _wanderTimer;             //  how much longer we'll wander for (if we're wandering for too long it means we can't find a path, so just fail after a while.)
         private float _idleTimer;               //  how much longer we'll idle for
 
         private void Awake()
         {
             _fleeDistanceSqr = _fleeDistance * _fleeDistance;
+            _wanderRadiusSqr= _wanderRadius * _wanderRadius;
             _startPosition = transform.position;
         }
 
@@ -49,7 +52,7 @@ namespace Assets.Metroidvania.Characters.NPC
 
         private void Start()
         {
-            LocalMemory = BlackboardManager.Instance.GetIndividualBlackboard<BlackboardKey>(this);
+            //LocalMemory = BlackboardManager.Instance.GetIndividualBlackboard<BlackboardKey>(this);
 
             var BTRoot = LinkedBT.RootNode.Add<BTNode_Selector>("Scared NPC Base Logic");
 
@@ -62,9 +65,9 @@ namespace Assets.Metroidvania.Characters.NPC
             var fleeNode = BTRoot.Add<BTNode_Sequence>("Flee Player");
             fleeNode.AddDecorator<BTDecoratorBase>("Should Flee", () => _shouldFlee);
 
-            fleeNode.Add<BTNode_Action>(new BTNode_Action("Flee Action", 
+            fleeNode.Add<BTNode_Action>(new BTNode_Action("Flee Action",
                 () => //    OnEnter state
-                { 
+                {
                     return BehaviourTree.ENodeStatus.InProgress;
                 },
                 () =>   //  OnTick state
@@ -78,36 +81,14 @@ namespace Assets.Metroidvania.Characters.NPC
                     return _shouldFlee ? BehaviourTree.ENodeStatus.InProgress : BehaviourTree.ENodeStatus.Succeeded;
                 }));
 
-
-            var randomIdleNode = BTRoot.Add<BTNode_Random>("Random Idle");
-
-            var idleNode = randomIdleNode.Add(new BTNode_Action("Idle Animation",
-                () => 
-                {
-                    _idleTimer = Random.Range(_minIdleTime, _maxIdleTime);
-                    //Debug.Log($"Standing Idle for {_idleTimer}");
-                    return BehaviourTree.ENodeStatus.InProgress;
-                },
-                () => 
-                {
-                    _idleTimer -= Time.deltaTime;
-                    //Debug.Log($"Standing Idle for {_idleTimer}");
-                    if (_idleTimer > 0f)
-                        return BehaviourTree.ENodeStatus.InProgress;
-                    else
-                        return BehaviourTree.ENodeStatus.Succeeded;
-                }));
-
-            var wanderNode = randomIdleNode.Add<BTNode_Sequence>("Wander");
-
-            wanderNode.Add<BTNode_Action>(new BTNode_Action("Wander Action",
-                ()=>
+            BTNode_Action wanderAction = new BTNode_Action("Wander Action",
+                () =>
                 {
                     //  determine a random spot within our wander radius, and start moving there
-                    _targetWanderPosition = _startPosition + new Vector3(UnityEngine.Random.Range(-_wanderRadius, _wanderRadius), 0f, UnityEngine.Random.Range(-_wanderRadius, _wanderRadius));
+                    _targetWanderPosition = _startPosition + new Vector3(Random.Range(-_wanderRadius, _wanderRadius), 0f, Random.Range(-_wanderRadius, _wanderRadius));
                     _wanderVelocity = Random.Range(_maxVelocity * 0.25f, _maxVelocity);
-                    //_wanderVelocity = Mathf.Clamp(_wanderVelocity, 0f, MaxVelocity);
                     MoveTowardsTarget(_targetWanderPosition, _wanderVelocity);
+                    _wanderTimer = 10f;
 
                     //Debug.Log($"Wander starting");
                     return BehaviourTree.ENodeStatus.InProgress;
@@ -118,17 +99,53 @@ namespace Assets.Metroidvania.Characters.NPC
 
                     //Debug.Log($"Wander in progress {DistanceToTargetSqr(_targetWanderPosition)}");
 
+                    _wanderTimer -= Time.deltaTime;
+                    if (_wanderTimer < 0f)
+                    {
+                        StopMovement();
+                        return BehaviourTree.ENodeStatus.Failed;
+                    }
 
                     if (DistanceToTargetSqr(_targetWanderPosition) < 0.05f)
                     {
-                        _wanderVector = Vector3.zero;
-                        _inputs.MoveVector = _wanderVector;
-                        _npcCharacterController.SetInputs(ref _inputs);
+                        StopMovement();
                         return BehaviourTree.ENodeStatus.Succeeded;
                     }
+
                     //  check when we've arrived, and return success when we are there
                     return BehaviourTree.ENodeStatus.InProgress;
+                });
+
+            var returnToZoneNode = BTRoot.Add<BTNode_Sequence>("Return to Zone");
+            returnToZoneNode.AddDecorator<BTDecoratorBase>("Is out of zone", () => (_startPosition - transform.position).sqrMagnitude > _wanderRadiusSqr);
+
+            returnToZoneNode.Add(wanderAction);
+
+            var randomIdleNode = BTRoot.Add<BTNode_Random>("Random Idle");
+
+            var idleNode = randomIdleNode.Add(new BTNode_Action("Idle Animation",
+                () =>
+                {
+                    _idleTimer = Random.Range(_minIdleTime, _maxIdleTime);
+                    //Debug.Log($"Standing Idle for {_idleTimer}");
+                    return BehaviourTree.ENodeStatus.InProgress;
+                },
+                () =>
+                {
+                    _idleTimer -= Time.deltaTime;
+                    StopMovement();
+                    //Debug.Log($"Standing Idle for {_idleTimer}");
+                    if (_idleTimer > 0f)
+                        return BehaviourTree.ENodeStatus.InProgress;
+                    else
+                        return BehaviourTree.ENodeStatus.Succeeded;
                 }));
+
+            var wanderNode = randomIdleNode.Add<BTNode_Sequence>("Wander");
+            wanderNode.Add<BTNode_Action>(wanderAction);
+
+
+            //  
         }
 
         private void MoveTowardsTarget(Vector3 target, float velocity)
@@ -142,6 +159,14 @@ namespace Assets.Metroidvania.Characters.NPC
             _npcCharacterController.SetInputs(ref _inputs);
         }
 
+        private void StopMovement()
+        {
+            _wanderVector = Vector3.zero;
+            _inputs.MoveVector = Vector2.zero;
+            _npcCharacterController.SetInputs(ref _inputs);
+        }
+
+
 
         private float DistanceToTargetSqr(Vector3 target)
         {
@@ -151,11 +176,18 @@ namespace Assets.Metroidvania.Characters.NPC
             return distToTarget.sqrMagnitude;
         }
 
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, _targetWanderPosition);
-            //Gizmos.DrawWireSphere(_startPosition, _wanderRadius); //  shows it's wander area
+            if (Application.isPlaying)
+            {
+                Gizmos.DrawLine(transform.position, _targetWanderPosition);
+                Gizmos.DrawWireSphere(_startPosition, _wanderRadius); //  shows it's wander area
+            }
+            else
+            {
+                Gizmos.DrawWireSphere(transform.position, _wanderRadius); //  shows it's wander area
+            }
         }
 
         [Button("Debug BehaviourTree")]
