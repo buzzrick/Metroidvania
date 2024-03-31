@@ -71,7 +71,7 @@ namespace Metroidvania.Characters.Base
             if (_characterMotor == null)
             {
                 _characterMotor = GetComponent<KinematicCharacterMotor>();
-                Debug.Log($"Found Motor: {_characterMotor.name}");
+                //Debug.Log($"Found Motor: {_characterMotor.name}");
                 _characterMotor.CharacterController = this;
             }
         }

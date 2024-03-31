@@ -54,7 +54,7 @@ namespace Metroidvania.Cameras
 
         private void SetDefaultScene()
         {
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName("GameCoreScene"));
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("_GameCoreScene"));
         }
     }
 }
