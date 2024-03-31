@@ -1,6 +1,8 @@
 #nullable enable
 using Buzzrick.UnityLibs.Attributes;
+using Metroidvania.Characters.Player;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Metroidvania.Characters.NPC
 {
@@ -19,6 +21,14 @@ namespace Assets.Metroidvania.Characters.NPC
 
         private int _frameCounter = 0;
 
+        [Inject]
+        private void Initialise([InjectOptional]PlayerCore playerCore)
+        {
+            if (playerCore != null)
+            {
+                PlayerTransform = playerCore.GetPlayerRoot().transform;
+            }
+        }
 
         // Update is called once per frame
         private void Update()
