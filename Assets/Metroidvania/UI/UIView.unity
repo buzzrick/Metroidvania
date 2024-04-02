@@ -1645,6 +1645,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _topBar: {fileID: 998509444}
   _bottomBar: {fileID: 1635575245}
+  _uiElementsToHide:
+  - {fileID: 1272000848}
+  - {fileID: 872325013}
 --- !u!1 &1635575244
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Metroidvania.Characters.Player;
 using UnityEngine;
 using Zenject;
@@ -9,6 +10,7 @@ namespace Metroidvania.UI
     {
         [SerializeField] private RectTransform _topBar;
         [SerializeField] private RectTransform _bottomBar;
+        [SerializeField] private List<RectTransform> _uiElementsToHide = new();
         private PlayerMovementInputLimiter _inputLimiter;
         private bool _isInputAllowed = true;
         
@@ -26,6 +28,11 @@ namespace Metroidvania.UI
             {
                 _isInputAllowed = isAllowed;
                 StartCoroutine(ShowBars(!isAllowed));
+                
+                foreach (var uiElement in _uiElementsToHide)
+                {
+                    uiElement.gameObject.SetActive(isAllowed);
+                }
             }
         }
         
