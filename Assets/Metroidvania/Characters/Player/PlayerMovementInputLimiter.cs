@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace Metroidvania.Characters.Player
     {
         private List<object> _limiters = new List<object>();
 
+        public event Action<bool> OnInputAllowedChanged;
         public bool IsMovementInputAllowed { get; private set; } = true;
 
         public void RegisterLimiter(object limiter)
@@ -19,7 +21,8 @@ namespace Metroidvania.Characters.Player
             _limiters.Add(limiter);
             IsMovementInputAllowed = false;
 
-            Debug.Log($"Registering {IsMovementInputAllowed}");
+            //Debug.Log($"Registering {IsMovementInputAllowed}");
+            OnInputAllowedChanged?.Invoke(false);
         }
 
 
@@ -33,6 +36,7 @@ namespace Metroidvania.Characters.Player
             _limiters.Remove(limiter);
             IsMovementInputAllowed = _limiters.Count == 0;
             Debug.Log($"Unregistering {IsMovementInputAllowed} ({_limiters.Count})");
+            OnInputAllowedChanged?.Invoke(IsMovementInputAllowed);
         }
     }
 }
