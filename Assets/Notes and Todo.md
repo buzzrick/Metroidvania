@@ -23,21 +23,19 @@ colorized Gameobjects in heirarchy (eg: color or icon for UnlockNodes)
 # Future thoughts
 
 
-## Cutscene Camera
+Add "Cinematic bars" to top/bottom of the screen when cutscene camera running.
 
-Unlock node would have an optional cutscene camera option.
-This would have a Camera transform, and a target transform
-While the camera is transitioning to the cutscene camera and back again, the user controls will be disabled.
-Possible "Focus time" setting to stay focused on the target for a period of time.
-Possible separate monobehavior to encapsulate all of this configuration and running.
-Possible message bus for Input control disable/enable triggers.
+Crab Island to the South East 
+Grab the "Ropeweaver" soul from a skittish crab
+Turn Rope machine into Kira the Ropeweaver 
 
+# weapons
 
-## Behaviour Trees
-https://www.youtube.com/watch?v=aR6wt5BlE-E&ab_channel=MinaP%C3%AAcheux
+Can start with a club
+Carpenter can create it.
 
-https://www.youtube.com/watch?v=b6kvr10uWsg&ab_channel=IainMcManus
-https://www.youtube.com/watch?v=LL0DtWwIO9A&ab_channel=IainMcManus
-https://github.com/GameDevEducation/UnityAITutorial_BehaviourTrees/tree/Part-1-Behaviour-Tree-Base
-https://github.com/GameDevEducation/UnityAITutorial_BehaviourTrees/tree/Part-2-Decorators-and-Services
-https://github.com/GameDevEducation/UnityAITutorial_BehaviourTrees/tree/Part-3-Parallel-Node
+NPCs - Add question mark UI element to talk to NPC 
+	eg: Ropeweaver
+			"Thank you for saving me"
+			"I'm Kira the Ropeweaver"
+			"Bring me wiregrass and I can make rope for you" (this could be generalised with input/output resource SOs?)
