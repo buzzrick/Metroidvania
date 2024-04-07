@@ -16,7 +16,7 @@ namespace Metroidvania.Characters.Player
         private PlayerMovementInputLimiter _inputLimiter;
         private Transform _cameraTransform;
         PlayerCharacterInputs characterInputs = new PlayerCharacterInputs();
-
+        private bool _isTouchMoving;    //  whether a touch move is currently detected
         private Vector2 _touchMoveDelta = Vector2.zero;
         private float _touchScalar;
         private const float TouchScalarMultiplier = 2.5f;
@@ -56,7 +56,6 @@ namespace Metroidvania.Characters.Player
         private void CalculateTouchScalar()
         {
             _touchScalar = 1f / Screen.width * TouchScalarMultiplier;
-
             Debug.Log($"Found TouchScalar = {_touchScalar}");
         }
 
@@ -68,11 +67,13 @@ namespace Metroidvania.Characters.Player
 
         private void TouchMoveStart(InputAction.CallbackContext context)
         {
+            _isTouchMoving = true;
             _touchMoveDelta = Vector2.zero; //  reset the start position
         }
 
         private void TouchMoveEnd(InputAction.CallbackContext context)
         {
+            _isTouchMoving = false;
             _touchMoveDelta = Vector2.zero; //  reset the start position
         }
 
@@ -134,10 +135,16 @@ namespace Metroidvania.Characters.Player
             if (moveAxis.sqrMagnitude < 0.01f) 
             {
                 moveAxis = _touchMoveDelta * _touchScalar;
+
                 // if (moveAxis.sqrMagnitude > 0.01f)
                 //     Debug.Log($"TouchMove Delta:{_touchMoveDelta}, Scalar:{_touchScalar}, Final:{moveAxis}");
                 if (moveAxis.sqrMagnitude < 0.01f)
                 {
+                    moveAxis = Vector2.zero;
+                }
+                else if (!_isTouchMoving)
+                {
+                    Debug.LogWarning($"Touch move detected after touch completed");
                     moveAxis = Vector2.zero;
                 }
             }
@@ -161,7 +168,6 @@ namespace Metroidvania.Characters.Player
             characterInputs.JumpDown = false;
             characterInputs.CrouchDown = false;
             characterInputs.CrouchUp = false;
-
         }
     }
 }
