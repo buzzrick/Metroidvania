@@ -1,4 +1,6 @@
+using Metroidvania.UI;
 using Metroidvania.UI.ToolPickupPopup;
+using UnityEngine;
 using Zenject;
 
 namespace Assets.Metroidvania.UI
@@ -9,5 +11,7 @@ namespace Assets.Metroidvania.UI
         {
             Container.Bind<ToolPickupPopupController>().FromNew().AsSingle().NonLazy();
         }
+
+
     }
 }

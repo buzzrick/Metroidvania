@@ -1,3 +1,4 @@
+using Metroidvania.UI;
 using Metroidvania.World;
 using NaughtyAttributes;
 using UnityEngine;
@@ -11,11 +12,16 @@ namespace Metroidvania.Characters.Base
         public CharacterStatsContainer DefaultStats;
         [ShowNonSerializedField]private CharacterStats Stats = default;
         private WorldCharacterStatsData _statsProvider;
+        private CharacterHealthBar.Factory _healthBarFactory;
+
+        private CharacterHealthBar? _healthBar;
 
         [Inject] 
-        private void Initialise(WorldCharacterStatsData statsProvider)
+        private void Initialise(WorldCharacterStatsData statsProvider,
+            CharacterHealthBar.Factory healthBarFactory)
         {
             _statsProvider = statsProvider;
+            _healthBarFactory = healthBarFactory;
         }
 
 
@@ -25,10 +31,19 @@ namespace Metroidvania.Characters.Base
             PrintCharacterStats();
             Stats.OnDeath += Die;
             Stats.OnHealthChanged += OnHealthChanged;
+            LoadHealthBar();
         }
 
         private void OnHealthChanged(float oldHealth, float newHealth, float maxHealth)
         {
+            _healthBar?.SetValue(Stats.CurrentHealth, Stats.MaxHealth);
+        }
+
+        private void LoadHealthBar()
+        {
+            _healthBar = _healthBarFactory.Create();
+            _healthBar.transform.SetParent(transform, false);
+            _healthBar.SetValue(Stats.CurrentHealth, Stats.MaxHealth);
         }
 
         private void Die()
