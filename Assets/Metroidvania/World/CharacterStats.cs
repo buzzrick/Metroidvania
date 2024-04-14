@@ -33,9 +33,21 @@ namespace Metroidvania.World
             }
         }
 
+        public void Heal(float health)
+        {
+            float oldHealth = CurrentHealth;
+            CurrentHealth += health;
+            if (CurrentHealth > MaxHealth)
+            {
+                CurrentHealth = MaxHealth;
+            }
+            OnHealthChanged?.Invoke(oldHealth, CurrentHealth, MaxHealth);
+        }
+
         public override string ToString()
         {
             return $"Character {CharacterID} stats: {CurrentHealth}/{MaxHealth}";
         }
+
     }
 }

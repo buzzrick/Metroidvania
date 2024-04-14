@@ -4232,6 +4232,7 @@ GameObject:
   - component: {fileID: 1403159904}
   - component: {fileID: 1403159905}
   - component: {fileID: 1403159906}
+  - component: {fileID: 1403159907}
   m_Layer: 8
   m_Name: PlayerRoot
   m_TagString: Untagged
@@ -4248,7 +4249,7 @@ Transform:
   m_GameObject: {fileID: 1403159893}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -139.9875, y: 26.719255, z: 24.992975}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4460,6 +4461,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1403159907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403159893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64cac28f8d60a954c9fc44d3afa62757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharacterID: Player
+  DefaultStats: {fileID: 11400000, guid: 3d64cba8b16d3b947936909da83cdce2, type: 2}
+  _healthView: {fileID: 1448746308}
 --- !u!1 &1448746306
 GameObject:
   m_ObjectHideFlags: 0
