@@ -13,11 +13,11 @@ namespace Metroidvania.Characters.Player
 {
     public class PlayerRoot : MonoBehaviour, ICore, IView
     {
-        PlayerMovementController_NoIK _playerMovementOld;
-        PlayerTriggerDetector _playerTriggerDetector;
+        PlayerMovementController_NoIK? _playerMovementOld;
+        PlayerTriggerDetector _playerTriggerDetector = default!;
         public bool UseOldPlayerMovementController = false;
-        [SerializeField, RequiredField] PlayerMovementInputs _playerMovementInputs;
-        private PlayerMovementController _playerMovement;
+        [SerializeField, RequiredField] PlayerMovementInputs _playerMovementInputs = default!;
+        private PlayerMovementController _playerMovement = default!;
         [SerializeField, RequiredField] private Transform _cameraTarget = default!;
         public Transform CameraTarget => _cameraTarget;
 
@@ -54,7 +54,7 @@ namespace Metroidvania.Characters.Player
         {
             if (UseOldPlayerMovementController)
             {
-                _playerMovementOld.Enable(false);
+                _playerMovementOld!.Enable(false);
             }
             else
             {
@@ -77,7 +77,7 @@ namespace Metroidvania.Characters.Player
         {
             if (UseOldPlayerMovementController)
             {
-                _playerMovementOld.Teleport(position);
+                _playerMovementOld!.Teleport(position);
             }
             else
             {
@@ -92,7 +92,7 @@ namespace Metroidvania.Characters.Player
             Debug.Log($"Starting PlayerRoot");
             if (UseOldPlayerMovementController)
             {
-                _playerMovementOld.Enable(true);
+                _playerMovementOld!.Enable(true);
             }
             else
             {

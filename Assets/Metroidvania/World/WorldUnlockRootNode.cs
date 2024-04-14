@@ -38,7 +38,7 @@ namespace Metroidvania.World
         {
             if (!IsChildScene)
             {
-                _uiCore.RegisterListener("ResetPosition", TeleportPlayerToStartPosition);
+                _uiCore!.RegisterListener("ResetPosition", TeleportPlayerToStartPosition);
             }
         }
 
@@ -46,7 +46,7 @@ namespace Metroidvania.World
         {
             if (!IsChildScene)
             {
-                _uiCore.UnregisterListener("ResetPosition", TeleportPlayerToStartPosition);
+                _uiCore!.UnregisterListener("ResetPosition", TeleportPlayerToStartPosition);
             }
         }
 
@@ -84,7 +84,7 @@ namespace Metroidvania.World
         /// <param name="worldUnlockData"></param>
         /// <param name="zoneID"></param>
         /// <param name="parentIsActive">Never false for the root node</param>
-        public override void LoadData(string zoneID, WorldUnlockData worldUnlockData, WorldUnlockData.WorldUnlockNodeData parentData, bool firstLoad)
+        public override void LoadData(string zoneID, WorldUnlockData worldUnlockData, WorldUnlockData.WorldUnlockNodeData? parentData, bool firstLoad)
         {
             //  because this is the root node, this needs to be automatically set active;
             worldUnlockData.GetOrCreateZone(zoneID).GetOrCreateNode(NodeID).IsUnlocked = true;

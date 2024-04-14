@@ -15,9 +15,9 @@ namespace Metroidvania.World
         public WorldUnlockScene? ChildScene;
         [SerializeField, RequiredField] private UnlockAnimator? _unlockAnimator;
         public string NodeID => name;
-        protected string _zoneID;
-        protected WorldUnlockData _worldUnlockData;
-        protected WorldUnlockData.WorldUnlockNodeData _nodeData;
+        protected string _zoneID = "";
+        protected WorldUnlockData _worldUnlockData = default!;
+        protected WorldUnlockData.WorldUnlockNodeData _nodeData = default!;
         protected WorldUnlockData.WorldUnlockNodeData? _parentNodeData;
         [SerializeField] protected CutsceneSimple? _unlockCutscene;
         public bool ParentIsUnlocked => _parentNodeData?.IsUnlocked ?? true; //  if there's no parent, then it's unlocked

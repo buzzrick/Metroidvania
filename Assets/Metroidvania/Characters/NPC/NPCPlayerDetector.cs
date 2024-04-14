@@ -12,7 +12,7 @@ namespace Assets.Metroidvania.Characters.NPC
     /// </summary>
     public class NPCPlayerDetector : MonoBehaviour
     {
-        [SerializeField, RequiredField] public Transform PlayerTransform;
+        [SerializeField, RequiredField] public Transform PlayerTransform = default!;
         [Tooltip("The number of frames to skip between updates - used for reducing overhead before we get to an ECS implementation")]
         [SerializeField] public int RateLimiter = 1;
 

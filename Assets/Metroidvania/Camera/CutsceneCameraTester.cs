@@ -15,7 +15,7 @@ namespace Assets.Metroidvania.Camera
             await _cutsceneSimple.RunCutscene();
         }
 
-        public async void OnPlayerExitedZone(PlayerRoot player)
+        public void OnPlayerExitedZone(PlayerRoot player)
         {
             //await _cameraController.CancelCutscene();
         }
