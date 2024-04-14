@@ -36,6 +36,7 @@ namespace Metroidvania.GameCore
             Container.Bind<WorldUnlockData>().FromNew().AsSingle();
             Container.Bind<WorldUnlockRequirementsUIController>().FromNew().AsSingle();
             Container.Bind<WorldManager>().FromNew().AsSingle().NonLazy();
+            Container.Bind<WorldCharacterStatsData>().FromNew().AsSingle();
             Container.Bind<ProductionMachineUIController>().FromNew().AsSingle();
             Container.BindInstance(GameConfigurationInstance).AsSingle();
 

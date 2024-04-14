@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 using AYellowpaper.SerializedCollections;
-using Cysharp.Threading.Tasks;
 using Metroidvania.ResourceTypes;
 using Newtonsoft.Json;
-using UnityEngine;
+using System.Collections.Generic;
 
 namespace Metroidvania.World
 {
@@ -13,36 +9,11 @@ namespace Metroidvania.World
     /// Encapsulates ALL saved world data
     /// </summary>
     [JsonObject]
-    public class WorldUnlockData 
+    public class WorldUnlockData : BaseSaveData
     {
+        public override string SaveName => "WorldData";
+
         public Dictionary<string, WorldDataZone> Zones = new ();
-        [JsonIgnore] public string SavePath = Path.Combine(Application.persistentDataPath, "WorldData.json");
-        
-        public async UniTask SaveData()
-        {
-            Debug.Log($"Writing WorldData to {SavePath}");
-            await File.WriteAllTextAsync(SavePath, ToJson());
-        }
-
-        public async UniTask LoadData()
-        {
-            Debug.Log($"Loading WorldData from {SavePath}");
-            if (File.Exists(SavePath))
-            {
-                string json = await File.ReadAllTextAsync(SavePath);
-                FromJson(json);
-            }
-        }
-
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
-
-        public void FromJson(string json)
-        {
-            JsonConvert.PopulateObject(json, this);
-        }
         
         public WorldDataZone GetOrCreateZone(string zoneID)
         {
@@ -61,7 +32,7 @@ namespace Metroidvania.World
             }
         }
 
-        public void ResetWorldData()
+        public override void ResetData()
         {
             Zones.Clear();
         }

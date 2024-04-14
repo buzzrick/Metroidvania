@@ -8,14 +8,17 @@ namespace Metroidvania.World
     {
         private readonly GameLifecycleManager _gameLifecycleManager;
         private readonly WorldUnlockData _worldUnlockData;
+        private readonly WorldCharacterStatsData _characterStatsProvider;
         private readonly UICore _uiCore;
 
         public WorldManager(GameLifecycleManager gameLifecycleManager,
             WorldUnlockData worldUnlockData,
+            WorldCharacterStatsData characterStatsProvider,
             UICore uiCore)
         {
             _gameLifecycleManager = gameLifecycleManager;
             _worldUnlockData = worldUnlockData;
+            _characterStatsProvider = characterStatsProvider;
             _gameLifecycleManager.OnGamePaused += HandleOnGamePaused;
             _gameLifecycleManager.OnGameQuit += HandleOnGameQuit;
             _uiCore = uiCore;
@@ -43,6 +46,7 @@ namespace Metroidvania.World
         public async UniTask SaveData()
         {
             await _worldUnlockData.SaveData();
+            await _characterStatsProvider.SaveData();
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Metroidvania.GameCore
         private readonly CameraController _cameraController;
         private readonly DebuggingCore _debuggingCore;
         private readonly WorldUnlockData _worldUnlockData;
+        private readonly WorldCharacterStatsData _characterStatsProvider;
 
         public GameCore(ISceneLoader sceneLoader,
             SceneAnchorCore sceneAnchorCore,
@@ -28,7 +29,8 @@ namespace Metroidvania.GameCore
             UICore uiCore,
             CameraController cameraController,
             DebuggingCore debuggingCore,
-            WorldUnlockData worldUnlockData)
+            WorldUnlockData worldUnlockData,
+            WorldCharacterStatsData characterStatsProvider)
         {
             _sceneLoader = sceneLoader;
             _sceneAnchorCore = sceneAnchorCore;
@@ -38,6 +40,7 @@ namespace Metroidvania.GameCore
             _cameraController = cameraController;
             _debuggingCore = debuggingCore;
             _worldUnlockData = worldUnlockData;
+            _characterStatsProvider = characterStatsProvider;
             StartCore().Forget();
         }
 
@@ -46,6 +49,7 @@ namespace Metroidvania.GameCore
             Debug.Log($"Starting GameCore");
             await _sceneLoader.StartCore();
             await _worldUnlockData.LoadData();
+            await _characterStatsProvider.LoadData();
             await _lightingCore.StartCore();
             await _playerCore.StartCore();
             await _uiCore.StartCore();  //  UI Core requires GameCore loaded

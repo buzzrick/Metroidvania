@@ -65,7 +65,7 @@ namespace Metroidvania.World
 
         public void DebugResetWorldData()
         {
-            _worldData.ResetWorldData();
+            _worldData.ResetData();
             // _playerCore.GetPlayerRoot().PlayerInventoryManager.ResetInventory();
             Start();
         }
