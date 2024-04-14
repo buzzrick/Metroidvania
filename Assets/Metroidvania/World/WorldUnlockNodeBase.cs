@@ -10,8 +10,8 @@ namespace Metroidvania.World
 {
     public abstract class WorldUnlockNodeBase : MonoBehaviour
     {
-        [SerializeField] private GameObject[] NodeObjects;
-        [SerializeField] private WorldUnlockNode[] ChildNodes;
+        [SerializeField] private GameObject[] NodeObjects = default!;
+        [SerializeField] private WorldUnlockNode[] ChildNodes = default!;
         public WorldUnlockScene? ChildScene;
         [SerializeField, RequiredField] private UnlockAnimator? _unlockAnimator;
         public string NodeID => name;

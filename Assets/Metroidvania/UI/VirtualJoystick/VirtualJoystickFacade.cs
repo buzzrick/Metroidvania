@@ -14,7 +14,7 @@ namespace Metroidvania.UI.VirtualJoystick
     public class VirtualJoystickFacade : MonoBehaviour
     {
         [FormerlySerializedAs("DisplayObejct")] [SerializeField, RequiredField] private GameObject DisplayObject = default!;
-        private PlayerControls _playerControls;
+        private PlayerControls _playerControls = default!;
 
         [Inject]
         private void Initialise(PlayerControls playerControls)

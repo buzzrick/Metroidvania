@@ -25,7 +25,7 @@ namespace Metroidvania.Characters.Player.Inventory
         public event Action<InventoryItemAmount>? OnInventoryAmountChanged;
         public event Action? OnInventoryReset;
 
-        private static string SavePath;
+        private static string SavePath = string.Empty;
 
         public PlayerInventoryManager(ResourceTypeDB resourceTypeDB,
             [Inject(Id = "ToolPickedUp")] MessageBusBase<ToolLevel> toolPickupBus)
@@ -182,8 +182,8 @@ namespace Metroidvania.Characters.Player.Inventory
         [Serializable]
         public class InventoryItemAmount
         {
-            public string ResourceTypeID;
-            [NonSerialized] public ResourceTypeSO ResourceType;
+            public string ResourceTypeID = string.Empty;
+            [NonSerialized] public ResourceTypeSO ResourceType = default!;
             public int ItemCount;
         }
 

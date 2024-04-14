@@ -60,7 +60,7 @@ namespace Metroidvania.World
                 // Debug.Log($"Gathering DefaultScales for :{name}", gameObject);
                 _unlockZoneMesh = GetComponent<MeshRenderer>();
                 _collider = GetComponent<Collider>();
-                foreach (var scaleObject in _node.GetObjects())
+                foreach (var scaleObject in _node!.GetObjects())
                 {
                     _defaultScales.Add(scaleObject, scaleObject.transform.localScale);
                 }

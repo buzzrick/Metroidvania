@@ -10,14 +10,14 @@ namespace Metroidvania.UI
 {
     public class InventoryHUDPanel : MonoBehaviour
     {
-        private PlayerInventoryManager _playerInventoryManager;
+        private PlayerInventoryManager _playerInventoryManager = default!;
         /// <summary>
         /// How many of the most recent inventory items should we display.
         /// </summary>
         public int InventoryDisplayCount = 3;
 
         [SerializeField, RequiredField] InventoryItemAmountPanel _inventoryItemAmountPanelTemplate = default!;
-        [SerializeField, RequiredField] InventoryItemAmountPanel[] _inventoryItemAmountPanels = default;
+        [SerializeField, RequiredField] InventoryItemAmountPanel[] _inventoryItemAmountPanels = default!;
 
         private PlayerInventoryManager.InventoryItemAmount[] _inventoryItemAmounts = default!;
         private List<PlayerInventoryManager.InventoryItemAmount> _inventoryItemList = new();
@@ -69,7 +69,6 @@ namespace Metroidvania.UI
         private void Handle_OnInventoryAmountChanged(PlayerInventoryManager.InventoryItemAmount amount)
         {
             //  pull any existing item of this type out of the list.
-            PlayerInventoryManager.InventoryItemAmount? removeItem = null;
             foreach (var item in _inventoryItemList)
             {
                 if (item.ResourceType == amount.ResourceType)

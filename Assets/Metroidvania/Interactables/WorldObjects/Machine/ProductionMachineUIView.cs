@@ -1,15 +1,13 @@
-﻿using System;
+﻿#nullable enable
 using AYellowpaper.SerializedCollections;
 using Buzzrick.UnityLibs.Attributes;
 using Cysharp.Threading.Tasks;
 using Metroidvania.MultiScene;
-using Metroidvania.Characters.Player;
-using Metroidvania.Characters.Player.Inventory;
 using Metroidvania.ResourceTypes;
 using Metroidvania.World;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace Metroidvania.Interactables.WorldObjects.Machine
 {
@@ -22,8 +20,8 @@ namespace Metroidvania.Interactables.WorldObjects.Machine
         [SerializeField, RequiredField] private Button Purchase_x10 = default!;
         [SerializeField, RequiredField] private Button Purchase_x100 = default!;
         
-        private ProductionMachine _displayedMachine;
-        private Camera _mainCamera;
+        private ProductionMachine? _displayedMachine;
+        private Camera _mainCamera = default!;
 
         public event Action<int>? OnCreateRequested;
 
@@ -52,7 +50,7 @@ namespace Metroidvania.Interactables.WorldObjects.Machine
             _canvas.transform.LookAt(_canvas.transform.position + cameraRotation * Vector3.forward, cameraRotation * Vector3.up);
         }
         
-        public async UniTask ShowRequirements(ProductionMachine displayedMachine)
+        public UniTask ShowRequirements(ProductionMachine displayedMachine)
         {
             _displayedMachine = displayedMachine;
                         
@@ -62,6 +60,7 @@ namespace Metroidvania.Interactables.WorldObjects.Machine
             
             ShowResources(displayedMachine.InputAmounts, _machineInputDisplays);
             ShowResources(displayedMachine.OutputAmounts, _machineOutputDisplays);
+            return UniTask.CompletedTask;
         }
 
         private void ShowResources(SerializedDictionary<ResourceTypeSO, int> resourceAmounts, UnlockItemCostsDisplay[] itemDisplay)

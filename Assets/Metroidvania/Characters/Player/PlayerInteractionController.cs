@@ -195,7 +195,6 @@ namespace Metroidvania.Characters.Player
                 case InteractionActionType.Axe:
                 case InteractionActionType.Sickle:
                     return IsToolUnlocked(interactionActionType);
-                    break;
             }
             return true;
         }

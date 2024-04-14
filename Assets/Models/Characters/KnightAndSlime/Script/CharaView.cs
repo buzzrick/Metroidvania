@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,8 +33,6 @@ public class CharaView : MonoBehaviour
         int buttonSpace = 25;
         int rectWidth = 100;
         int rectHeight = 40;
-        int max = 10;
-        List<Rect> rects = new List<Rect>();
         int i = 0;
 
         foreach (string name  in _animationList)

@@ -1,9 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
+using Metroidvania.Characters.Player.Installer;
 using Metroidvania.ResourceTypes;
 using System;
 using System.Threading;
-using Metroidvania.Characters.Player.Installer;
-using Metroidvania.Characters.Player.Inventory;
 using UnityEngine;
 using Zenject;
 
@@ -11,8 +10,6 @@ namespace Metroidvania.Characters.Player.Animation
 {
     public class PlayerAnimationActionsHandler
     {
-        private readonly PlayerCore _playerCore;
-        private PlayerInventoryManager _playerInventoryManager;
         private readonly PlayerAnimationView _playerAnimationView;
         private readonly ActiveAnimatorDetector _actionAnimationDetector;
         private readonly ToolPrefabs _toolPrefabs;
@@ -29,14 +26,12 @@ namespace Metroidvania.Characters.Player.Animation
         private GameObject _pickAxeTool;
         private GameObject _axeTool;
         private GameObject _sickleTool;
-        private bool _isActive = false;
 
         public event Action OnAnimationComplete;
         public event Action OnAnimationStrike;
 
-        public PlayerAnimationActionsHandler(PlayerCore playerCore, PlayerAnimationView playerAnimationView, ToolPrefabs toolPrefabs)
+        public PlayerAnimationActionsHandler(PlayerAnimationView playerAnimationView, ToolPrefabs toolPrefabs)
         {
-            _playerCore = playerCore;
             _playerAnimationView = playerAnimationView;
             _playerAnimationView.OnAnimationStriked += HandleOnAnimationStriked;
             _animator = _playerAnimationView.GetAnimator();
