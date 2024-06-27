@@ -21,6 +21,8 @@ namespace Buzzrick.AISystems.BehaviourTree
 
             //  tick the current node
             bool result = _currentNode.Tick(deltaTime);
+            LastStatus = _currentNode.LastStatus;
+
             if (!result
                 || _currentNode.LastStatus != BehaviourTree.ENodeStatus.InProgress)
             {
