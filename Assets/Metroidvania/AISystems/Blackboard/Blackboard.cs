@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Metroidvania.AISystems.Blackboard
+namespace Metroidvania.AISystems.Blackboard
 {
     public class Blackboard<BlackboardKeyType>
     {

@@ -1,12 +1,13 @@
 using Buzzrick.UnityLibs.Attributes;
+using Metroidvania.AISystems.Blackboard;
 using Metroidvania.Cameras;
+using Metroidvania.Characters.Player;
 using Metroidvania.Configuration;
 using Metroidvania.Debugging;
 using Metroidvania.Interactables.ResourcePickups;
 using Metroidvania.Interactables.WorldObjects.Machine;
 using Metroidvania.Lighting;
 using Metroidvania.MultiScene;
-using Metroidvania.Characters.Player;
 using Metroidvania.ResourceTypes;
 using Metroidvania.UI;
 using Metroidvania.World;
@@ -38,6 +39,7 @@ namespace Metroidvania.GameCore
             Container.Bind<WorldManager>().FromNew().AsSingle().NonLazy();
             Container.Bind<WorldCharacterStatsData>().FromNew().AsSingle();
             Container.Bind<ProductionMachineUIController>().FromNew().AsSingle();
+            Container.Bind<BlackboardManager>().FromNewComponentOnNewGameObject().WithGameObjectName("BlackboardManager").AsSingle().NonLazy();
             Container.BindInstance(GameConfigurationInstance).AsSingle();
 
             Container.BindInstance(GameLifecycleManager).AsSingle();

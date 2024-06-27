@@ -1,4 +1,4 @@
-namespace Assets.Metroidvania.AISystems.Blackboard
+namespace Metroidvania.AISystems.Blackboard
 {
     public abstract class BlackboardKeyBase
     {

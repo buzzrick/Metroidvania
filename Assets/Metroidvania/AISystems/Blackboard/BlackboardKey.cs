@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Assets.Metroidvania.AISystems.Blackboard
+namespace Metroidvania.AISystems.Blackboard
 {
     public class BlackboardKey : BlackboardKeyBase, System.IEquatable<BlackboardKey>
     {

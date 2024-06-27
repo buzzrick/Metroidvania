@@ -1,10 +1,11 @@
-using Assets.Metroidvania.AISystems.Blackboard;
 using Buzzrick.AISystems.BehaviourTree;
 using Buzzrick.UnityLibs.Attributes;
 using KinematicCharacterController.Examples;
+using Metroidvania.AISystems.Blackboard;
 using Metroidvania.Characters.NPC;
 using NaughtyAttributes;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Metroidvania.Characters.NPC
 {
@@ -23,11 +24,13 @@ namespace Assets.Metroidvania.Characters.NPC
         [SerializeField] private float _minIdleTime = 1f;
         [SerializeField] private float _maxIdleTime = 3f;
 
+        private Blackboard<BlackboardKey> _blackBoard;
+
         private float _fleeDistanceSqr;
         protected Blackboard<BlackboardKey> LocalMemory;
         //  the input details that will be sent through to the character controller 
         private AICharacterInputs _inputs;
-        private bool _shouldFlee;
+        //private bool _shouldFlee;
 
         private Vector3 _startPosition;         //  center of random wander radius
         private float _wanderRadiusSqr;         //  the wander radius squared
@@ -37,11 +40,14 @@ namespace Assets.Metroidvania.Characters.NPC
         private float _wanderTimer;             //  how much longer we'll wander for (if we're wandering for too long it means we can't find a path, so just fail after a while.)
         private float _idleTimer;               //  how much longer we'll idle for
 
+        private readonly BlackboardKey _shouldFlee = new BlackboardKey { Name = "ShouldFlee" };
+
         private void Awake()
         {
             _fleeDistanceSqr = _fleeDistance * _fleeDistance;
             _wanderRadiusSqr= _wanderRadius * _wanderRadius;
             _startPosition = transform.position;
+            _blackBoard = BlackboardManager.Instance.GetIndividualBlackboard<BlackboardKey>(this);
         }
 
         private void Reset()
@@ -50,7 +56,7 @@ namespace Assets.Metroidvania.Characters.NPC
             _playerDetector = GetComponent<NPCPlayerDetector>();
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             //LocalMemory = BlackboardManager.Instance.GetIndividualBlackboard<BlackboardKey>(this);
 
@@ -59,11 +65,11 @@ namespace Assets.Metroidvania.Characters.NPC
             // This service will check if the player is closer than the minimum flee distance
             BTRoot.AddService<BTServiceBase>("Check for Player", (deltaTime) =>
             {
-                _shouldFlee = (_playerDetector.PlayerDistanceSqr < _fleeDistanceSqr);
+                _blackBoard.Set(_shouldFlee, (_playerDetector.PlayerDistanceSqr < _fleeDistanceSqr));
             });
 
             var fleeNode = BTRoot.Add<BTNode_Sequence>("Flee Player");
-            fleeNode.AddDecorator<BTDecoratorBase>("Should Flee", () => _shouldFlee);
+            fleeNode.AddDecorator<BTDecoratorBase>("Should Flee", () => _blackBoard.GetBool(_shouldFlee));
 
             fleeNode.Add<BTNode_Action>(new BTNode_Action("Flee Action",
                 () => //    OnEnter state
@@ -78,7 +84,7 @@ namespace Assets.Metroidvania.Characters.NPC
 
                     _npcCharacterController.SetInputs(ref _inputs);
 
-                    return _shouldFlee ? BehaviourTree.ENodeStatus.InProgress : BehaviourTree.ENodeStatus.Succeeded;
+                    return _blackBoard.GetBool(_shouldFlee) ? BehaviourTree.ENodeStatus.InProgress : BehaviourTree.ENodeStatus.Succeeded;
                 }));
 
             BTNode_Action wanderAction = new BTNode_Action("Wander Action",
