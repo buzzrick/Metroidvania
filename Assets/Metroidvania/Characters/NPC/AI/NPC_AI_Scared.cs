@@ -210,5 +210,13 @@ namespace Metroidvania.Characters.NPC.AI
                 Gizmos.DrawWireSphere(characterTransform.position, _wanderRadius); //  shows it's wander area
             }
         }
+
+        public override void InstallRequiredComponents(Transform characterTransform)
+        {
+            if (characterTransform.GetComponent<NPCPlayerDetector>() == null)
+            {
+                characterTransform.gameObject.AddComponent<NPCPlayerDetector>();
+            }
+        }
     }
 }

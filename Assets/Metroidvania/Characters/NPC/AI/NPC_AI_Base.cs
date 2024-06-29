@@ -11,5 +11,6 @@ namespace Metroidvania.Characters.NPC.AI
         public abstract BTNodeBase BuildBehaviourTree(BehaviourTree LinkedBT, Blackboard<BlackboardKey> blackboard, Transform characterTransform);
         public abstract void InitialiseBlackboard(Blackboard<BlackboardKey> blackboard, Transform characterTransform);
         public abstract void RenderGizmos(Blackboard<BlackboardKey> blackboard, Transform characterTransform);
+        public virtual void InstallRequiredComponents(Transform characterTransform) { }
     }
 }

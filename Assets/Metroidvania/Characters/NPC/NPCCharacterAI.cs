@@ -2,6 +2,7 @@
 using Buzzrick.UnityLibs.Attributes;
 using Metroidvania.AISystems.Blackboard;
 using Metroidvania.Characters.NPC.AI;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Metroidvania.Characters.NPC
@@ -31,6 +32,12 @@ namespace Metroidvania.Characters.NPC
             _blackboard = BlackboardManager.Instance.GetIndividualBlackboard<BlackboardKey>(this);
             _blackboard.SetGeneric(_characterControllerKey, _npcCharacterController);
             AIBrain.InitialiseBlackboard(_blackboard, transform);
+        }
+
+        [Button("Install required components")]
+        public void InstallRequiredComponents()
+        {
+            AIBrain?.InstallRequiredComponents(transform);
         }
 
         private void OnDrawGizmosSelected()
