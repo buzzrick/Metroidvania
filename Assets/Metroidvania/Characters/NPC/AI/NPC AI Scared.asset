@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: NPC AI Scared
   m_EditorClassIdentifier: 
   _maxVelocity: 0.5
-  _fleeDistance: 0.25
+  _fleeDistance: 4
   _wanderRadius: 5
   _minIdleTime: 1
   _maxIdleTime: 3
