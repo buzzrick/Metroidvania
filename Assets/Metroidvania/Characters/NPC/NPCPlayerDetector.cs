@@ -4,7 +4,7 @@ using Metroidvania.Characters.Player;
 using UnityEngine;
 using Zenject;
 
-namespace Assets.Metroidvania.Characters.NPC
+namespace Metroidvania.Characters.NPC
 {
     /// <summary>
     /// Used for detecting the distance and vector to the player - used for AI.
@@ -12,7 +12,7 @@ namespace Assets.Metroidvania.Characters.NPC
     /// </summary>
     public class NPCPlayerDetector : MonoBehaviour
     {
-        [SerializeField, RequiredField] public Transform PlayerTransform = default!;
+        [SerializeField, Tooltip("Only wire this up in the inspector if you're not expecting it to be automatically injected")] public Transform PlayerTransform = default!;
         [Tooltip("The number of frames to skip between updates - used for reducing overhead before we get to an ECS implementation")]
         [SerializeField] public int RateLimiter = 1;
 

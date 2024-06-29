@@ -31,5 +31,7 @@ namespace Metroidvania.AISystems.Blackboard
         {
             return !(left == right);
         }
+
+        public override string ToString() => $"Key: {Name}";
     }
 }

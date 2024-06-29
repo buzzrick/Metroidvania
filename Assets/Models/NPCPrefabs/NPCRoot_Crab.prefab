@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8852507797724470697}
   - component: {fileID: 2038065657860013231}
   - component: {fileID: 4917772490440339069}
-  - component: {fileID: 1386151226018005438}
+  - component: {fileID: 5072668363769907790}
   m_Layer: 0
   m_Name: NPCCaracterAI_Scared
   m_TagString: Untagged
@@ -60,7 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerTransform: {fileID: 0}
   RateLimiter: 1
---- !u!114 &1386151226018005438
+--- !u!114 &5072668363769907790
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,17 +69,75 @@ MonoBehaviour:
   m_GameObject: {fileID: 697344616209634520}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6e2fe7682fff104cad6fcefcbac4dd3, type: 3}
+  m_Script: {fileID: 11500000, guid: 865f5c1a31ea4d30995e0e443bdfbbbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _npcCharacterController: {fileID: 8229914945470614640}
   _playerDetector: {fileID: 4917772490440339069}
   LinkedBT: {fileID: 2038065657860013231}
-  _maxVelocity: 0.25
-  _fleeDistance: 5
-  _wanderRadius: 10
-  _minIdleTime: 3
-  _maxIdleTime: 10
+  AIBrain: {fileID: 11400000, guid: 37574069f78a1784abc69b507ede85fa, type: 2}
+--- !u!1 &3264793984787450142
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7684519840814814166}
+  m_Layer: 0
+  m_Name: AttachPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7684519840814814166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3264793984787450142}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0.00029, y: 0.00219, z: 0.00087}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5682837329840464021}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!1 &4964983842167003005
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 963943941008055496}
+  m_Layer: 0
+  m_Name: AttachPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &963943941008055496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4964983842167003005}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0.00029, y: 0.00219, z: 0.00087}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5682837329840464021}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &5411134506558347170
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,10 +269,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.25
-  m_Height: 0.51
+  m_Radius: 0.8
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.25, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &3613272491663385681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,9 +286,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Capsule: {fileID: 14506973154114221}
-  CapsuleRadius: 0.25
-  CapsuleHeight: 0.51
-  CapsuleYOffset: 0.25
+  CapsuleRadius: 0.8
+  CapsuleHeight: 2
+  CapsuleYOffset: 1
   CapsulePhysicsMaterial: {fileID: 0}
   GroundDetectionExtraDistance: 0
   MaxStableSlopeAngle: 60
@@ -241,9 +299,9 @@ MonoBehaviour:
   StepHandling: 1
   MaxStepHeight: 0.5
   AllowSteppingWithoutStableGrounding: 0
-  MinRequiredStepDepth: 0.1
+  MinRequiredStepDepth: 0
   LedgeAndDenivelationHandling: 1
-  MaxStableDistanceFromLedge: 0.2
+  MaxStableDistanceFromLedge: 0
   MaxVelocityForLedgeSnap: 0
   MaxStableDenivelationAngle: 180
   InteractiveRigidbodyHandling: 1
@@ -502,13 +560,27 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 7893974801881764409, guid: 27d6a72fdc9f82a43bf4ba0a4c1a73ba, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 6240586592180112998, guid: 27d6a72fdc9f82a43bf4ba0a4c1a73ba,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 963943941008055496}
+    - targetCorrespondingSourceObject: {fileID: 6240586592180112998, guid: 27d6a72fdc9f82a43bf4ba0a4c1a73ba,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7684519840814814166}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7893974801881764390, guid: 27d6a72fdc9f82a43bf4ba0a4c1a73ba,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1482530169008230107}
   m_SourcePrefab: {fileID: 100100000, guid: 27d6a72fdc9f82a43bf4ba0a4c1a73ba, type: 3}
+--- !u!4 &5682837329840464021 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6240586592180112998, guid: 27d6a72fdc9f82a43bf4ba0a4c1a73ba,
+    type: 3}
+  m_PrefabInstance: {fileID: 1749219646798458611}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &8488003552072072395 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 7893974801881764408, guid: 27d6a72fdc9f82a43bf4ba0a4c1a73ba,
