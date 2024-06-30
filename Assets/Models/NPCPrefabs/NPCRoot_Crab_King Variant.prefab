@@ -8,6 +8,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 697344616209634520, guid: 7d38fcfccad608b4cae8a8c807778472,
+        type: 3}
+      propertyPath: m_Name
+      value: NPCCaracterAI_CrabKing
+      objectReference: {fileID: 0}
+    - target: {fileID: 5072668363769907790, guid: 7d38fcfccad608b4cae8a8c807778472,
+        type: 3}
+      propertyPath: AIBrain
+      value: 
+      objectReference: {fileID: 11400000, guid: 4cd42727ba7b7d94caf175cc217fac24,
+        type: 2}
     - target: {fileID: 6384020492985473469, guid: 7d38fcfccad608b4cae8a8c807778472,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -26,12 +37,12 @@ PrefabInstance:
     - target: {fileID: 6725591686140760882, guid: 7d38fcfccad608b4cae8a8c807778472,
         type: 3}
       propertyPath: m_Name
-      value: NPCRoot_Crab_King (1) Variant
+      value: NPCRoot_Crab_King Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8081470019332738460, guid: 7d38fcfccad608b4cae8a8c807778472,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.1500015
+      value: -17.8
       objectReference: {fileID: 0}
     - target: {fileID: 8081470019332738460, guid: 7d38fcfccad608b4cae8a8c807778472,
         type: 3}
@@ -41,7 +52,7 @@ PrefabInstance:
     - target: {fileID: 8081470019332738460, guid: 7d38fcfccad608b4cae8a8c807778472,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.01
+      value: 10.7
       objectReference: {fileID: 0}
     - target: {fileID: 8081470019332738460, guid: 7d38fcfccad608b4cae8a8c807778472,
         type: 3}
@@ -81,5 +92,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 697344616209634520, guid: 7d38fcfccad608b4cae8a8c807778472,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1481575107672979119}
   m_SourcePrefab: {fileID: 100100000, guid: 7d38fcfccad608b4cae8a8c807778472, type: 3}
+--- !u!1 &4202083462422898779 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 697344616209634520, guid: 7d38fcfccad608b4cae8a8c807778472,
+    type: 3}
+  m_PrefabInstance: {fileID: 3746356756238204035}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1481575107672979119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4202083462422898779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7367be941f2b2584b83eda7c0be3b7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RateLimiter: 1
+  DetectionRadius: 5
+  ResourceToDetect: {fileID: 11400000, guid: 248635e5c3985854aafeda718ad02c04, type: 2}
+  DetectionLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024

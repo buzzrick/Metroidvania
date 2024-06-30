@@ -23,15 +23,15 @@ namespace Metroidvania.Characters.NPC
 
         private void Awake()
         {
-            SetupBlackboard();
-            AIBrain.BuildBehaviourTree(LinkedBT, _blackboard, transform);
+            SetupBrain();
         }
 
-        private void SetupBlackboard()
+        private void SetupBrain()
         {
             _blackboard = BlackboardManager.Instance.GetIndividualBlackboard<BlackboardKey>(this);
             _blackboard.SetGeneric(_characterControllerKey, _npcCharacterController);
             AIBrain.InitialiseBlackboard(_blackboard, transform);
+            AIBrain.BuildBehaviourTree(LinkedBT, _blackboard);
         }
 
         [Button("Install required components")]

@@ -2,9 +2,7 @@
 using KinematicCharacterController.Examples;
 using Metroidvania.AISystems.Blackboard;
 using System;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 namespace Metroidvania.Characters.NPC.AI
@@ -13,33 +11,40 @@ namespace Metroidvania.Characters.NPC.AI
     public class NPC_AI_Scared : NPC_AI_Base
     {
         [Header("NPC Settings")]
-        [SerializeField] private float _maxVelocity = 0.25f;
-        [SerializeField] private float _fleeDistance = 5f;
-        [SerializeField] private float _wanderRadius = 5f;
-        [SerializeField] private float _minIdleTime = 3f;
-        [SerializeField] private float _maxIdleTime = 10f;
+        [SerializeField] protected float _maxVelocity = 0.25f;
+        [SerializeField] protected float _fleeDistance = 5f;
+        [SerializeField] protected float _wanderRadius = 5f;
+        [SerializeField] protected float _minIdleTime = 3f;
+        [SerializeField] protected float _maxIdleTime = 10f;
 
         private float _wanderRadiusSqr;
         private float _fleeDistanceSqr;
 
-        private readonly BlackboardKey _shouldFleeKey = new BlackboardKey { Name = "ShouldFlee" };
-        private readonly BlackboardKey _characterControllerKey = new BlackboardKey { Name = "CharacterController" };
-        private readonly BlackboardKey _transformKey = new BlackboardKey { Name = "Transform" };
-        private readonly BlackboardKey _startPositionKey = new BlackboardKey { Name = "StartPosition" };
-        private readonly BlackboardKey _wanderVelocityKey = new BlackboardKey { Name = "WanderVelocity" };
-        private readonly BlackboardKey _wanderTargetKey = new BlackboardKey { Name = "WanderTarget" };
-        private readonly BlackboardKey _wanderTimerKey = new BlackboardKey { Name = "WanderTimer" };
-        private readonly BlackboardKey _idleTimerKey = new BlackboardKey { Name = "IdleTimer" };
-        private readonly BlackboardKey _playerDetectorKey = new BlackboardKey { Name = "PlayerDetector" };
-        private readonly BlackboardKey _inputsKey = new BlackboardKey { Name = "Inputs" };          //  Should this be stored in the blackboard? probably because we're persisting look direction, even on stop movement
+        protected static BlackboardKey _shouldFleeKey = new BlackboardKey { Name = "ShouldFlee" };
+        protected static BlackboardKey _characterControllerKey = new BlackboardKey { Name = "CharacterController" };
+        protected static BlackboardKey _transformKey = new BlackboardKey { Name = "Transform" };
+        protected static BlackboardKey _startPositionKey = new BlackboardKey { Name = "StartPosition" };
+        protected static BlackboardKey _wanderVelocityKey = new BlackboardKey { Name = "WanderVelocity" };  //  used for random wander velocity
+        protected static BlackboardKey _wanderTargetKey = new BlackboardKey { Name = "WanderTarget" };
+        protected static BlackboardKey _wanderTimerKey = new BlackboardKey { Name = "WanderTimer" };
+        protected static BlackboardKey _idleTimerKey = new BlackboardKey { Name = "IdleTimer" };
+        protected static BlackboardKey _playerDetectorKey = new BlackboardKey { Name = "PlayerDetector" };
+        protected static BlackboardKey _inputsKey = new BlackboardKey { Name = "Inputs" };          //  Should this be stored in the blackboard? probably because we're persisting look direction, even on stop movement
 
 
-        public override BTNodeBase BuildBehaviourTree(BehaviourTree LinkedBT, Blackboard<BlackboardKey> blackboard, Transform characterTransform)
+        public override BTNodeBase BuildBehaviourTree(BehaviourTree LinkedBT, Blackboard<BlackboardKey> blackboard)
         {
             _wanderRadiusSqr = _wanderRadius * _wanderRadius;
             _fleeDistanceSqr = _fleeDistance * _fleeDistance;
 
-            BTNodeBase BTRoot = LinkedBT.RootNode.Add<BTNode_Selector>("Scared NPC Base Logic");
+            BTNodeBase BTRoot = LinkedBT.RootNode.Add<BTNode_Selector>(name);
+            BuildBehaviourTreeNodes(BTRoot, blackboard);
+            return BTRoot; 
+        }
+
+
+        protected virtual void BuildBehaviourTreeNodes(BTNodeBase BTRoot, Blackboard<BlackboardKey> blackboard)
+        {
 
             // This service will check if the player is closer than the minimum flee distance
             BTRoot.AddService<BTServiceBase>("Check for Player", (deltaTime) =>
@@ -59,6 +64,8 @@ namespace Metroidvania.Characters.NPC.AI
                 () =>   //  OnTick state
                 {
                     NPCPlayerDetector playerDetector = blackboard.GetGeneric<NPCPlayerDetector>(_playerDetectorKey);
+
+
                     Vector3 MoveVector = -playerDetector.PlayerDirection.normalized;
 
                     AICharacterInputs inputs = blackboard.GetGeneric<AICharacterInputs>(_inputsKey);
@@ -115,10 +122,10 @@ namespace Metroidvania.Characters.NPC.AI
                 });
 
             var returnToZoneNode = BTRoot.Add<BTNode_Sequence>("Return to Zone");
-            returnToZoneNode.AddDecorator<BTDecoratorBase>("Is out of zone", 
-                () => { 
+            returnToZoneNode.AddDecorator<BTDecoratorBase>("Is out of zone",
+                () => {
                     Transform transform = blackboard.GetGeneric<Transform>(_transformKey);
-                    return (blackboard.GetVector3(_startPositionKey) - transform.position).sqrMagnitude > _wanderRadiusSqr; 
+                    return (blackboard.GetVector3(_startPositionKey) - transform.position).sqrMagnitude > _wanderRadiusSqr;
                 });
             returnToZoneNode.Add(wanderAction);
 
@@ -149,11 +156,9 @@ namespace Metroidvania.Characters.NPC.AI
             wanderNode.Add<BTNode_Action>(wanderAction);
 
 
-            return BTRoot; 
         }
 
-
-        private void MoveTowardsTarget(Vector3 target, float velocity, Blackboard<BlackboardKey> blackboard)
+        protected void MoveTowardsTarget(Vector3 target, float velocity, Blackboard<BlackboardKey> blackboard)
         {
             Transform transform = blackboard.GetGeneric<Transform>(_transformKey);
 
@@ -171,7 +176,7 @@ namespace Metroidvania.Characters.NPC.AI
             blackboard.GetGeneric<NPCCharacterController>(_characterControllerKey).SetInputs(ref inputs);
         }
 
-        private void StopMovement(Blackboard<BlackboardKey> blackboard)
+        protected void StopMovement(Blackboard<BlackboardKey> blackboard)
         {
             AICharacterInputs inputs = blackboard.GetGeneric<AICharacterInputs>(_inputsKey);
             inputs.MoveVector = Vector2.zero;
@@ -179,7 +184,7 @@ namespace Metroidvania.Characters.NPC.AI
         }
 
 
-        private float DistanceToTargetSqr(Vector3 target, Blackboard<BlackboardKey> blackboard)
+        protected float DistanceToTargetSqr(Vector3 target, Blackboard<BlackboardKey> blackboard)
         {
             Transform transform = blackboard.GetGeneric<Transform>(_transformKey);
             Vector3 distToTarget = (transform.position - target);
@@ -194,6 +199,8 @@ namespace Metroidvania.Characters.NPC.AI
             blackboard.SetGeneric(_transformKey, characterTransform);
             blackboard.SetGeneric(_inputsKey, new AICharacterInputs());
             blackboard.SetGeneric(_playerDetectorKey, characterTransform.GetComponent<NPCPlayerDetector>());
+            blackboard.Set(_wanderTargetKey, characterTransform.position);
+            blackboard.Set(_wanderVelocityKey, 0f);
         }
 
         public override void RenderGizmos(Blackboard<BlackboardKey> blackboard, Transform characterTransform)
