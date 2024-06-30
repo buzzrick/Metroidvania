@@ -34,10 +34,11 @@ namespace Metroidvania.Characters.NPC.AI
             });
 
             var collectResourceNode = BTRoot.Add<BTNode_Sequence>("Collect Resource");
-            //collectResourceNode.AddDecorator<BTDecoratorBase>("Can Collect Resource", () =>
-            //{
-            //    return blackboard.GetGeneric<NPCResourceDetector>(_resourceDetectorKey).IsResourceDetected;
-            //});
+            collectResourceNode.AddDecorator<BTDecoratorBase>("Can Collect Resource", () =>
+            {
+                //  this is raised as a separate decorator so that this node can be triggered immediately, even when we're in another later lesser priority node.
+                return blackboard.GetGeneric<NPCResourceDetector>(_resourceDetectorKey).IsResourceDetected;
+            });
 
             collectResourceNode.Add<BTNode_Action>(new BTNode_Action("Move To Resource", 
                 () =>   //  on Enter state
@@ -75,6 +76,12 @@ namespace Metroidvania.Characters.NPC.AI
                 NPCResourceDetector resourceDetector = characterTransform.gameObject.AddComponent<NPCResourceDetector>();
                 resourceDetector.DetectionRadius = 5;
                 resourceDetector.ResourceToDetect = ResourceToDetect;
+            }
+
+            if (characterTransform.GetComponent<NPCResourceHolder>() == null)
+            {
+                NPCResourceHolder resourceHolder = characterTransform.gameObject.AddComponent<NPCResourceHolder>();
+                resourceHolder.ResourceType = ResourceToDetect;
             }
 #endif
         }

@@ -12,7 +12,7 @@ namespace Metroidvania.Characters.NPC
         [Tooltip("The number of frames to skip between updates - used for reducing overhead before we get to an ECS implementation")]
         [SerializeField] private int RateLimiter = 1;
         [SerializeField] public float DetectionRadius = 5;
-        [SerializeField] public ResourceTypeSO ResourceToDetect;
+        [SerializeField] public ResourceTypeSO ResourceToDetect;     //  todo: change this to a list of supported ResourceTypes
         [SerializeField] public LayerMask DetectionLayerMask;
 
         public Vector3 ResourceDirection { get; private set; }
@@ -56,7 +56,9 @@ namespace Metroidvania.Characters.NPC
                     {
                         Collider collider = hit.collider;
 
-                        if (collider.TryGetComponent<ResourcePickup>(out var pickup) && pickup.ResourceType == ResourceToDetect)
+                        if (collider.TryGetComponent<ResourcePickup>(out var pickup) 
+                            && pickup.IsPickupAllowed
+                            && pickup.ResourceType == ResourceToDetect)
                         {
                             Transform hitTransform = collider.transform;
 
