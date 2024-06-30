@@ -99,5 +99,10 @@ namespace Metroidvania.Interactables.WorldObjects
         }
 
         public ResourceTypeSO GetResourceType() => ResourceType;
+
+        private void Reset()
+        {
+            gameObject.layer = LayerMask.NameToLayer("PlayerPickup");
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace Metroidvania.Interactables.ResourcePickups
     {
         [SerializeField, RequiredField] private Rigidbody _rigidBody;
         public ResourceTypeSO ResourceType;
-        public int Amount;
+        public int Amount = 1;
         private float _allowPickupTimer = 0.75f;
         private const float UpImpulseForce = 3.0f;
         private const float HorizontImpulseForce = 1.5f;

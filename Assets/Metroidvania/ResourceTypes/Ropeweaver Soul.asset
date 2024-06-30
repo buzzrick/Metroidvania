@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8177f5fd0010b142808ed5f01ac5331, type: 3}
   m_Name: Ropeweaver Soul
   m_EditorClassIdentifier: 
-  ResourceSprite: {fileID: 0}
-  ResourcePickupPrefab: {fileID: 0}
+  ResourceSprite: {fileID: 21300000, guid: 8351d9b4f1f8064449a6d33f6e20d6c1, type: 3}
+  ResourcePickupPrefab: {fileID: -404631173001419537, guid: d40b7040b63f30d46813f2579f8fb72a,
+    type: 3}
   InteractionAction: 100
   HarvestSound: {fileID: 0}
