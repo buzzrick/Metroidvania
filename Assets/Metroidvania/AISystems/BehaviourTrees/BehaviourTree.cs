@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Buzzrick.AISystems.BehaviourTree
@@ -37,6 +38,13 @@ namespace Buzzrick.AISystems.BehaviourTree
         public string GetDebugText()
         {
             return RootNode.GetDebugText();
+        }
+
+        [Button("Debug BehaviourTree")]
+        public void DebugBehaviourTree()
+        {
+
+            Debug.Log(GetDebugText());
         }
     }
 }
