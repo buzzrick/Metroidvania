@@ -45,7 +45,14 @@ namespace Metroidvania.Characters.NPC.AI
 
         protected virtual void BuildBehaviourTreeNodes(BTNodeBase BTRoot, Blackboard<BlackboardKey> blackboard)
         {
+            BuildFleePlayerNodes(BTRoot, blackboard);
+            BuildRandomIdleNodes(BTRoot, blackboard);
 
+        }
+
+
+        protected void BuildFleePlayerNodes(BTNodeBase BTRoot, Blackboard<BlackboardKey> blackboard)
+        {
             // This service will check if the player is closer than the minimum flee distance
             BTRoot.AddService<BTServiceBase>("Check for Player", (deltaTime) =>
             {
@@ -76,7 +83,10 @@ namespace Metroidvania.Characters.NPC.AI
 
                     return blackboard.GetBool(_shouldFleeKey) ? BehaviourTree.ENodeStatus.InProgress : BehaviourTree.ENodeStatus.Succeeded;
                 }));
+        }
 
+        protected void BuildRandomIdleNodes(BTNodeBase BTRoot, Blackboard<BlackboardKey> blackboard)
+        {
             BTNode_Action wanderAction = new BTNode_Action("Wander Action",
                 () =>
                 {
@@ -123,7 +133,8 @@ namespace Metroidvania.Characters.NPC.AI
 
             var returnToZoneNode = BTRoot.Add<BTNode_Sequence>("Return to Zone");
             returnToZoneNode.AddDecorator<BTDecoratorBase>("Is out of zone",
-                () => {
+                () =>
+                {
                     Transform transform = blackboard.GetGeneric<Transform>(_transformKey);
                     return (blackboard.GetVector3(_startPositionKey) - transform.position).sqrMagnitude > _wanderRadiusSqr;
                 });
@@ -154,9 +165,8 @@ namespace Metroidvania.Characters.NPC.AI
 
             var wanderNode = randomIdleNode.Add<BTNode_Sequence>("Wander");
             wanderNode.Add<BTNode_Action>(wanderAction);
-
-
         }
+
 
         protected void MoveTowardsTarget(Vector3 target, float velocity, Blackboard<BlackboardKey> blackboard)
         {
