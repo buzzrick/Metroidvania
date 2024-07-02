@@ -17,6 +17,9 @@ namespace Metroidvania.Characters.NPC
         [SerializeField] private LayerMask _layerMask;
         private ResourcePickup _pickup;
         private Transform _previousParent;
+        public bool IsHoldingResource => _pickup != null;
+        public ResourcePickup Pickup => _pickup;
+
 
         //  todo: add a flag whether to consume items.
 

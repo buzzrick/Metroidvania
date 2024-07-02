@@ -13,6 +13,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPCCaracterAI_CrabKing
       objectReference: {fileID: 0}
+    - target: {fileID: 697344616209634520, guid: 7d38fcfccad608b4cae8a8c807778472,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5072668363769907790, guid: 7d38fcfccad608b4cae8a8c807778472,
         type: 3}
       propertyPath: AIBrain
@@ -38,6 +43,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NPCRoot_Crab_King Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725591686140760882, guid: 7d38fcfccad608b4cae8a8c807778472,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8081470019332738460, guid: 7d38fcfccad608b4cae8a8c807778472,
         type: 3}
@@ -110,6 +120,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3755589348447602955}
+    - targetCorrespondingSourceObject: {fileID: 697344616209634520, guid: 7d38fcfccad608b4cae8a8c807778472,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8835794309880204125}
   m_SourcePrefab: {fileID: 100100000, guid: 7d38fcfccad608b4cae8a8c807778472, type: 3}
 --- !u!1 &4202083462422898779 stripped
 GameObject:
@@ -174,6 +188,23 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.75
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8835794309880204125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4202083462422898779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55148a2a290863c48b9b51a8a7599c7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RateLimiter: 1
+  DetectionRadius: 5
+  DetectionLayerMask:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!4 &4511804693472256075 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 963943941008055496, guid: 7d38fcfccad608b4cae8a8c807778472,
