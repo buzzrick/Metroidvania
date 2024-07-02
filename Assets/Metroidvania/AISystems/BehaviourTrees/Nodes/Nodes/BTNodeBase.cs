@@ -259,7 +259,10 @@ namespace Buzzrick.AISystems.BehaviourTree
             for (int index = 0; index < indentLevel; ++index)
                 debugTextBuilder.Append(' ');
 
-            debugTextBuilder.Append($"{Name} [{LastStatus.ToString()}]");
+            if (LastStatus == BehaviourTree.ENodeStatus.InProgress)
+                debugTextBuilder.Append($"<color=cyan>{Name} [{LastStatus.ToString()}]</color>");
+            else
+                debugTextBuilder.Append($"{Name} [{LastStatus.ToString()}]");
 
             foreach (var service in Services)
             {
