@@ -39,8 +39,6 @@ namespace Metroidvania.World
         }
 
 
-        public virtual void ResetData()
-        {
-        }
+        public abstract void ResetData();
     }
 }

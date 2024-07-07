@@ -36,5 +36,14 @@ namespace Metroidvania.World
                 await _sceneLoader.UnloadSceneAsync(SceneName, _node);
             }
         }
+
+        private void OnDestroy()
+        {
+            if (_node != null)
+            {
+                _sceneLoader.UnloadSceneAsync(SceneName, _node).Forget();
+                _node = null;
+            }
+        }
     }
 }

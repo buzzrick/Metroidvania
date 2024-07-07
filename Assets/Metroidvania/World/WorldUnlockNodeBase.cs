@@ -56,6 +56,14 @@ namespace Metroidvania.World
             SetUnlockedState(firstLoad);
         }
 
+        private void OnDestroy()
+        {
+            _worldUnlockData = null!;
+            _parentNodeData = null!;
+            _zoneID = null!;
+            _nodeData = null!;
+        }
+
         protected virtual void OnUnlockedChanging(bool isUnlocked) {}
         
         protected virtual void CalculateIsUnlocked()
@@ -96,6 +104,7 @@ namespace Metroidvania.World
             }
             return false;
         }
+
 
         //public void Unlock()
         //{

@@ -1,17 +1,15 @@
 #nullable enable
 
-using System;
 using AYellowpaper.SerializedCollections;
 using CandyCoded.HapticFeedback;
 using Cysharp.Threading.Tasks;
+using Metroidvania.Characters.Player;
 using Metroidvania.Configuration;
 using Metroidvania.Interactables;
-using Metroidvania.Characters.Player;
 using Metroidvania.ResourceTypes;
 using NaughtyAttributes;
 using UnityEngine;
 using Zenject;
-using Assets.Metroidvania.Camera;
 
 namespace Metroidvania.World
 {

@@ -17,6 +17,7 @@ namespace Metroidvania.MultiScene
         public UniTask StartCore()
         {
             Debug.Log($"Starting SceneLoader");
+            _loadedScenes.Clear();
             for (int i = 0; i < SceneManager.sceneCount; i++)
             {
                 Scene scene = SceneManager.GetSceneAt(i);

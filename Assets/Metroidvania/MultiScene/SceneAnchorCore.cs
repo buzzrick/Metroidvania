@@ -21,6 +21,13 @@ namespace Metroidvania.MultiScene
             await _controller.StartCore();
         }
 
+        public async UniTask StopCore()
+        {
+
+            await _sceneLoader.UnloadSceneAsync("SceneAnchors", _controller);
+            _controller = null;
+        }
+
         public bool ForceCalculation()
         {
             return _controller.ForceCalculation();

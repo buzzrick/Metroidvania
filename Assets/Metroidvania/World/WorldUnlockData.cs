@@ -14,7 +14,8 @@ namespace Metroidvania.World
         public override string SaveName => "WorldData";
 
         public Dictionary<string, WorldDataZone> Zones = new ();
-        
+        public List<string> WorldDestroyedObjectsList = new List<string>();
+
         public WorldDataZone GetOrCreateZone(string zoneID)
         {
             if (Zones.TryGetValue(zoneID, out var zone))
@@ -35,6 +36,7 @@ namespace Metroidvania.World
         public override void ResetData()
         {
             Zones.Clear();
+            WorldDestroyedObjectsList.Clear();
         }
 
         /// <summary>

@@ -26,8 +26,8 @@ namespace Metroidvania.UI.VirtualJoystick
 
         private void OnDestroy()
         {
-            _playerControls.World.TouchMoveStart.performed += TouchMoveStart;
-            _playerControls.World.TouchMoveStart.canceled += TouchMoveEnd;
+            _playerControls.World.TouchMoveStart.performed -= TouchMoveStart;
+            _playerControls.World.TouchMoveStart.canceled -= TouchMoveEnd;
         }
 
         private void TouchMoveEnd(InputAction.CallbackContext obj)

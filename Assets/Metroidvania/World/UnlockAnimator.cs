@@ -38,7 +38,10 @@ namespace Metroidvania.World
                     float percent = _timer / ANIMATION_TIME;
                     foreach (var scaleObjectKV in _defaultScales)
                     {
-                        scaleObjectKV.Key.transform.localScale = Vector3.Lerp(Vector3.zero, scaleObjectKV.Value, percent);
+                        if (scaleObjectKV.Key.activeInHierarchy)
+                        {
+                            scaleObjectKV.Key.transform.localScale = Vector3.Lerp(Vector3.zero, scaleObjectKV.Value, percent);
+                        }
                     }                        
                 }
             }
@@ -77,8 +80,11 @@ namespace Metroidvania.World
             EnableNodeObjects();
             foreach (var scaleObjectKV in _defaultScales)
             {
-                scaleObjectKV.Key.transform.localScale =
-                    IsUnlocked ? scaleObjectKV.Value : Vector3.zero;
+                if (scaleObjectKV.Key.activeInHierarchy)
+                {
+                    scaleObjectKV.Key.transform.localScale =
+                        IsUnlocked ? scaleObjectKV.Value : Vector3.zero;
+                }
             }
         }
 
@@ -122,7 +128,10 @@ namespace Metroidvania.World
             //Debug.Log($"Enabling NodeObjects {name}=>{isEnabled}", this);
             foreach (GameObject nodeObject in _node!.GetObjects())    
             {
-                nodeObject.SetActive(isEnabled);
+                if (nodeObject)     //  could be null if the object has been destroyed
+                {
+                    nodeObject.SetActive(isEnabled);
+                }
             }
 
             if (_node.ChildScene != null)
@@ -147,6 +156,13 @@ namespace Metroidvania.World
                 _isAnimatingToUnlocked = true;
                 _timer = 0f;
             }
+        }
+
+        private void OnDestroy()
+        {
+            _node = null;
+            _isAnimatingToUnlocked = false;
+            _defaultScales.Clear();
         }
     }
 }

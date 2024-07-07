@@ -17,11 +17,6 @@ namespace Metroidvania.MultiScene
         private ScenePartAnchor[] _anchors;
         private int _sceneAnchorLayerMask;
 
-        public UniTask CleanupSelf()
-        {
-            return UniTask.CompletedTask;
-        }
-
         [Inject]
         private void Initialise(PlayerCore playerCore,
             SceneAnchorOverridesSO sceneAnchorOverrides,
@@ -32,6 +27,21 @@ namespace Metroidvania.MultiScene
             _scenePartFactory = scenePartFactory;
             _anchors = GetComponentsInChildren<ScenePartAnchor>();
             _sceneAnchorLayerMask = LayerMask.GetMask("SceneAnchors");
+        }
+
+        public async UniTask CleanupSelf()
+        {
+            //if (!string.IsNullOrEmpty(_sceneAnchorOverrides.OverrideAnchorSceneName))
+            //{
+            //    OverrideSceneAnchors(_sceneAnchorOverrides.OverrideAnchorSceneName);
+            //    return true;
+            //}
+
+
+            foreach (var anchor in _anchors)
+            {
+                await anchor.ResetAnchor(); //  causes the anchor to unload the scene if it is loaded
+            }
         }
 
         public void HandleSceneAnchorLoading(string sceneName)

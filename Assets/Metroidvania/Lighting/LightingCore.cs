@@ -1,7 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Metroidvania.GameCore;
 using Metroidvania.MultiScene;
-using System;
 using UnityEngine;
 
 namespace Metroidvania.Lighting
@@ -23,6 +22,13 @@ namespace Metroidvania.Lighting
             await _lightingController.StartCore();
         }
 
+        public async UniTask StopCore()
+        {
+            await _sceneLoader.UnloadSceneAsync("LightingScene", _lightingController);
+            _lightingController = null;
+        }
+
+
         public void EnableLightSetup(string setupName, string sourceName) 
         {
             _lightingController.EnableLightSetup(setupName, sourceName);
@@ -32,5 +38,6 @@ namespace Metroidvania.Lighting
         {
             _lightingController.DisableLightSetup(setupName, sourceName);
         }
+
     }
 }

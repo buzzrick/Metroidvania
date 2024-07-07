@@ -16,16 +16,20 @@ namespace Metroidvania.Debugging
     public class DebuggingView : MonoBehaviour, IView, ICore
     {
         public PlayerMovementStatsSO[] MovementStats = default!;
+        private GameCore.GameCore _gameCore;
         private PlayerCore _playerCore = default!;
         private GameConfiguration _gameConfiguration = default!;
         private WorldUnlockData _worldData = default!;
         private WorldUnlockRootNode? _rootNode;
 
         [Inject]
-        private void Initialise(PlayerCore playerCore,
+        private void Initialise(
+            GameCore.GameCore gameCore,
+            PlayerCore playerCore,
             GameConfiguration gameConfiguration,
             WorldUnlockData worldUnlockData)
         {
+            _gameCore = gameCore;
             _playerCore = playerCore;
             _gameConfiguration = gameConfiguration;
             _worldData = worldUnlockData;
@@ -33,6 +37,7 @@ namespace Metroidvania.Debugging
 
         public UniTask CleanupSelf()
         {
+            Destroy(DebugSheet.Instance);
             return UniTask.CompletedTask;
         }
 
@@ -50,6 +55,7 @@ namespace Metroidvania.Debugging
             var rootPage = DebugSheet.Instance.GetOrCreateInitialPage();
 
             rootPage.AddSwitch(_gameConfiguration.FreeWorldUnlocksDebugging, "Free Unlocks", null, null, null, null, null, ToggleFreeWorldUnlocks);
+            rootPage.AddButton("Reset Game", clicked: ResetGame);
             rootPage.AddButton("Reset World Data", clicked: ResetWorldData);
             rootPage.AddButton("Toggle Graphy", clicked: ToggleGraphy);
             
@@ -92,7 +98,17 @@ namespace Metroidvania.Debugging
             await _playerCore.GetPlayerRoot().PlayerInventoryManager.ResetInventory();
 
             //Debug.Log($"Resetting World Data on RootNode:{(_rootNode == null ? "NULL" : _rootNode.name)}");
-            _rootNode?.DebugResetWorldData();
+            if (_rootNode != null)
+            {
+                await _rootNode.DebugResetWorldData();
+            }
+            ResetGame();
+        }
+
+        private void ResetGame()
+        {
+            DebugSheet.Instance.Hide();
+            _gameCore.ResetGame().Forget();
         }
     }
 }

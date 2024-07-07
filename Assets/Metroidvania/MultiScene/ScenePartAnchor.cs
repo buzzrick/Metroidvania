@@ -39,6 +39,14 @@ namespace Metroidvania.MultiScene
         }
 
 
+        public async UniTask ResetAnchor()
+        {
+            Debug.Log($"Unloading scene for Anchor {this.name}");
+            _shouldLoad = false;
+            await UnloadScene();
+        }
+
+
         private async UniTask TriggerCheck()
         {
             if (_shouldLoad)

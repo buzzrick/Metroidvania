@@ -50,7 +50,12 @@ namespace Metroidvania.Characters.Player
             await _playerRoot.LoadAllData();
         }
 
-        
+        public async UniTask StopCore()
+        {
+            await _sceneLoader.UnloadSceneAsync("PlayerScene", _playerRoot);
+            _playerRoot = null;
+        }
+
 
         public PlayerRoot GetPlayerRoot() => _playerRoot;
 

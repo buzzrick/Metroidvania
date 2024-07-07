@@ -7,6 +7,8 @@ using Metroidvania.Characters.Player;
 using Metroidvania.UI;
 using Metroidvania.World;
 using UnityEngine;
+using System;
+using UnityEngine.SceneManagement;
 
 namespace Metroidvania.GameCore
 {
@@ -60,6 +62,23 @@ namespace Metroidvania.GameCore
             //  now that the entire scene should be loaded, start the player
             await _playerCore.StartPlayer();    
             Debug.Log($"Starting GameCore Complete");
+        }
+
+        public async UniTask ResetGame()
+        {
+            //  TODO: Register these in some sort of ordered list to automatically sequence loading/unloading them.
+            Debug.Log($"Resetting GameCore");
+            await _worldUnlockData.SaveData();  //  ensure that we've actually saved the game.
+            await _debuggingCore.StopCore();
+            await _cameraController.StopCore();
+            await _sceneAnchorCore.StopCore();
+            await _uiCore.StopCore();
+            await _playerCore.StopCore();
+            await _lightingCore.StopCore();
+            Debug.Log($"Resetting GameCore Complete");
+            await UniTask.Delay(TimeSpan.FromSeconds(2f));
+            SceneManager.LoadScene("SplashScene");
+            //await StartCore();
         }
     }
 }

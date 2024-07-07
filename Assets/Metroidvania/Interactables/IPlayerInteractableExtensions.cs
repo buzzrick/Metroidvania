@@ -9,7 +9,7 @@ namespace Metroidvania.Interactables
         [System.Diagnostics.Conditional("UNITY_EDITOR")]
         public static void EnsureCorrectInteractableLayer(this IPlayerInteractable playerInteractable)
         {
-            Debug.Log($"Testing {playerInteractable}");
+            //Debug.Log($"Testing {playerInteractable}");
             if (playerInteractable != null)
             {
                 MonoBehaviour monoBehaviour = playerInteractable as MonoBehaviour;

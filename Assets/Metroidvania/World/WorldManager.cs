@@ -48,5 +48,12 @@ namespace Metroidvania.World
             await _worldUnlockData.SaveData();
             await _characterStatsProvider.SaveData();
         }
+
+        public async UniTask ResetData()
+        {
+            _worldUnlockData.ResetData();
+            _characterStatsProvider.ResetData();
+            await SaveData();
+        }
     }
 }

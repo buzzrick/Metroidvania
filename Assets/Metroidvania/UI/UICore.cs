@@ -27,6 +27,13 @@ namespace Metroidvania.UI
             LoadPendingListeners();
         }
 
+        public async UniTask StopCore()
+        {
+            await _sceneLoader.UnloadSceneAsync("UIView", _uiView);
+            _uiView = null;
+            _pendingListeners.Clear();
+        }
+
         private void LoadPendingListeners()
         {
             foreach (var pendingListener in _pendingListeners)

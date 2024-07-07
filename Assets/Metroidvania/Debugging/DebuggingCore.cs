@@ -2,7 +2,6 @@ using Cysharp.Threading.Tasks;
 using Metroidvania.GameCore;
 using Metroidvania.MultiScene;
 using Metroidvania.World;
-using UnityEngine;
 
 namespace Metroidvania.Debugging
 {
@@ -30,6 +29,13 @@ namespace Metroidvania.Debugging
             }
         }
 
+        public async UniTask StopCore()
+        {
+            await _sceneLoader.UnloadSceneAsync("DebuggingScene", _debuggingView);
+            _debuggingView = null;
+        }
+
+
         public void RegisterRootNode(WorldUnlockRootNode rootNode)
         {
             _rootNode = rootNode;
@@ -39,5 +45,6 @@ namespace Metroidvania.Debugging
                 _debuggingView.RegisterRootNode(_rootNode);
             }
         }
+
     }
 }
