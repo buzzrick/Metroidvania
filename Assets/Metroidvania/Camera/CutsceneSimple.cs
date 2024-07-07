@@ -39,13 +39,13 @@ namespace Assets.Metroidvania.Camera
 
             _skipBus.OnEvent += SkipCutscene;
             _inputLimiter.RegisterLimiter(this);
-            Debug.Log($"Cutscene - zoom camera in");
+            //Debug.Log($"Cutscene - zoom camera in");
             await _cameraController.ShowCutscene(_cameraPosition, _lookatTransform, skipToken.Token);
-            Debug.Log($"Cutscene - Starting delay");
+            //Debug.Log($"Cutscene - Starting delay");
             await UniTask.Delay((int)(_lookatDuration * 1000), cancellationToken: skipToken.Token);
-            Debug.Log($"Cutscene - zoom camera back out");
+            //Debug.Log($"Cutscene - zoom camera back out");
             await _cameraController.CancelCutscene();
-            Debug.Log($"Cutscene - complete");
+            //Debug.Log($"Cutscene - complete");
             _skipBus.OnEvent -= SkipCutscene;
             _inputLimiter.UnregisterLimiter(this);
         }
