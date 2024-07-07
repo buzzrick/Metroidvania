@@ -1540,7 +1540,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22176913accb3104492a8d2adc7b6256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MessageBusVoids: []
+  MessageBusVoids:
+  - {fileID: 11400000, guid: f5b85a1717ce473409e908de1460ce15, type: 2}
   MessageBusInts: []
   MessageBusStrings: []
   MessageBusTools:

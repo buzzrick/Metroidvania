@@ -2,12 +2,15 @@
 using AYellowpaper.SerializedCollections;
 using Buzzrick.UnityLibs.Attributes;
 using Cysharp.Threading.Tasks;
+using Metroidvania.Characters.Player.Animation;
 using Metroidvania.MessageBus;
 using Metroidvania.MultiScene;
-using Metroidvania.Characters.Player.Animation;
+using System;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 
 namespace Metroidvania.UI.ToolPickupPopup
@@ -20,8 +23,19 @@ namespace Metroidvania.UI.ToolPickupPopup
         [SerializeField, RequiredField] private TMP_Text _toolName = default!;
         [SerializeField, RequiredField] private TMP_Text _toolLevel = default!;
 
+        [Inject(Id = "Skip")] private MessageBusVoid _skipBus = default!;
+
         public async UniTask ShowToolPickup(ToolLevel toolLevel)
         {
+            CancellationTokenSource skipToken = new CancellationTokenSource();
+
+            void HandleSkip()
+            {
+                skipToken.Cancel();
+            }
+
+            _skipBus.OnEvent += HandleSkip;
+
             if (ToolSprites.TryGetValue(toolLevel.Tool, out Sprite sprite))
             {
                 _toolSprite.sprite = sprite;
@@ -29,8 +43,17 @@ namespace Metroidvania.UI.ToolPickupPopup
             _toolName.text = toolLevel.Tool.ToString();
             _toolLevel.text = toolLevel.Level.ToString();
 
-            await UniTask.Delay(2000);
+            try
+            {
+                await UniTask.Delay(2000, cancellationToken: skipToken.Token);
+            }
+            catch (OperationCanceledException )
+            {
+                // Skipped
+            }
+            _skipBus.OnEvent -= HandleSkip;
         }
+
 
         public UniTask CleanupSelf()
         {

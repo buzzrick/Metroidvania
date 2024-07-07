@@ -1,13 +1,14 @@
+using Buzzrick.UnityLibs.Attributes;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
-using Metroidvania.GameCore;
 using Metroidvania.Characters.Player;
+using Metroidvania.GameCore;
+using Metroidvania.MessageBus;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using UnityEngine;
 using Zenject;
-using System.Linq;
-using Buzzrick.UnityLibs.Attributes;
-using System;
 
 namespace Metroidvania.Cameras
 {
@@ -43,6 +44,12 @@ namespace Metroidvania.Cameras
             _cameraTarget = _playerRoot.CameraTarget;
             ResetCameraTargets();
             _brain.enabled = true;
+            return UniTask.CompletedTask;
+        }
+
+        public UniTask StopCore()
+        {
+            _brain.enabled = false;
             return UniTask.CompletedTask;
         }
 
@@ -154,14 +161,19 @@ namespace Metroidvania.Cameras
             }
         }
 
-        public async UniTask ShowCutscene(Transform cameraOffset, Transform targetObject)
+        public async UniTask ShowCutscene(Transform cameraOffset, Transform targetObject, CancellationToken token)
         {
             _cutsceneCamera.LookAt = targetObject;
             _cutsceneCamera.Follow = cameraOffset;
             Debug.Log($"Starting Camera Blend to cutscene");
             _cutsceneCamera.Priority = 1000;
             //_brain.IsBlending
-            await UniTask.WaitWhile(IsBlendingToCutscene);
+
+            await UniTask.WaitWhile(IsBlendingToCutscene, cancellationToken: token);
+            if (token.IsCancellationRequested)
+            {
+                _cutsceneCamera.Priority = 0;
+            }
 
             Debug.Log($"Finished Camera Blend to cutscene");
         }
