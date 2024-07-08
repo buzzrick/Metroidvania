@@ -9,7 +9,7 @@ using PsychoticLab;
 using Metroidvania.Configuration;
 using System;
 
-namespace Assets.Metroidvania.Debugging.DebugMenu
+namespace Metroidvania.Debugging.DebugMenu
 {
     public class DebugPlayerMenu : DebugPageBase
     {

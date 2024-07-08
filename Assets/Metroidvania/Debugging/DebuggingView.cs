@@ -1,10 +1,10 @@
 ﻿#nullable enable
-using Assets.Metroidvania.Debugging.DebugMenu;
 using Cysharp.Threading.Tasks;
+using Metroidvania.Characters.Player;
 using Metroidvania.Configuration;
+using Metroidvania.Debugging.DebugMenu;
 using Metroidvania.GameCore;
 using Metroidvania.MultiScene;
-using Metroidvania.Characters.Player;
 using Metroidvania.World;
 using Tayx.Graphy;
 using UnityDebugSheet.Runtime.Core.Scripts;
