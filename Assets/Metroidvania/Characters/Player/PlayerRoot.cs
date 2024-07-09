@@ -6,6 +6,7 @@ using Metroidvania.Characters.Player.Animation;
 using Metroidvania.Characters.Player.Inventory;
 using Metroidvania.GameCore;
 using Metroidvania.MultiScene;
+using PsychoticLab;
 using UnityEngine;
 using Zenject;
 
@@ -19,6 +20,7 @@ namespace Metroidvania.Characters.Player
         [SerializeField, RequiredField] PlayerMovementInputs _playerMovementInputs = default!;
         private PlayerMovementController _playerMovement = default!;
         [SerializeField, RequiredField] private Transform _cameraTarget = default!;
+        [SerializeField, RequiredField] private CharacterRandomizer _characterRandomizer = default!;
         public Transform CameraTarget => _cameraTarget;
 
         [Inject] private PlayerInventoryManager _playerInventoryManager = default!;
@@ -70,6 +72,11 @@ namespace Metroidvania.Characters.Player
 
         public async UniTask SaveAllData()
         {
+            var playerConfiguration = _characterRandomizer.GetConfiguration();
+            string playerConfigJson = JsonUtility.ToJson(playerConfiguration);
+
+            Debug.Log($"playerConfigJson:\n{playerConfigJson}");
+
             await _playerInventoryManager.SaveData();
         }
 

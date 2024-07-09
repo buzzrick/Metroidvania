@@ -3632,6 +3632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   repeatOnPlay: 0
+  RandomiseOnStart: 0
   shuffleSpeed: 0.7
   mat: {fileID: 2100000, guid: ea128b040f8b0af4c9d2de400aaff30a, type: 2}
   primary:
@@ -4286,6 +4287,7 @@ MonoBehaviour:
   UseOldPlayerMovementController: 0
   _playerMovementInputs: {fileID: 1403159904}
   _cameraTarget: {fileID: 1343940055}
+  _characterRandomizer: {fileID: 471024270}
 --- !u!114 &1403159900
 MonoBehaviour:
   m_ObjectHideFlags: 0

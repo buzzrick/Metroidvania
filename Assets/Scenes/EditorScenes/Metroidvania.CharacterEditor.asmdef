@@ -1,8 +1,11 @@
 {
-    "name": "Synty",
+    "name": "Metroidvania.CharacterEditor",
     "rootNamespace": "",
     "references": [
-        "NaughtyAttributes.Core"
+        "Synty",
+        "NaughtyAttributes.Core",
+        "Buzzrick.UnityLibs",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

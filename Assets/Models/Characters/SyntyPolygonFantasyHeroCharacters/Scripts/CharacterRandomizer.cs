@@ -1,7 +1,8 @@
 ﻿// character randomizer version 1.30
+using NaughtyAttributes;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-//using static UnityEngine.Rendering.DebugUI;
 
 namespace PsychoticLab
 {
@@ -16,6 +17,7 @@ namespace PsychoticLab
     {
         [Header("Demo Settings")]
         public bool repeatOnPlay = false;
+        public bool RandomiseOnStart = true;
         public float shuffleSpeed = 0.7f;
 
         [Header("Material")]
@@ -78,23 +80,24 @@ namespace PsychoticLab
 
         private List<SkinnedMeshRenderer> _allRenderers = new();
         private MaterialPropertyBlock _materialPropertyBlock;
+        private bool _isBuilt;
 
         private void Start()
         {
-            // rebuild all lists
+            SetDefaultConfiguration();
+
+            // if repeat on play is checked in the inspector, repeat the randomize method based on the shuffle speed, also defined in the inspector
+            if (repeatOnPlay)
+                InvokeRepeating("Randomize", shuffleSpeed, shuffleSpeed);
+            else if (RandomiseOnStart)
+                Randomize();
+        }
+
+        public void SetDefaultConfiguration()
+        {
+            // rebuild all lists if required
             BuildLists();
-
-            // disable any enabled objects before clear
-            if (enabledObjects.Count != 0)
-            {
-                foreach (GameObject g in enabledObjects)
-                {
-                    g.SetActive(false);
-                }
-            }
-
-            // clear enabled objects list
-            enabledObjects.Clear();
+            ClearEnabledObjects();
 
             // set default male character
             ActivateItem(male.headAllElements[0]);
@@ -110,15 +113,23 @@ namespace PsychoticLab
             ActivateItem(male.hips[0]);
             ActivateItem(male.leg_Right[0]);
             ActivateItem(male.leg_Left[0]);
-
-
-            // if repeat on play is checked in the inspector, repeat the randomize method based on the shuffle speed, also defined in the inspector
-            if (repeatOnPlay)
-                InvokeRepeating("Randomize", shuffleSpeed, shuffleSpeed);
-            else
-                Randomize();
         }
 
+        private void ClearEnabledObjects()
+        {
+            // disable any enabled objects before clear
+            if (enabledObjects.Count != 0)
+            {
+                foreach (GameObject g in enabledObjects)
+                {
+                    g.SetActive(false);
+                }
+            }
+
+            enabledObjects.Clear();
+        }
+
+        [Button]
         // character randomization method
         public void Randomize()
         {
@@ -130,17 +141,7 @@ namespace PsychoticLab
             HeadCovering headCovering = HeadCovering.HeadCoverings_Base_Hair;
             FacialHair facialHair = FacialHair.Yes;
 
-            // disable any enabled objects before clear
-            if (enabledObjects.Count != 0)
-            {
-                foreach (GameObject g in enabledObjects)
-                {
-                    g.SetActive(false);
-                }
-            }
-
-            // clear enabled objects list (all objects now disabled)
-            enabledObjects.Clear();
+            ClearEnabledObjects();
 
             // roll for gender
             if (!GetPercent(50))
@@ -209,6 +210,16 @@ namespace PsychoticLab
                     RandomizeByVariable(female, gender, elements, race, facialHair, skinColor, headCovering);
                     break;
             }
+        }
+
+        public CharacterConfiguration GetConfiguration()
+        {
+            return new CharacterConfiguration(this);
+        }
+
+        public void ApplyConfiguration(CharacterConfiguration configuration)
+        {
+            configuration.Apply(this);
         }
 
         // randomization method based on previously selected variables
@@ -443,7 +454,7 @@ namespace PsychoticLab
         }
 
         // enable game object and add it to the enabled objects list
-        void ActivateItem(GameObject go)
+        protected void ActivateItem(GameObject go)
         {
             // enable item
             go.SetActive(true);
@@ -469,13 +480,26 @@ namespace PsychoticLab
             return p;
         }
 
-        private void SetMaterialColor(string colorPropertyName, Color color)
+        protected void SetMaterialColor(string colorPropertyName, Color color)
         {
             _materialPropertyBlock.SetColor(colorPropertyName, color);
             foreach (var go in this.enabledObjects)
             {
                 SkinnedMeshRenderer renderer = go.GetComponent<SkinnedMeshRenderer>();
                 renderer.SetPropertyBlock(_materialPropertyBlock);
+            }
+        }
+
+        protected Color GetMaterialColor(string colorPropertyName)
+        {
+            try
+            {
+                return _materialPropertyBlock.GetColor(colorPropertyName);
+            }
+            catch
+            {
+                Debug.LogError($"Unable to find material property {colorPropertyName}");
+                throw;
             }
         }
 
@@ -493,8 +517,12 @@ namespace PsychoticLab
 
 
         // build all item lists for use in randomization
-        private void BuildLists()
+        public void BuildLists()
         {
+            if (_isBuilt)
+                return;
+            _isBuilt = true;
+
             EnsureMaterialPropertyBlock();
 
             //build out male lists
@@ -599,6 +627,105 @@ namespace PsychoticLab
                 }
             }
         }
+
+
+        [System.Serializable]
+        public class CharacterConfiguration
+        {
+            public List<string> ActiveItems = new();
+            public List<ColorCombination> ColorCombinations = new();
+            private CharacterRandomizer? _characterRandomizer;
+
+            [System.Serializable]
+            public struct ColorCombination : ISerializationCallbackReceiver
+            {
+                public string MaterialName;
+                public string MaterialColorHtml;
+                [System.NonSerialized] public Color Color;
+
+                public void OnAfterDeserialize()
+                {
+                    ColorUtility.TryParseHtmlString(MaterialColorHtml, out Color);
+                }
+
+                public void OnBeforeSerialize()
+                {
+                    MaterialColorHtml = ColorUtility.ToHtmlStringRGB(Color);
+                }
+            }
+
+            private static string[] MaterialColorProperties = new string[]
+            {
+                "_Color_Primary",
+                "_Color_Secondary",
+                "_Color_Metal_Primary",
+                "_Color_Metal_Secondary",
+                "_Color_Leather_Primary",
+                "_Color_Leather_Secondary",
+                "_Color_BodyArt",
+                "_Color_Skin",
+                "_Color_Hair",
+                "_Color_Stubble",
+                "_Color_Scar"
+            };
+
+
+            public CharacterConfiguration() { }
+
+            public CharacterConfiguration(CharacterRandomizer characterRandomizer)
+            {
+                _characterRandomizer = characterRandomizer;
+                ActiveItems = _characterRandomizer.enabledObjects.Select(i => i.name).ToList();
+                ColorCombinations = MaterialColorProperties.Select(prop => new ColorCombination
+                {
+                    MaterialName = prop,
+                    Color = _characterRandomizer.GetMaterialColor(prop)
+                }).ToList();
+            }
+
+            public void Apply(CharacterRandomizer characterRandomizer)
+            {
+                _characterRandomizer = characterRandomizer;
+                _characterRandomizer.SetDefaultConfiguration();
+
+                foreach (var colorCombination in ColorCombinations)
+                {
+                    _characterRandomizer.SetMaterialColor(colorCombination.MaterialName, colorCombination.Color);
+                }
+
+                foreach (string itemName in ActiveItems)
+                {
+                    bool found = false;
+                    foreach (var list in _characterRandomizer.allGender.GetAllLists())
+                    {
+                        if (EnableItem(list, itemName))
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found)
+                    {
+                        Debug.LogWarning($"Unable to find Character part:{itemName}");
+                    }
+                }
+
+            }
+
+
+            private bool EnableItem(IEnumerable<GameObject> items, string itemName)
+            {
+                foreach (var item in items)
+                {
+                    if (item.name == itemName)
+                    {
+                        _characterRandomizer.ActivateItem(item);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
     }
 
     // classe for keeping the lists organized, allows for simple switching from male/female objects
@@ -619,6 +746,24 @@ namespace PsychoticLab
         public List<GameObject> hips;
         public List<GameObject> leg_Right;
         public List<GameObject> leg_Left;
+
+        public IEnumerable<List<GameObject>> GetAllLists() => new List<List<GameObject>>()
+        {
+            headAllElements,
+            headNoElements,
+            eyebrow,
+            facialHair,
+            torso,
+            arm_Upper_Right,
+            arm_Upper_Left,
+            arm_Lower_Right,
+            arm_Lower_Left,
+            hand_Right,
+            hand_Left,
+            hips,
+            leg_Right,
+            leg_Left,
+        };
     }
 
     // classe for keeping the lists organized, allows for organization of the all gender items
@@ -641,5 +786,27 @@ namespace PsychoticLab
         public List<GameObject> knee_Attachement_Left;
         public List<GameObject> all_12_Extra;
         public List<GameObject> elf_Ear;
+
+
+        public IEnumerable<List<GameObject>> GetAllLists() => new List<List<GameObject>>()
+        {
+            headCoverings_Base_Hair,
+            headCoverings_No_FacialHair,
+            headCoverings_No_Hair,
+            all_Hair,
+            all_Head_Attachment,
+            chest_Attachment,
+            back_Attachment,
+            shoulder_Attachment_Right,
+            shoulder_Attachment_Left,
+            elbow_Attachment_Right,
+            elbow_Attachment_Left,
+            hips_Attachment,
+            knee_Attachement_Right,
+            knee_Attachement_Left,
+            all_12_Extra,
+            elf_Ear
+        };
     }
+
 }
