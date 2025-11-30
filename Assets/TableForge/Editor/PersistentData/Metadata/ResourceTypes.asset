@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b79e36b3a8534235852035ac7e993606, type: 3}
+  m_Name: ResourceTypes
+  m_EditorClassIdentifier: 
+  expandedTables:
+    values: 
+  transposedTables:
+    values: 
+  hiddenFields:
+    values: 
+  itemsTypeName: Metroidvania.ResourceTypes.ResourceTypeSO, Metroidvania, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  bindingTypeName: ResourceTypeSO
+  itemGUIDs:
+    values: []
+  cellAnchorMetadata:
+    mKeys: d7c98e9ee6c26b17aabcf16661c75943a1dade519f89794f1503dd3b35926c5a808ef392
+    mValues:
+    - position: 1
+      size: {x: 0, y: 0}
+    - position: 2
+      size: {x: 0, y: 0}
+    - position: 3
+      size: {x: 0, y: 0}
+    - position: 4
+      size: {x: 0, y: 0}
+    - position: 5
+      size: {x: 0, y: 0}
+    - position: 6
+      size: {x: 0, y: 0}
+    - position: 7
+      size: {x: 0, y: 0}
+    - position: 0
+      size: {x: 277, y: 0}
+    - position: 0
+      size: {x: 397, y: 0}
+  functions:
+    mKeys: 
+    mValues: []
