@@ -144,7 +144,7 @@ namespace Metroidvania.Characters.Player
                 }
                 else if (!_isTouchMoving)
                 {
-                    Debug.LogWarning($"Touch move detected after touch completed");
+                    //Debug.LogWarning($"Touch move detected after touch completed");
                     moveAxis = Vector2.zero;
                 }
             }
