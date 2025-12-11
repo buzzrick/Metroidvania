@@ -15,11 +15,11 @@ namespace Metroidvania.Debugging
 {
     public class DebuggingView : MonoBehaviour, IView, ICore
     {
-        public PlayerMovementStatsSO[] MovementStats = default!;
-        private GameCore.GameCore _gameCore;
-        private PlayerCore _playerCore = default!;
-        private GameConfiguration _gameConfiguration = default!;
-        private WorldUnlockData _worldData = default!;
+        public PlayerMovementStatsSO[] MovementStats = null!;
+        private GameCore.GameCore _gameCore = null!;
+        private PlayerCore _playerCore = null!;
+        private GameConfiguration _gameConfiguration = null!;
+        private WorldUnlockData _worldData = null!;
         private WorldUnlockRootNode? _rootNode;
 
         [Inject]

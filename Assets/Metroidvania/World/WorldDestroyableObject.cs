@@ -12,7 +12,7 @@ namespace Metroidvania.World
     public class WorldDestroyableObject : MonoBehaviour
     {
         private WorldUnlockData _worldUnlockData = null!;
-        [SerializeField, ReadOnly]private string _uniqueID;
+        [SerializeField, ReadOnly]private string _uniqueID = Guid.NewGuid().ToString();
         private bool _isInitialised;
 
         [Inject]

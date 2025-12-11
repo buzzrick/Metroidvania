@@ -1,3 +1,4 @@
+#nullable enable
 using Metroidvania.UI;
 using Metroidvania.World;
 using NaughtyAttributes;
@@ -8,10 +9,10 @@ namespace Metroidvania.Characters.Base
 {
     public class CharacterHealthView : MonoBehaviour
     {
-        public string CharacterID;
-        public CharacterStatsContainer DefaultStats;
-        [ShowNonSerializedField]private CharacterStats Stats = default;
-        private CharacterHealthBar.Factory _healthBarFactory;
+        public string CharacterID = "Player";
+        public CharacterStatsContainer DefaultStats = null!;
+        [ShowNonSerializedField]private CharacterStats Stats = null!;
+        private CharacterHealthBar.Factory _healthBarFactory = null!;
 
         private CharacterHealthBar? _healthBar;
 

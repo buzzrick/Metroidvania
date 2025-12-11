@@ -1,3 +1,4 @@
+#nullable enable
 using Metroidvania.Characters.Base;
 using Metroidvania.UI;
 using Metroidvania.World;
@@ -10,11 +11,11 @@ namespace Metroidvania.Characters
     [RequireComponent(typeof(Collider))]
     public class DamageReceiver : MonoBehaviour
     {
-        public string CharacterID;
-        public CharacterStatsContainer DefaultStats;
-        private CharacterStats Stats = default;
-        private WorldCharacterStatsData _statsProvider;
-        [SerializeField] CharacterHealthView? _healthView;
+        public string CharacterID = "Player";
+        public CharacterStatsContainer DefaultStats = null!;
+        private CharacterStats Stats = null!;
+        private WorldCharacterStatsData _statsProvider = null!;
+        [SerializeField]private CharacterHealthView? _healthView;
 
         [Inject]
         private void Initialise(WorldCharacterStatsData statsProvider,
