@@ -1,5 +1,4 @@
 using Buzzrick.UnityLibs.Attributes;
-using Cinemachine;
 using Cysharp.Threading.Tasks;
 using Metroidvania.Characters.Player;
 using Metroidvania.GameCore;
@@ -7,6 +6,7 @@ using Metroidvania.MessageBus;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Unity.Cinemachine;
 using UnityEngine;
 using Zenject;
 

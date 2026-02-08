@@ -5,7 +5,7 @@
         "UniTask",
         "Zenject",
         "Buzzrick.UnityLibs",
-        "Cinemachine",
+        "Unity.Cinemachine",
         "UnityDebugSheet",
         "KinematicCharacterController.Core",
         "KinematicCharacterController.ExampleCharacter",

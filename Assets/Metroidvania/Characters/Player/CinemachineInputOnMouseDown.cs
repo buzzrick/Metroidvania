@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using Cinemachine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using Unity.Cinemachine;
 
 public class CinemachineInputOnMouseDown : MonoBehaviour, AxisState.IInputAxisProvider
 {
