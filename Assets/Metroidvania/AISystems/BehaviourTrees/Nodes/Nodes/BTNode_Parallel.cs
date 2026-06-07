@@ -1,49 +1,16 @@
-using System.Text;
-
 namespace Buzzrick.AISystems.BehaviourTree
 {
     public class BTNode_Parallel : BTNodeBase
     {
-        protected bool AlwaysRunSecondary = true;
-        protected BTNodeBase PrimaryChild;
-        protected BTNodeBase SecondaryChild;
-
-        public new BTNodeBase Add<T>(string _Name,
-            System.Func<BehaviourTree.ENodeStatus> _OnEnterFn = null,
-            System.Func<BehaviourTree.ENodeStatus> _OnTickFn = null) where T : BTNodeBase, new()
-        {
-            throw new System.InvalidOperationException("Add is not permitted with BTNode_Parallel. Use SetPrimary or SetSecondary");
-        }
-
-        public new BTNodeBase Add<T>(T newNode) where T : BTNodeBase
-        {
-            throw new System.InvalidOperationException("Add is not permitted with BTNode_Parallel. Use SetPrimary or SetSecondary");
-        }
-
-        public BTNodeBase SetPrimary<T>(T newNode) where T : BTNodeBase
-        {
-            PrimaryChild = newNode;
-            return PrimaryChild;
-        }
-
-        public BTNodeBase SetSecondary<T>(T newNode) where T : BTNodeBase
-        {
-            SecondaryChild = newNode;
-            return SecondaryChild;
-        }
-
         protected override bool OnTick(float deltaTime)
         {
-            bool tickedAnyNodes = false;
-
             if (!DecoratorsPermitRunning)
             {
                 LastStatus = BehaviourTree.ENodeStatus.Failed;
-                tickedAnyNodes = true;
-                return tickedAnyNodes;
+                return true;
             }
 
-            if (PrimaryChild == null)
+            if (Children.Count == 0)
             {
                 LastStatus = BehaviourTree.ENodeStatus.Failed;
                 return false;
@@ -51,77 +18,32 @@ namespace Buzzrick.AISystems.BehaviourTree
 
             TickServices(deltaTime);
 
-            bool primaryWasEnabled = PrimaryChild.DecoratorsPermitRunning;
-            bool primaryIsEnabled = PrimaryChild.EvaluateDecorators();
-
-            // primary child is newly enabled
+            // First child is primary — its status drives this node's result
+            var primary = Children[0];
+            bool primaryWasEnabled = primary.DecoratorsPermitRunning;
+            bool primaryIsEnabled  = primary.EvaluateDecorators();
             if (!primaryWasEnabled && primaryIsEnabled)
-                PrimaryChild.Reset();
+                primary.Reset();
 
+            bool tickedAnyNodes = false;
             if (primaryIsEnabled)
-                tickedAnyNodes |= PrimaryChild.Tick(deltaTime);
-            else
-                LastStatus = BehaviourTree.ENodeStatus.Failed;
+                tickedAnyNodes |= primary.Tick(deltaTime);
 
-            // should we run a secondary and is one present?
-            if (AlwaysRunSecondary && (SecondaryChild != null))
+            // Remaining children always run regardless of the primary's result
+            for (int i = 1; i < Children.Count; i++)
             {
-                bool secondaryWasEnabled = SecondaryChild.DecoratorsPermitRunning;
-                bool secondaryIsEnabled = SecondaryChild.EvaluateDecorators();
-
-                // secondary child is newly enabled
-                if (!secondaryWasEnabled && secondaryIsEnabled)
-                    SecondaryChild.Reset();
-
-                if (secondaryIsEnabled)
-                    SecondaryChild.Tick(deltaTime);
+                var child = Children[i];
+                bool wasEnabled = child.DecoratorsPermitRunning;
+                bool isEnabled  = child.EvaluateDecorators();
+                if (!wasEnabled && isEnabled)
+                    child.Reset();
+                if (isEnabled)
+                    child.Tick(deltaTime);
             }
 
-            LastStatus = PrimaryChild.LastStatus;
+            LastStatus = primaryIsEnabled ? primary.LastStatus : BehaviourTree.ENodeStatus.Failed;
 
             return tickedAnyNodes;
-        }
-
-        public override void Reset()
-        {
-            base.Reset();
-
-            if (PrimaryChild != null)
-                PrimaryChild.Reset();
-            if (SecondaryChild != null)
-                SecondaryChild.Reset();
-        }
-
-        public override void GetDebugTextInternal(StringBuilder debugTextBuilder, int indentLevel = 0)
-        {
-            // apply the indent
-            for (int index = 0; index < indentLevel; ++index)
-                debugTextBuilder.Append(' ');
-
-            debugTextBuilder.Append($"{Name} [{LastStatus.ToString()}]");
-
-            foreach (var service in Services)
-            {
-                debugTextBuilder.AppendLine();
-                debugTextBuilder.Append(service.GetDebugText(indentLevel + 1));
-            }
-
-            foreach (var decorator in Decorators)
-            {
-                debugTextBuilder.AppendLine();
-                debugTextBuilder.Append(decorator.GetDebugText(indentLevel + 1));
-            }
-
-            if (PrimaryChild != null)
-            {
-                debugTextBuilder.AppendLine();
-                PrimaryChild.GetDebugTextInternal(debugTextBuilder, indentLevel + 2);
-            }
-            if (SecondaryChild != null)
-            {
-                debugTextBuilder.AppendLine();
-                SecondaryChild.GetDebugTextInternal(debugTextBuilder, indentLevel + 2);
-            }
         }
     }
 }

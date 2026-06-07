@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da3658186df17d943afb399f61f6c9f7, type: 3}
+  m_Name: NPC_AI_Scared
+  Nodes:
+  - Type: 0
+    NodeName:
+    ResultStatus: 0
+    PrimaryChildIndex: -1
+    SecondaryChildIndex: -1
+    ChildrenIndices:
+    - 1
+    Action: {fileID: 0}
+    Condition: {fileID: 0}
+    Service: {fileID: 0}
+  - Type: 2
+    NodeName: NPC AI Scared
+    ResultStatus: 0
+    PrimaryChildIndex: -1
+    SecondaryChildIndex: -1
+    ChildrenIndices:
+    - 2
+    - 3
+    - 6
+    - 9
+    Action: {fileID: 0}
+    Condition: {fileID: 0}
+    Service: {fileID: 0}
+  - Type: 8
+    NodeName: Check for Player
+    ResultStatus: 0
+    PrimaryChildIndex: -1
+    SecondaryChildIndex: -1
+    ChildrenIndices: []
+    Action: {fileID: 0}
+    Condition: {fileID: 0}
+    Service: {fileID: 11400000, guid: bb00000000000000bb00000000000001, type: 3}
+  - Type: 7
+    NodeName: Should Flee
+    ResultStatus: 0
+    PrimaryChildIndex: -1
+    SecondaryChildIndex: -1
+    ChildrenIndices:
+    - 4
+    Action: {fileID: 0}
+    Condition: {fileID: 11400000, guid: bc00000000000000bc00000000000001, type: 3}
+    Service: {fileID: 0}
+  - Type: 1
+    NodeName: Flee Player
+    ResultStatus: 0
+    PrimaryChildIndex: -1
+    SecondaryChildIndex: -1
+    ChildrenIndices:
+    - 5
+    Action: {fileID: 0}
+    Condition: {fileID: 0}
+    Service: {fileID: 0}
+  - Type: 5
+    NodeName: Flee Action
+    ResultStatus: 0
+    PrimaryChildIndex: -1
+    SecondaryChildIndex: -1
+    ChildrenIndices: []
+    Action: {fileID: 11400000, guid: ba00000000000000ba00000000000001, type: 3}
+    Condition: {fileID: 0}
+    Service: {fileID: 0}
+  - Type: 7
+    NodeName: Is Out Of Zone
+    ResultStatus: 0
+    PrimaryChildIndex: -1
+    SecondaryChildIndex: -1
+    ChildrenIndices:
+    - 7
+    Action: {fileID: 0}
+    Condition: {fileID: 11400000, guid: bc00000000000000bc00000000000002, type: 3}
+    Service: {fileID: 0}
+  - Type: 1
+    NodeName: Return to Zone
+    ResultStatus: 0
+    PrimaryChildIndex: -1
+    SecondaryChildIndex: -1
+    ChildrenIndices:
+    - 8
+    Action: {fileID: 0}
+    Condition: {fileID: 0}
+    Service: {fileID: 0}
+  - Type: 5
+    NodeName: Wander Action
+    ResultStatus: 0
+    PrimaryChildIndex: -1
+    SecondaryChildIndex: -1
+    ChildrenIndices: []
+    Action: {fileID: 11400000, guid: ba00000000000000ba00000000000002, type: 3}
+    Condition: {fileID: 0}
+    Service: {fileID: 0}
+  - Type: 4
+    NodeName: Random Idle
+    ResultStatus: 0
+    PrimaryChildIndex: -1
+    SecondaryChildIndex: -1
+    ChildrenIndices:
+    - 10
+    - 11
+    Action: {fileID: 0}
+    Condition: {fileID: 0}
+    Service: {fileID: 0}
+  - Type: 5
+    NodeName: Idle Animation
+    ResultStatus: 0
+    PrimaryChildIndex: -1
+    SecondaryChildIndex: -1
+    ChildrenIndices: []
+    Action: {fileID: 11400000, guid: ba00000000000000ba00000000000003, type: 3}
+    Condition: {fileID: 0}
+    Service: {fileID: 0}
+  - Type: 1
+    NodeName: Wander
+    ResultStatus: 0
+    PrimaryChildIndex: -1
+    SecondaryChildIndex: -1
+    ChildrenIndices:
+    - 12
+    Action: {fileID: 0}
+    Condition: {fileID: 0}
+    Service: {fileID: 0}
+  - Type: 5
+    NodeName: Wander Action
+    ResultStatus: 0
+    PrimaryChildIndex: -1
+    SecondaryChildIndex: -1
+    ChildrenIndices: []
+    Action: {fileID: 11400000, guid: ba00000000000000ba00000000000002, type: 3}
+    Condition: {fileID: 0}
+    Service: {fileID: 0}
+  RootNodeIndex: 0

@@ -1,5 +1,6 @@
-﻿using Buzzrick.AISystems.BehaviourTree;
+using Buzzrick.AISystems.BehaviourTree;
 using Buzzrick.UnityLibs.Attributes;
+using KinematicCharacterController.Examples;
 using Metroidvania.AISystems.Blackboard;
 using Metroidvania.Characters.NPC.AI;
 using NaughtyAttributes;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Metroidvania.Characters.NPC
 {
-    public class NPCCharacterAI : MonoBehaviour 
+    public class NPCCharacterAI : MonoBehaviour
     {
         [Header("Dependencies")]
         [SerializeField, RequiredField] protected NPCCharacterController _npcCharacterController;
@@ -18,8 +19,6 @@ namespace Metroidvania.Characters.NPC
         [SerializeField, RequiredField] private NPC_AI_Base AIBrain;
 
         private Blackboard<BlackboardKey> _blackboard;
-        private readonly BlackboardKey _characterControllerKey = new BlackboardKey { Name = "CharacterController" };
-        
 
         private void Awake()
         {
@@ -29,7 +28,17 @@ namespace Metroidvania.Characters.NPC
         private void SetupBrain()
         {
             _blackboard = BlackboardManager.Instance.GetIndividualBlackboard<BlackboardKey>(this);
-            _blackboard.SetGeneric(_characterControllerKey, _npcCharacterController);
+
+            // Populate all standard keys from Inspector-assigned fields.
+            // Graph-based AIs read directly from these; code-based AIs may supplement via InitialiseBlackboard.
+            _blackboard.SetGeneric(NPCBlackboardKeys.CharacterController, _npcCharacterController);
+            _blackboard.SetGeneric(NPCBlackboardKeys.PlayerDetector,      _playerDetector);
+            _blackboard.SetGeneric(NPCBlackboardKeys.Transform,           transform);
+            _blackboard.Set(NPCBlackboardKeys.StartPosition,              transform.position);
+            _blackboard.SetGeneric(NPCBlackboardKeys.Inputs,              new AICharacterInputs());
+            _blackboard.Set(NPCBlackboardKeys.WanderTarget,               transform.position);
+            _blackboard.Set(NPCBlackboardKeys.WanderVelocity,             0f);
+
             AIBrain.InitialiseBlackboard(_blackboard, transform);
             AIBrain.BuildBehaviourTree(LinkedBT, _blackboard);
         }

@@ -4,7 +4,7 @@ namespace Buzzrick.AISystems.BehaviourTree
 {
     public abstract class BTElementBase
     {
-        public string Name { get; protected set; } = "-NO NAME-";
+        public string Name { get; set; } = "-NO NAME-";
 
         public string GetDebugText(int indentLevel = 0)
         {

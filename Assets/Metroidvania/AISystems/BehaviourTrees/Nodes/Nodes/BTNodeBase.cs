@@ -16,6 +16,8 @@ namespace Buzzrick.AISystems.BehaviourTree
         public BehaviourTree.ENodeStatus LastStatus { get; protected set; } = BehaviourTree.ENodeStatus.Unknown;
         public bool DecoratorsPermitRunning { get; protected set; } = true;
 
+        public IReadOnlyList<BTNodeBase> GetChildren() => Children;
+
         public BTNodeBase(string _Name = "",
             System.Func<BehaviourTree.ENodeStatus> _OnEnterFn = null,
             System.Func<BehaviourTree.ENodeStatus> _OnTickFn = null)
