@@ -39,6 +39,10 @@ namespace Metroidvania.Characters.NPC
             _blackboard.Set(NPCBlackboardKeys.WanderTarget,               transform.position);
             _blackboard.Set(NPCBlackboardKeys.WanderVelocity,             0f);
 
+            var animator = GetComponentInChildren<Animator>();
+            if (animator != null)
+                _blackboard.SetGeneric(NPCBlackboardKeys.Animator, animator);
+
             AIBrain.InitialiseBlackboard(_blackboard, transform);
             AIBrain.BuildBehaviourTree(LinkedBT, _blackboard);
         }

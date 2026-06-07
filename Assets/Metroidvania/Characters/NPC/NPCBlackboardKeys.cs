@@ -13,6 +13,10 @@ namespace Metroidvania.Characters.NPC
         public static readonly BlackboardKey WanderVelocity      = new BlackboardKey { Name = "WanderVelocity" };
         public static readonly BlackboardKey WanderTimer         = new BlackboardKey { Name = "WanderTimer" };
         public static readonly BlackboardKey IdleTimer           = new BlackboardKey { Name = "IdleTimer" };
+        public static readonly BlackboardKey AttackTimer         = new BlackboardKey { Name = "AttackTimer" };
         public static readonly BlackboardKey ShouldFlee          = new BlackboardKey { Name = "ShouldFlee" };
+        public static readonly BlackboardKey ShouldChase         = new BlackboardKey { Name = "ShouldChase" };
+        public static readonly BlackboardKey ShouldAttack        = new BlackboardKey { Name = "ShouldAttack" };
+        public static readonly BlackboardKey Animator            = new BlackboardKey { Name = "Animator" };
     }
 }

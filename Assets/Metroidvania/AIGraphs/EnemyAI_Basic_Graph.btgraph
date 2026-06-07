@@ -1,0 +1,1120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 61
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 790b4d75d92f4b0984310a268dbd952f, type: 3}
+  m_Name: EnemyAI_Basic_Graph
+  m_EditorClassIdentifier: Unity.GraphToolkit.Editor::Unity.GraphToolkit.Editor.Implementation.GraphObjectImp
+  m_GraphModel:
+    rid: 5863024948055376381
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 5863024948055376381
+      type: {class: GraphModelImp, ns: Unity.GraphToolkit.Editor.Implementation, asm: Unity.GraphToolkit.Editor}
+      data:
+        m_Guid:
+          m_Value0: 2279164291134465425
+          m_Value1: 5236306695698609116
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 9125d3e5d837a11fdc731d543219ab48
+        m_Name: EnemyAI_Basic_Graph
+        m_GraphNodeModels:
+        - rid: 5863024948055376384
+        - rid: 5863024948055376386
+        - rid: 5863024948055376391
+        - rid: 5863024948055376401
+        - rid: 5863024948055376406
+        - rid: 5863024948055376411
+        - rid: 5863024948055376416
+        - rid: 5863024948055376421
+        - rid: 5863024948055376426
+        - rid: 5863024948055376431
+        m_GraphWireModels:
+        - rid: 5863024948055376387
+        - rid: 5863024948055376400
+        - rid: 5863024948055376402
+        - rid: 5863024948055376407
+        - rid: 5863024948055376412
+        - rid: 5863024948055376417
+        - rid: 5863024948055376422
+        - rid: 5863024948055376427
+        - rid: 5863024948055376432
+        m_GraphStickyNoteModels: []
+        m_GraphPlacematModels: []
+        m_GraphVariableModels:
+        - rid: 5863024948055376398
+        m_GraphPortalModels: []
+        m_SectionModels:
+        - rid: 5863024948055376382
+        m_LocalSubgraphs: []
+        m_LastKnownBounds:
+          serializedVersion: 2
+          x: 342
+          y: 126
+          width: 1989
+          height: 1045
+        m_GraphElementMetaData:
+        - m_Guid:
+            m_Value0: 807284892457815885
+            m_Value1: 8223729849921107972
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: 4dcf7c1f550d340b04f85231ba8e2072
+          m_Category: 0
+          m_Index: 0
+        - m_Guid:
+            m_Value0: 13007846020333119723
+            m_Value1: 11324180654229613443
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: eb28ef76092785b483ebb4934e92279d
+          m_Category: 0
+          m_Index: 1
+        - m_Guid:
+            m_Value0: 11788424334769315993
+            m_Value1: 7795185223918405902
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: 99e07e8779e598a30ec90716a90f2e6c
+          m_Category: 2
+          m_Index: 0
+        - m_Guid:
+            m_Value0: 15873539127671675318
+            m_Value1: 2230827161090070751
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: b6592229bc234adcdf1811cc7b7df51e
+          m_Category: 0
+          m_Index: 2
+        - m_Guid:
+            m_Value0: 16755248574694311587
+            m_Value1: 11889511242134217788
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: a346063ace9986e83c646c3c7b0700a5
+          m_Category: 1
+          m_Index: 0
+        - m_Guid:
+            m_Value0: 18206973399088673223
+            m_Value1: 4668449427931399512
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: c7b1aa7fd729acfc5805ba2b05aac940
+          m_Category: 2
+          m_Index: 1
+        - m_Guid:
+            m_Value0: 10816162398457251058
+            m_Value1: 1200085070802988789
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: f244fb1865ba1a96f52e7679038fa710
+          m_Category: 0
+          m_Index: 3
+        - m_Guid:
+            m_Value0: 9909256946015201382
+            m_Value1: 12524697723221340297
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: 66e84edfb0c084898970c07738aad0ad
+          m_Category: 2
+          m_Index: 2
+        - m_Guid:
+            m_Value0: 1786543052206244113
+            m_Value1: 8590235127613163165
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: 1101b2c27013cb189d0677e655a53677
+          m_Category: 0
+          m_Index: 4
+        - m_Guid:
+            m_Value0: 8599745438415372052
+            m_Value1: 13778451874562809662
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: 14bf88afe96e58773e9f2182fae436bf
+          m_Category: 2
+          m_Index: 3
+        - m_Guid:
+            m_Value0: 17714925761781275523
+            m_Value1: 9076074717569175699
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: 839b63651f0fd8f593509d57deb1f47d
+          m_Category: 0
+          m_Index: 5
+        - m_Guid:
+            m_Value0: 10623987148787339292
+            m_Value1: 10365254240209334999
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: 1cd0c80506fc6f93d7f24962d0c7d88f
+          m_Category: 2
+          m_Index: 4
+        - m_Guid:
+            m_Value0: 8910273125865584156
+            m_Value1: 18130647375359518585
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: 1c76ed0633a6a77b79272c44baff9cfb
+          m_Category: 0
+          m_Index: 6
+        - m_Guid:
+            m_Value0: 9769726076641261053
+            m_Value1: 5425717129026989741
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: fdb512bf1a0a9587adee676ffb044c4b
+          m_Category: 2
+          m_Index: 5
+        - m_Guid:
+            m_Value0: 10047000337380033314
+            m_Value1: 4354256963031706778
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: 2243c457931d6e8b9aac4656a36d6d3c
+          m_Category: 0
+          m_Index: 7
+        - m_Guid:
+            m_Value0: 11439094367644794011
+            m_Value1: 16930387624099618146
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: 9bbca36fb8d3bf9e629d20d4d7d1f4ea
+          m_Category: 2
+          m_Index: 6
+        - m_Guid:
+            m_Value0: 11732715523760872202
+            m_Value1: 4712886492780439284
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: 0a5b7a349bfad2a2f426ea944b896741
+          m_Category: 0
+          m_Index: 8
+        - m_Guid:
+            m_Value0: 1257694740542913903
+            m_Value1: 10350466805541781561
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: 6ffdeff5b33a74113940ca73b83ea48f
+          m_Category: 2
+          m_Index: 7
+        - m_Guid:
+            m_Value0: 10143571308405511696
+            m_Value1: 18396234684329179172
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: 10d65aaf5c34c58c2438295cfa8d4cff
+          m_Category: 0
+          m_Index: 9
+        - m_Guid:
+            m_Value0: 16184057615592771112
+            m_Value1: 3858904486337446168
+          m_HashGuid:
+            serializedVersion: 2
+            Hash: 28cedc91a75299e018014e5a2f958d35
+          m_Category: 2
+          m_Index: 8
+        m_EntryPoint:
+          rid: 5863024948055376384
+        m_Graph:
+          rid: 5863024948055376383
+    - rid: 5863024948055376382
+      type: {class: SectionModel, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Guid:
+          m_Value0: 3878098218230271094
+          m_Value1: 7454139905845117875
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 76ccb04dc8c5d135b343f629c06c7267
+        m_Version: 2
+        m_Items:
+        - rid: 5863024948055376398
+        m_Title: 
+    - rid: 5863024948055376383
+      type: {class: BehaviourTreeGraph, ns: Buzzrick.AISystems.BehaviourTree.Graph.Editor,
+        asm: Metroidvania.BehaviourTree.Graph.Editor}
+      data: 
+    - rid: 5863024948055376384
+      type: {class: UserNodeModelImp, ns: Unity.GraphToolkit.Editor.Implementation,
+        asm: Unity.GraphToolkit.Editor}
+      data:
+        m_Guid:
+          m_Value0: 807284892457815885
+          m_Value1: 8223729849921107972
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 4dcf7c1f550d340b04f85231ba8e2072
+        m_Version: 2
+        m_Position: {x: 342.28, y: 126.03999}
+        m_Title: 
+        m_Tooltip: 
+        m_NodePreviewModel:
+          rid: -2
+        m_State: 0
+        m_InputConstantsById:
+          m_KeyList: []
+          m_ValueList: []
+        m_InputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_OutputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_Collapsed: 0
+        m_CurrentModeIndex: 0
+        m_ElementColor:
+          m_Color: {r: 0, g: 0, b: 0, a: 0}
+          m_HasUserColor: 0
+        m_Node:
+          rid: 5863024948055376385
+    - rid: 5863024948055376385
+      type: {class: BTGraphNode_Root, ns: Buzzrick.AISystems.BehaviourTree.Graph.Editor,
+        asm: Metroidvania.BehaviourTree.Graph.Editor}
+      data: 
+    - rid: 5863024948055376386
+      type: {class: UserNodeModelImp, ns: Unity.GraphToolkit.Editor.Implementation,
+        asm: Unity.GraphToolkit.Editor}
+      data:
+        m_Guid:
+          m_Value0: 13007846020333119723
+          m_Value1: 11324180654229613443
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: eb28ef76092785b483ebb4934e92279d
+        m_Version: 2
+        m_Position: {x: 667.48, y: 184.84006}
+        m_Title: 
+        m_Tooltip: 
+        m_NodePreviewModel:
+          rid: -2
+        m_State: 0
+        m_InputConstantsById:
+          m_KeyList:
+          - __option_NodeName
+          - ParentIn
+          m_ValueList:
+          - rid: 5863024948055376388
+          - rid: 5863024948055376389
+        m_InputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_OutputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_Collapsed: 0
+        m_CurrentModeIndex: 0
+        m_ElementColor:
+          m_Color: {r: 0, g: 0, b: 0, a: 0}
+          m_HasUserColor: 0
+        m_Node:
+          rid: 5863024948055376390
+    - rid: 5863024948055376387
+      type: {class: WireModel, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Guid:
+          m_Value0: 11788424334769315993
+          m_Value1: 7795185223918405902
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 99e07e8779e598a30ec90716a90f2e6c
+        m_Version: 2
+        m_FromPortReference:
+          m_NodeModelGuid:
+            m_Value0: 807284892457815885
+            m_Value1: 8223729849921107972
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: 4dcf7c1f550d340b04f85231ba8e2072
+          m_UniqueId: ChildrenOut
+          m_PortDirection: 2
+          m_PortOrientation: 0
+          m_Title: Children
+        m_ToPortReference:
+          m_NodeModelGuid:
+            m_Value0: 13007846020333119723
+            m_Value1: 11324180654229613443
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: eb28ef76092785b483ebb4934e92279d
+          m_UniqueId: ParentIn
+          m_PortDirection: 1
+          m_PortOrientation: 0
+          m_Title: 
+    - rid: 5863024948055376388
+      type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor,
+        asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: Enamy AI
+    - rid: 5863024948055376389
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.Editor.BTExecutionFlow, Metroidvania.BehaviourTree.Graph.Editor]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data: {}
+    - rid: 5863024948055376390
+      type: {class: BTGraphNode_Selector, ns: Buzzrick.AISystems.BehaviourTree.Graph.Editor,
+        asm: Metroidvania.BehaviourTree.Graph.Editor}
+      data: 
+    - rid: 5863024948055376391
+      type: {class: UserNodeModelImp, ns: Unity.GraphToolkit.Editor.Implementation,
+        asm: Unity.GraphToolkit.Editor}
+      data:
+        m_Guid:
+          m_Value0: 15873539127671675318
+          m_Value1: 2230827161090070751
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: b6592229bc234adcdf1811cc7b7df51e
+        m_Version: 2
+        m_Position: {x: 1048.84, y: 145.40005}
+        m_Title: 
+        m_Tooltip: 
+        m_NodePreviewModel:
+          rid: -2
+        m_State: 0
+        m_InputConstantsById:
+          m_KeyList:
+          - __option_NodeName
+          - ParentIn
+          - __option_Service
+          m_ValueList:
+          - rid: 5863024948055376393
+          - rid: 5863024948055376394
+          - rid: 5863024948055376450
+        m_InputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_OutputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_Collapsed: 0
+        m_CurrentModeIndex: 0
+        m_ElementColor:
+          m_Color: {r: 0, g: 0, b: 0, a: 0}
+          m_HasUserColor: 0
+        m_Node:
+          rid: 5863024948055376395
+    - rid: 5863024948055376393
+      type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor,
+        asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: Track Ranges
+    - rid: 5863024948055376394
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.Editor.BTExecutionFlow, Metroidvania.BehaviourTree.Graph.Editor]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data: {}
+    - rid: 5863024948055376395
+      type: {class: BTGraphNode_Service, ns: Buzzrick.AISystems.BehaviourTree.Graph.Editor,
+        asm: Metroidvania.BehaviourTree.Graph.Editor}
+      data: 
+    - rid: 5863024948055376398
+      type: {class: VariableDeclarationModel, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Guid:
+          m_Value0: 16755248574694311587
+          m_Value1: 11889511242134217788
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: a346063ace9986e83c646c3c7b0700a5
+        m_Version: 2
+        m_Name: Input
+        m_UniqueId: 
+        m_DataType:
+          m_Identification: Buzzrick.AISystems.BehaviourTree.Graph.Editor.BTExecutionFlow,
+            Metroidvania.BehaviourTree.Graph.Editor, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        m_IsExposed: 0
+        m_Scope: 0
+        m_ShowOnInspectorOnly: 0
+        m_Tooltip: 
+        m_InitializationValue:
+          rid: 5863024948055376399
+        m_Modifiers: 0
+        m_VariableFlags: 0
+    - rid: 5863024948055376399
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.Editor.BTExecutionFlow, Metroidvania.BehaviourTree.Graph.Editor]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data: {}
+    - rid: 5863024948055376400
+      type: {class: WireModel, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Guid:
+          m_Value0: 18206973399088673223
+          m_Value1: 4668449427931399512
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: c7b1aa7fd729acfc5805ba2b05aac940
+        m_Version: 2
+        m_FromPortReference:
+          m_NodeModelGuid:
+            m_Value0: 13007846020333119723
+            m_Value1: 11324180654229613443
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: eb28ef76092785b483ebb4934e92279d
+          m_UniqueId: ChildrenOut
+          m_PortDirection: 2
+          m_PortOrientation: 0
+          m_Title: Children
+        m_ToPortReference:
+          m_NodeModelGuid:
+            m_Value0: 15873539127671675318
+            m_Value1: 2230827161090070751
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: b6592229bc234adcdf1811cc7b7df51e
+          m_UniqueId: ParentIn
+          m_PortDirection: 1
+          m_PortOrientation: 0
+          m_Title: 
+    - rid: 5863024948055376401
+      type: {class: UserNodeModelImp, ns: Unity.GraphToolkit.Editor.Implementation,
+        asm: Unity.GraphToolkit.Editor}
+      data:
+        m_Guid:
+          m_Value0: 10816162398457251058
+          m_Value1: 1200085070802988789
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: f244fb1865ba1a96f52e7679038fa710
+        m_Version: 2
+        m_Position: {x: 1049, y: 354.20004}
+        m_Title: 
+        m_Tooltip: 
+        m_NodePreviewModel:
+          rid: -2
+        m_State: 0
+        m_InputConstantsById:
+          m_KeyList:
+          - __option_NodeName
+          - ParentIn
+          - __option_Condition
+          m_ValueList:
+          - rid: 5863024948055376403
+          - rid: 5863024948055376404
+          - rid: 5863024948055376451
+        m_InputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_OutputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_Collapsed: 0
+        m_CurrentModeIndex: 0
+        m_ElementColor:
+          m_Color: {r: 0, g: 0, b: 0, a: 0}
+          m_HasUserColor: 0
+        m_Node:
+          rid: 5863024948055376405
+    - rid: 5863024948055376402
+      type: {class: WireModel, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Guid:
+          m_Value0: 9909256946015201382
+          m_Value1: 12524697723221340297
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 66e84edfb0c084898970c07738aad0ad
+        m_Version: 2
+        m_FromPortReference:
+          m_NodeModelGuid:
+            m_Value0: 13007846020333119723
+            m_Value1: 11324180654229613443
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: eb28ef76092785b483ebb4934e92279d
+          m_UniqueId: ChildrenOut
+          m_PortDirection: 2
+          m_PortOrientation: 0
+          m_Title: Children
+        m_ToPortReference:
+          m_NodeModelGuid:
+            m_Value0: 10816162398457251058
+            m_Value1: 1200085070802988789
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: f244fb1865ba1a96f52e7679038fa710
+          m_UniqueId: ParentIn
+          m_PortDirection: 1
+          m_PortOrientation: 0
+          m_Title: 
+    - rid: 5863024948055376403
+      type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor,
+        asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: Is In Attack Range
+    - rid: 5863024948055376404
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.Editor.BTExecutionFlow, Metroidvania.BehaviourTree.Graph.Editor]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data: {}
+    - rid: 5863024948055376405
+      type: {class: BTGraphNode_Decorator, ns: Buzzrick.AISystems.BehaviourTree.Graph.Editor,
+        asm: Metroidvania.BehaviourTree.Graph.Editor}
+      data: 
+    - rid: 5863024948055376406
+      type: {class: UserNodeModelImp, ns: Unity.GraphToolkit.Editor.Implementation,
+        asm: Unity.GraphToolkit.Editor}
+      data:
+        m_Guid:
+          m_Value0: 1786543052206244113
+          m_Value1: 8590235127613163165
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 1101b2c27013cb189d0677e655a53677
+        m_Version: 2
+        m_Position: {x: 1921.71, y: 376.49255}
+        m_Title: 
+        m_Tooltip: 
+        m_NodePreviewModel:
+          rid: -2
+        m_State: 0
+        m_InputConstantsById:
+          m_KeyList:
+          - __option_NodeName
+          - ParentIn
+          - __option_Action
+          m_ValueList:
+          - rid: 5863024948055376408
+          - rid: 5863024948055376409
+          - rid: 5863024948055376452
+        m_InputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_OutputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_Collapsed: 0
+        m_CurrentModeIndex: 0
+        m_ElementColor:
+          m_Color: {r: 0, g: 0, b: 0, a: 0}
+          m_HasUserColor: 0
+        m_Node:
+          rid: 5863024948055376410
+    - rid: 5863024948055376407
+      type: {class: WireModel, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Guid:
+          m_Value0: 8599745438415372052
+          m_Value1: 13778451874562809662
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 14bf88afe96e58773e9f2182fae436bf
+        m_Version: 2
+        m_FromPortReference:
+          m_NodeModelGuid:
+            m_Value0: 10816162398457251058
+            m_Value1: 1200085070802988789
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: f244fb1865ba1a96f52e7679038fa710
+          m_UniqueId: ChildrenOut
+          m_PortDirection: 2
+          m_PortOrientation: 0
+          m_Title: Children
+        m_ToPortReference:
+          m_NodeModelGuid:
+            m_Value0: 1786543052206244113
+            m_Value1: 8590235127613163165
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: 1101b2c27013cb189d0677e655a53677
+          m_UniqueId: ParentIn
+          m_PortDirection: 1
+          m_PortOrientation: 0
+          m_Title: 
+    - rid: 5863024948055376408
+      type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor,
+        asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: Attack
+    - rid: 5863024948055376409
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.Editor.BTExecutionFlow, Metroidvania.BehaviourTree.Graph.Editor]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data: {}
+    - rid: 5863024948055376410
+      type: {class: BTGraphNode_Action, ns: Buzzrick.AISystems.BehaviourTree.Graph.Editor,
+        asm: Metroidvania.BehaviourTree.Graph.Editor}
+      data: 
+    - rid: 5863024948055376411
+      type: {class: UserNodeModelImp, ns: Unity.GraphToolkit.Editor.Implementation,
+        asm: Unity.GraphToolkit.Editor}
+      data:
+        m_Guid:
+          m_Value0: 17714925761781275523
+          m_Value1: 9076074717569175699
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 839b63651f0fd8f593509d57deb1f47d
+        m_Version: 2
+        m_Position: {x: 1044.3201, y: 544.44}
+        m_Title: 
+        m_Tooltip: 
+        m_NodePreviewModel:
+          rid: -2
+        m_State: 0
+        m_InputConstantsById:
+          m_KeyList:
+          - __option_NodeName
+          - ParentIn
+          - __option_Condition
+          m_ValueList:
+          - rid: 5863024948055376413
+          - rid: 5863024948055376414
+          - rid: 5863024948055376453
+        m_InputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_OutputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_Collapsed: 0
+        m_CurrentModeIndex: 0
+        m_ElementColor:
+          m_Color: {r: 0, g: 0, b: 0, a: 0}
+          m_HasUserColor: 0
+        m_Node:
+          rid: 5863024948055376415
+    - rid: 5863024948055376412
+      type: {class: WireModel, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Guid:
+          m_Value0: 10623987148787339292
+          m_Value1: 10365254240209334999
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 1cd0c80506fc6f93d7f24962d0c7d88f
+        m_Version: 2
+        m_FromPortReference:
+          m_NodeModelGuid:
+            m_Value0: 13007846020333119723
+            m_Value1: 11324180654229613443
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: eb28ef76092785b483ebb4934e92279d
+          m_UniqueId: ChildrenOut
+          m_PortDirection: 2
+          m_PortOrientation: 0
+          m_Title: Children
+        m_ToPortReference:
+          m_NodeModelGuid:
+            m_Value0: 17714925761781275523
+            m_Value1: 9076074717569175699
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: 839b63651f0fd8f593509d57deb1f47d
+          m_UniqueId: ParentIn
+          m_PortDirection: 1
+          m_PortOrientation: 0
+          m_Title: 
+    - rid: 5863024948055376413
+      type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor,
+        asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: Is In Chase Range
+    - rid: 5863024948055376414
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.Editor.BTExecutionFlow, Metroidvania.BehaviourTree.Graph.Editor]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data: {}
+    - rid: 5863024948055376415
+      type: {class: BTGraphNode_Decorator, ns: Buzzrick.AISystems.BehaviourTree.Graph.Editor,
+        asm: Metroidvania.BehaviourTree.Graph.Editor}
+      data: 
+    - rid: 5863024948055376416
+      type: {class: UserNodeModelImp, ns: Unity.GraphToolkit.Editor.Implementation,
+        asm: Unity.GraphToolkit.Editor}
+      data:
+        m_Guid:
+          m_Value0: 8910273125865584156
+          m_Value1: 18130647375359518585
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 1c76ed0633a6a77b79272c44baff9cfb
+        m_Version: 2
+        m_Position: {x: 1945.8951, y: 588.12256}
+        m_Title: 
+        m_Tooltip: 
+        m_NodePreviewModel:
+          rid: -2
+        m_State: 0
+        m_InputConstantsById:
+          m_KeyList:
+          - __option_NodeName
+          - ParentIn
+          - __option_Action
+          m_ValueList:
+          - rid: 5863024948055376418
+          - rid: 5863024948055376419
+          - rid: 5863024948055376454
+        m_InputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_OutputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_Collapsed: 0
+        m_CurrentModeIndex: 0
+        m_ElementColor:
+          m_Color: {r: 0, g: 0, b: 0, a: 0}
+          m_HasUserColor: 0
+        m_Node:
+          rid: 5863024948055376420
+    - rid: 5863024948055376417
+      type: {class: WireModel, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Guid:
+          m_Value0: 9769726076641261053
+          m_Value1: 5425717129026989741
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: fdb512bf1a0a9587adee676ffb044c4b
+        m_Version: 2
+        m_FromPortReference:
+          m_NodeModelGuid:
+            m_Value0: 17714925761781275523
+            m_Value1: 9076074717569175699
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: 839b63651f0fd8f593509d57deb1f47d
+          m_UniqueId: ChildrenOut
+          m_PortDirection: 2
+          m_PortOrientation: 0
+          m_Title: Children
+        m_ToPortReference:
+          m_NodeModelGuid:
+            m_Value0: 8910273125865584156
+            m_Value1: 18130647375359518585
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: 1c76ed0633a6a77b79272c44baff9cfb
+          m_UniqueId: ParentIn
+          m_PortDirection: 1
+          m_PortOrientation: 0
+          m_Title: 
+    - rid: 5863024948055376418
+      type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor,
+        asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: Chase Player
+    - rid: 5863024948055376419
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.Editor.BTExecutionFlow, Metroidvania.BehaviourTree.Graph.Editor]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data: {}
+    - rid: 5863024948055376420
+      type: {class: BTGraphNode_Action, ns: Buzzrick.AISystems.BehaviourTree.Graph.Editor,
+        asm: Metroidvania.BehaviourTree.Graph.Editor}
+      data: 
+    - rid: 5863024948055376421
+      type: {class: UserNodeModelImp, ns: Unity.GraphToolkit.Editor.Implementation,
+        asm: Unity.GraphToolkit.Editor}
+      data:
+        m_Guid:
+          m_Value0: 10047000337380033314
+          m_Value1: 4354256963031706778
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 2243c457931d6e8b9aac4656a36d6d3c
+        m_Version: 2
+        m_Position: {x: 1045.0399, y: 764.84}
+        m_Title: 
+        m_Tooltip: 
+        m_NodePreviewModel:
+          rid: -2
+        m_State: 0
+        m_InputConstantsById:
+          m_KeyList:
+          - __option_NodeName
+          - ParentIn
+          m_ValueList:
+          - rid: 5863024948055376423
+          - rid: 5863024948055376424
+        m_InputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_OutputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_Collapsed: 0
+        m_CurrentModeIndex: 0
+        m_ElementColor:
+          m_Color: {r: 0, g: 0, b: 0, a: 0}
+          m_HasUserColor: 0
+        m_Node:
+          rid: 5863024948055376425
+    - rid: 5863024948055376422
+      type: {class: WireModel, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Guid:
+          m_Value0: 11439094367644794011
+          m_Value1: 16930387624099618146
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 9bbca36fb8d3bf9e629d20d4d7d1f4ea
+        m_Version: 2
+        m_FromPortReference:
+          m_NodeModelGuid:
+            m_Value0: 13007846020333119723
+            m_Value1: 11324180654229613443
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: eb28ef76092785b483ebb4934e92279d
+          m_UniqueId: ChildrenOut
+          m_PortDirection: 2
+          m_PortOrientation: 0
+          m_Title: Children
+        m_ToPortReference:
+          m_NodeModelGuid:
+            m_Value0: 10047000337380033314
+            m_Value1: 4354256963031706778
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: 2243c457931d6e8b9aac4656a36d6d3c
+          m_UniqueId: ParentIn
+          m_PortDirection: 1
+          m_PortOrientation: 0
+          m_Title: 
+    - rid: 5863024948055376423
+      type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor,
+        asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: Patrol
+    - rid: 5863024948055376424
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.Editor.BTExecutionFlow, Metroidvania.BehaviourTree.Graph.Editor]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data: {}
+    - rid: 5863024948055376425
+      type: {class: BTGraphNode_Random, ns: Buzzrick.AISystems.BehaviourTree.Graph.Editor,
+        asm: Metroidvania.BehaviourTree.Graph.Editor}
+      data: 
+    - rid: 5863024948055376426
+      type: {class: UserNodeModelImp, ns: Unity.GraphToolkit.Editor.Implementation,
+        asm: Unity.GraphToolkit.Editor}
+      data:
+        m_Guid:
+          m_Value0: 11732715523760872202
+          m_Value1: 4712886492780439284
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 0a5b7a349bfad2a2f426ea944b896741
+        m_Version: 2
+        m_Position: {x: 1946.6051, y: 806.1125}
+        m_Title: 
+        m_Tooltip: 
+        m_NodePreviewModel:
+          rid: -2
+        m_State: 0
+        m_InputConstantsById:
+          m_KeyList:
+          - __option_NodeName
+          - ParentIn
+          - __option_Action
+          m_ValueList:
+          - rid: 5863024948055376428
+          - rid: 5863024948055376429
+          - rid: 5863024948055376455
+        m_InputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_OutputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_Collapsed: 0
+        m_CurrentModeIndex: 0
+        m_ElementColor:
+          m_Color: {r: 0, g: 0, b: 0, a: 0}
+          m_HasUserColor: 0
+        m_Node:
+          rid: 5863024948055376430
+    - rid: 5863024948055376427
+      type: {class: WireModel, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Guid:
+          m_Value0: 1257694740542913903
+          m_Value1: 10350466805541781561
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 6ffdeff5b33a74113940ca73b83ea48f
+        m_Version: 2
+        m_FromPortReference:
+          m_NodeModelGuid:
+            m_Value0: 10047000337380033314
+            m_Value1: 4354256963031706778
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: 2243c457931d6e8b9aac4656a36d6d3c
+          m_UniqueId: ChildrenOut
+          m_PortDirection: 2
+          m_PortOrientation: 0
+          m_Title: Children
+        m_ToPortReference:
+          m_NodeModelGuid:
+            m_Value0: 11732715523760872202
+            m_Value1: 4712886492780439284
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: 0a5b7a349bfad2a2f426ea944b896741
+          m_UniqueId: ParentIn
+          m_PortDirection: 1
+          m_PortOrientation: 0
+          m_Title: 
+    - rid: 5863024948055376428
+      type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor,
+        asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: Idle
+    - rid: 5863024948055376429
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.Editor.BTExecutionFlow, Metroidvania.BehaviourTree.Graph.Editor]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data: {}
+    - rid: 5863024948055376430
+      type: {class: BTGraphNode_Action, ns: Buzzrick.AISystems.BehaviourTree.Graph.Editor,
+        asm: Metroidvania.BehaviourTree.Graph.Editor}
+      data: 
+    - rid: 5863024948055376431
+      type: {class: UserNodeModelImp, ns: Unity.GraphToolkit.Editor.Implementation,
+        asm: Unity.GraphToolkit.Editor}
+      data:
+        m_Guid:
+          m_Value0: 10143571308405511696
+          m_Value1: 18396234684329179172
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 10d65aaf5c34c58c2438295cfa8d4cff
+        m_Version: 2
+        m_Position: {x: 1922.7449, y: 1029.3823}
+        m_Title: 
+        m_Tooltip: 
+        m_NodePreviewModel:
+          rid: -2
+        m_State: 0
+        m_InputConstantsById:
+          m_KeyList:
+          - __option_NodeName
+          - ParentIn
+          - __option_Action
+          m_ValueList:
+          - rid: 5863024948055376433
+          - rid: 5863024948055376434
+          - rid: 5863024948055376456
+        m_InputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_OutputPortInfos:
+          expandedPortsById:
+            m_KeyList: []
+            m_ValueList: 
+        m_Collapsed: 0
+        m_CurrentModeIndex: 0
+        m_ElementColor:
+          m_Color: {r: 0, g: 0, b: 0, a: 0}
+          m_HasUserColor: 0
+        m_Node:
+          rid: 5863024948055376435
+    - rid: 5863024948055376432
+      type: {class: WireModel, ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Guid:
+          m_Value0: 16184057615592771112
+          m_Value1: 3858904486337446168
+        m_HashGuid:
+          serializedVersion: 2
+          Hash: 28cedc91a75299e018014e5a2f958d35
+        m_Version: 2
+        m_FromPortReference:
+          m_NodeModelGuid:
+            m_Value0: 10047000337380033314
+            m_Value1: 4354256963031706778
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: 2243c457931d6e8b9aac4656a36d6d3c
+          m_UniqueId: ChildrenOut
+          m_PortDirection: 2
+          m_PortOrientation: 0
+          m_Title: Children
+        m_ToPortReference:
+          m_NodeModelGuid:
+            m_Value0: 10143571308405511696
+            m_Value1: 18396234684329179172
+          m_NodeModelHashGuid:
+            serializedVersion: 2
+            Hash: 10d65aaf5c34c58c2438295cfa8d4cff
+          m_UniqueId: ParentIn
+          m_PortDirection: 1
+          m_PortOrientation: 0
+          m_Title: 
+    - rid: 5863024948055376433
+      type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor,
+        asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: Wander
+    - rid: 5863024948055376434
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.Editor.BTExecutionFlow, Metroidvania.BehaviourTree.Graph.Editor]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data: {}
+    - rid: 5863024948055376435
+      type: {class: BTGraphNode_Action, ns: Buzzrick.AISystems.BehaviourTree.Graph.Editor,
+        asm: Metroidvania.BehaviourTree.Graph.Editor}
+      data: 
+    - rid: 5863024948055376450
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.BTServiceSO, Metroidvania]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: {fileID: 11400000, guid: 5d6ffdcb6f59e4f48a61582dadc5f0c4, type: 2}
+    - rid: 5863024948055376451
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.BTConditionSO, Metroidvania]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: {fileID: 11400000, guid: ea94f6274b550804a88a4c29b65bf88d, type: 2}
+    - rid: 5863024948055376452
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.BTActionSO, Metroidvania]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: {fileID: 11400000, guid: 079c8b409eff7fd4589d510ab8854f1e, type: 2}
+    - rid: 5863024948055376453
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.BTConditionSO, Metroidvania]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: {fileID: 11400000, guid: f2f2795ad6d610047b4297813db82ae0, type: 2}
+    - rid: 5863024948055376454
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.BTActionSO, Metroidvania]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: {fileID: 11400000, guid: 65d1f770c59693147b24bb227c571f61, type: 2}
+    - rid: 5863024948055376455
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.BTActionSO, Metroidvania]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: {fileID: 11400000, guid: ba00000000000000ba00000000000003, type: 2}
+    - rid: 5863024948055376456
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.BTActionSO, Metroidvania]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: {fileID: 11400000, guid: ba00000000000000ba00000000000002, type: 2}

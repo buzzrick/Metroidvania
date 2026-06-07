@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 3613272491663385681}
   - component: {fileID: 8229914945470614640}
   m_Layer: 0
-  m_Name: NPCRoot_Crab
+  m_Name: NPC_Crab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -118,20 +118,20 @@ namespace Buzzrick.AISystems.BehaviourTree.Graph.Editor
                     data.ChildrenIndices = GetChildIndices(node, BTGraphNodeBase.PORT_OUT, nodeIndex, portToNode);
                     break;
 
-                case BTGraphNode_Action act:
+                case BTGraphNode_Action:
                     data.Type   = EBTNodeType.Action;
-                    data.Action = act.Action;
+                    data.Action = GetObjectOption<BTActionSO>(node, "Action");
                     break;
 
-                case BTGraphNode_Decorator dec:
-                    data.Type      = EBTNodeType.Decorator;
-                    data.Condition = dec.Condition;
+                case BTGraphNode_Decorator:
+                    data.Type        = EBTNodeType.Decorator;
+                    data.Condition   = GetObjectOption<BTConditionSO>(node, "Condition");
                     data.ChildrenIndices = GetChildIndices(node, BTGraphNodeBase.PORT_OUT, nodeIndex, portToNode);
                     break;
 
-                case BTGraphNode_Service svc:
+                case BTGraphNode_Service:
                     data.Type    = EBTNodeType.Service;
-                    data.Service = svc.Service;
+                    data.Service = GetObjectOption<BTServiceSO>(node, "Service");
                     break;
 
                 case BTGraphNode_ReturnResult:
@@ -168,6 +168,13 @@ namespace Buzzrick.AISystems.BehaviourTree.Graph.Editor
             var opt = node.GetNodeOptionByName(optionName);
             if (opt == null) return "";
             return opt.TryGetValue<string>(out string value) ? (value ?? "") : "";
+        }
+
+        static T GetObjectOption<T>(Node node, string optionName) where T : UnityEngine.Object
+        {
+            var opt = node.GetNodeOptionByName(optionName);
+            if (opt == null) return null;
+            return opt.TryGetValue<T>(out T value) ? value : null;
         }
     }
 }
