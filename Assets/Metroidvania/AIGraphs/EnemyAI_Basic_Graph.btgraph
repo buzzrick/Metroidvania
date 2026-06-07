@@ -360,7 +360,7 @@ MonoBehaviour:
       type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor,
         asm: Unity.GraphToolkit.Internal.Editor}
       data:
-        m_Value: Enamy AI
+        m_Value: Enemy AI
     - rid: 5863024948055376389
       type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.Editor.BTExecutionFlow, Metroidvania.BehaviourTree.Graph.Editor]]',
         ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}

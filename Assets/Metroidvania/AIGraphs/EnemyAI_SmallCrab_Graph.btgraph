@@ -432,9 +432,11 @@ MonoBehaviour:
           m_KeyList:
           - __option_NodeName
           - ParentIn
+          - __option_Action
           m_ValueList:
           - rid: 5863024948055376292
           - rid: 5863024948055376295
+          - rid: 5863024948055376471
         m_InputPortInfos:
           expandedPortsById:
             m_KeyList: []
@@ -494,8 +496,7 @@ MonoBehaviour:
     - rid: 5863024948055376296
       type: {class: BTGraphNode_Action, ns: Buzzrick.AISystems.BehaviourTree.Graph.Editor,
         asm: Metroidvania.BehaviourTree.Graph.Editor}
-      data:
-        Action: {fileID: 0}
+      data: 
     - rid: 5863024948055376297
       type: {class: UserNodeModelImp, ns: Unity.GraphToolkit.Editor.Implementation,
         asm: Unity.GraphToolkit.Editor}
@@ -601,9 +602,11 @@ MonoBehaviour:
           m_KeyList:
           - __option_NodeName
           - ParentIn
+          - __option_Action
           m_ValueList:
           - rid: 5863024948055376304
           - rid: 5863024948055376307
+          - rid: 5863024948055376472
         m_InputPortInfos:
           expandedPortsById:
             m_KeyList: []
@@ -663,8 +666,7 @@ MonoBehaviour:
     - rid: 5863024948055376308
       type: {class: BTGraphNode_Action, ns: Buzzrick.AISystems.BehaviourTree.Graph.Editor,
         asm: Metroidvania.BehaviourTree.Graph.Editor}
-      data:
-        Action: {fileID: 0}
+      data: 
     - rid: 5863024948055376309
       type: {class: UserNodeModelImp, ns: Unity.GraphToolkit.Editor.Implementation,
         asm: Unity.GraphToolkit.Editor}
@@ -770,9 +772,11 @@ MonoBehaviour:
           m_KeyList:
           - __option_NodeName
           - ParentIn
+          - __option_Action
           m_ValueList:
           - rid: 5863024948055376316
           - rid: 5863024948055376319
+          - rid: 5863024948055376473
         m_InputPortInfos:
           expandedPortsById:
             m_KeyList: []
@@ -832,8 +836,7 @@ MonoBehaviour:
     - rid: 5863024948055376320
       type: {class: BTGraphNode_Action, ns: Buzzrick.AISystems.BehaviourTree.Graph.Editor,
         asm: Metroidvania.BehaviourTree.Graph.Editor}
-      data:
-        Action: {fileID: 0}
+      data: 
     - rid: 5863024948055376321
       type: {class: UserNodeModelImp, ns: Unity.GraphToolkit.Editor.Implementation,
         asm: Unity.GraphToolkit.Editor}
@@ -855,9 +858,11 @@ MonoBehaviour:
           m_KeyList:
           - __option_NodeName
           - ParentIn
+          - __option_Action
           m_ValueList:
           - rid: 5863024948055376323
           - rid: 5863024948055376326
+          - rid: 5863024948055376474
         m_InputPortInfos:
           expandedPortsById:
             m_KeyList: []
@@ -917,8 +922,7 @@ MonoBehaviour:
     - rid: 5863024948055376327
       type: {class: BTGraphNode_Action, ns: Buzzrick.AISystems.BehaviourTree.Graph.Editor,
         asm: Metroidvania.BehaviourTree.Graph.Editor}
-      data:
-        Action: {fileID: 0}
+      data: 
     - rid: 5863024948055376344
       type: {class: UserNodeModelImp, ns: Unity.GraphToolkit.Editor.Implementation,
         asm: Unity.GraphToolkit.Editor}
@@ -940,9 +944,11 @@ MonoBehaviour:
           m_KeyList:
           - __option_NodeName
           - ParentIn
+          - __option_Condition
           m_ValueList:
           - rid: 5863024948055376347
           - rid: 5863024948055376348
+          - rid: 5863024948055376475
         m_InputPortInfos:
           expandedPortsById:
             m_KeyList: []
@@ -1034,5 +1040,29 @@ MonoBehaviour:
     - rid: 5863024948055376349
       type: {class: BTGraphNode_Decorator, ns: Buzzrick.AISystems.BehaviourTree.Graph.Editor,
         asm: Metroidvania.BehaviourTree.Graph.Editor}
+      data: 
+    - rid: 5863024948055376471
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.BTActionSO, Metroidvania]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
       data:
-        Condition: {fileID: 0}
+        m_Value: {fileID: 0}
+    - rid: 5863024948055376472
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.BTActionSO, Metroidvania]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: {fileID: 0}
+    - rid: 5863024948055376473
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.BTActionSO, Metroidvania]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: {fileID: 0}
+    - rid: 5863024948055376474
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.BTActionSO, Metroidvania]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: {fileID: 0}
+    - rid: 5863024948055376475
+      type: {class: 'Constant`1[[Buzzrick.AISystems.BehaviourTree.Graph.BTConditionSO, Metroidvania]]',
+        ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: {fileID: 0}

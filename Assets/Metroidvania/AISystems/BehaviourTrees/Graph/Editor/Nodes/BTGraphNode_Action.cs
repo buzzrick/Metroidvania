@@ -1,6 +1,4 @@
 using System;
-using Buzzrick.AISystems.BehaviourTree.Graph;
-using Unity.GraphToolkit.Editor;
 
 namespace Buzzrick.AISystems.BehaviourTree.Graph.Editor
 {

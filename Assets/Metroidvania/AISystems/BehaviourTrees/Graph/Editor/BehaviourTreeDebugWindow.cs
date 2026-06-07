@@ -190,14 +190,23 @@ namespace Buzzrick.AISystems.BehaviourTree.Graph.Editor
             box.style.borderLeftColor   = box.style.borderRightColor  =
                 new StyleColor(new Color(0f, 0f, 0f, 0.35f));
 
-            var lbl = new Label($"{node.Name}  [{node.LastStatus}]");
-            lbl.style.color          = new StyleColor(Color.white);
-            lbl.style.fontSize       = 11;
-            lbl.style.unityTextAlign = TextAnchor.MiddleCenter;
-            lbl.style.whiteSpace     = WhiteSpace.Normal;
-            lbl.style.width          = NodeW;
-            lbl.style.height         = NodeH;
-            box.Add(lbl);
+            var nameLbl = new Label(node.Name);
+            nameLbl.style.color          = new StyleColor(Color.white);
+            nameLbl.style.fontSize       = 11;
+            nameLbl.style.unityTextAlign = TextAnchor.UpperCenter;
+            nameLbl.style.whiteSpace     = WhiteSpace.Normal;
+            nameLbl.style.width          = NodeW;
+            nameLbl.style.paddingTop     = 4;
+            box.Add(nameLbl);
+
+            var statusLbl = new Label($"[{node.LastStatus}]");
+            statusLbl.style.color          = new StyleColor(new Color(1f, 1f, 1f, 0.6f));
+            statusLbl.style.fontSize       = 9;
+            statusLbl.style.unityTextAlign = TextAnchor.LowerCenter;
+            statusLbl.style.width          = NodeW;
+            statusLbl.style.paddingBottom  = 3;
+            statusLbl.style.flexGrow       = 1;
+            box.Add(statusLbl);
 
             return box;
         }

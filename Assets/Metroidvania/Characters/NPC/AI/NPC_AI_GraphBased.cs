@@ -42,7 +42,7 @@ namespace Metroidvania.Characters.NPC.AI
             {
                 case EBTNodeType.Sequence:
                 {
-                    var node = new BTNode_Sequence { Name = data.NodeName };
+                    var node = new BTNode_Sequence { Name = Label("Sequence", data.NodeName) };
                     foreach (int childIdx in data.ChildrenIndices)
                     {
                         var child = BuildNode(childIdx, linkedBT, blackboard, node);
@@ -53,7 +53,7 @@ namespace Metroidvania.Characters.NPC.AI
 
                 case EBTNodeType.Selector:
                 {
-                    var node = new BTNode_Selector { Name = data.NodeName };
+                    var node = new BTNode_Selector { Name = Label("Selector", data.NodeName) };
                     foreach (int childIdx in data.ChildrenIndices)
                     {
                         var child = BuildNode(childIdx, linkedBT, blackboard, node);
@@ -64,7 +64,7 @@ namespace Metroidvania.Characters.NPC.AI
 
                 case EBTNodeType.Random:
                 {
-                    var node = new BTNode_Random { Name = data.NodeName };
+                    var node = new BTNode_Random { Name = Label("Random", data.NodeName) };
                     foreach (int childIdx in data.ChildrenIndices)
                     {
                         var child = BuildNode(childIdx, linkedBT, blackboard, node);
@@ -75,7 +75,7 @@ namespace Metroidvania.Characters.NPC.AI
 
                 case EBTNodeType.Parallel:
                 {
-                    var node = new BTNode_Parallel { Name = data.NodeName };
+                    var node = new BTNode_Parallel { Name = Label("Parallel", data.NodeName) };
                     foreach (int childIdx in data.ChildrenIndices)
                     {
                         var child = BuildNode(childIdx, linkedBT, blackboard, node);
@@ -86,7 +86,8 @@ namespace Metroidvania.Characters.NPC.AI
 
                 case EBTNodeType.ReturnResult:
                 {
-                    var node = new BTNode_ReturnResult(data.ResultStatus, data.NodeName);
+                    var label = Label("Return", data.NodeName);
+                    var node  = new BTNode_ReturnResult(data.ResultStatus, label);
                     foreach (int childIdx in data.ChildrenIndices)
                     {
                         var child = BuildNode(childIdx, linkedBT, blackboard, node);
@@ -97,10 +98,11 @@ namespace Metroidvania.Characters.NPC.AI
 
                 case EBTNodeType.Action:
                 {
-                    if (data.Action == null) return new BTNode_Action(data.NodeName, null, null);
+                    var label = Label("Action", data.NodeName, data.Action);
+                    if (data.Action == null) return new BTNode_Action(label, null, null);
                     var action = data.Action;
                     var bb     = blackboard;
-                    return new BTNode_Action(data.NodeName,
+                    return new BTNode_Action(label,
                         () => action.OnEnter(bb),
                         () => action.OnTick(bb));
                 }
@@ -114,7 +116,7 @@ namespace Metroidvania.Characters.NPC.AI
                     {
                         var condition = data.Condition;
                         var bb        = blackboard;
-                        child.AddDecorator<BTDecoratorBase>(data.NodeName, () => condition.Evaluate(bb));
+                        child.AddDecorator<BTDecoratorBase>(Label("Decorator", data.NodeName, data.Condition), () => condition.Evaluate(bb));
                     }
                     return child;
                 }
@@ -125,7 +127,7 @@ namespace Metroidvania.Characters.NPC.AI
                     {
                         var service = data.Service;
                         var bb      = blackboard;
-                        parent.AddService<BTServiceBase>(data.NodeName, dt => service.OnTick(dt, bb));
+                        parent.AddService<BTServiceBase>(Label("Service", data.NodeName, data.Service), dt => service.OnTick(dt, bb));
                     }
                     return null;
                 }
@@ -134,6 +136,14 @@ namespace Metroidvania.Characters.NPC.AI
                     Debug.LogWarning($"{name}: Unknown node type {data.Type} at index {nodeIndex}");
                     return null;
             }
+        }
+
+        static string Label(string prefix, string nodeName, Object asset = null)
+        {
+            string suffix = !string.IsNullOrEmpty(nodeName) ? nodeName
+                          : asset != null                   ? asset.name
+                          : null;
+            return suffix != null ? $"{prefix} ({suffix})" : prefix;
         }
     }
 }
