@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2522312330276771760}
   - component: {fileID: 2314363854846389497}
   m_Layer: 0
-  m_Name: NPC_Crab_Graph
+  m_Name: NPC_Crab_Graphed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
