@@ -5,13 +5,24 @@ namespace Metroidvania.AISystems.Blackboard
 {
     public class Blackboard<BlackboardKeyType>
     {
-        Dictionary<BlackboardKeyType, int> IntValues = new();
-        Dictionary<BlackboardKeyType, float> FloatValues = new();
-        Dictionary<BlackboardKeyType, bool> BoolValues = new();
-        Dictionary<BlackboardKeyType, string> StringValues = new();
-        Dictionary<BlackboardKeyType, Vector3> Vector3Values = new();
+        Dictionary<BlackboardKeyType, int>        IntValues     = new();
+        Dictionary<BlackboardKeyType, float>      FloatValues   = new();
+        Dictionary<BlackboardKeyType, bool>       BoolValues    = new();
+        Dictionary<BlackboardKeyType, string>     StringValues  = new();
+        Dictionary<BlackboardKeyType, Vector3>    Vector3Values = new();
         Dictionary<BlackboardKeyType, GameObject> GameObjectValues = new();
-        Dictionary<BlackboardKeyType, object> GenericValues = new();
+        Dictionary<BlackboardKeyType, object>     GenericValues = new();
+
+        public IEnumerable<(string key, string value)> GetDebugEntries()
+        {
+            foreach (var kv in BoolValues)       yield return (kv.Key.ToString(), kv.Value.ToString());
+            foreach (var kv in FloatValues)      yield return (kv.Key.ToString(), kv.Value.ToString("F2"));
+            foreach (var kv in IntValues)        yield return (kv.Key.ToString(), kv.Value.ToString());
+            foreach (var kv in StringValues)     yield return (kv.Key.ToString(), kv.Value ?? "null");
+            foreach (var kv in Vector3Values)    yield return (kv.Key.ToString(), kv.Value.ToString("F1"));
+            foreach (var kv in GameObjectValues) yield return (kv.Key.ToString(), kv.Value != null ? kv.Value.name : "null");
+            foreach (var kv in GenericValues)    yield return (kv.Key.ToString(), kv.Value?.ToString() ?? "null");
+        }
 
         public void SetGeneric<T>(BlackboardKeyType key, T value)
         {

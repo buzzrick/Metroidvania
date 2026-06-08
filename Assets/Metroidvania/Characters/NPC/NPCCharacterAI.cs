@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Buzzrick.AISystems.BehaviourTree;
 using Buzzrick.UnityLibs.Attributes;
 using KinematicCharacterController.Examples;
@@ -8,7 +10,7 @@ using UnityEngine;
 
 namespace Metroidvania.Characters.NPC
 {
-    public class NPCCharacterAI : MonoBehaviour
+    public class NPCCharacterAI : MonoBehaviour, IBlackboardDebugProvider
     {
         [Header("Dependencies")]
         [SerializeField, RequiredField] protected NPCCharacterController _npcCharacterController;
@@ -46,6 +48,9 @@ namespace Metroidvania.Characters.NPC
             AIBrain.InitialiseBlackboard(_blackboard, transform);
             AIBrain.BuildBehaviourTree(LinkedBT, _blackboard);
         }
+
+        public IEnumerable<(string key, string value)> GetBlackboardDebugEntries() =>
+            _blackboard?.GetDebugEntries() ?? System.Linq.Enumerable.Empty<(string, string)>();
 
         [Button("Install required components")]
         public void InstallRequiredComponents()
