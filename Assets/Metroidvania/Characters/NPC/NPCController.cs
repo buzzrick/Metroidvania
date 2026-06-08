@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Metroidvania.Characters.NPC
 {
+    [SelectionBase]
     public class NPCController : MonoBehaviour
     {
         [SerializeField, RequiredField] private Animator _animator;

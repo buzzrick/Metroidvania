@@ -77,7 +77,14 @@ namespace Buzzrick.AISystems.BehaviourTree.Graph.Editor
         {
             _trackedTree = null;
             if (Selection.activeGameObject != null)
+            {
                 _trackedTree = Selection.activeGameObject.GetComponent<BehaviourTree>();
+                if (_trackedTree == null)
+                {
+                    _trackedTree = Selection.activeGameObject.GetComponentInChildren<BehaviourTree>();
+                }
+            }
+
             Refresh();
         }
 
