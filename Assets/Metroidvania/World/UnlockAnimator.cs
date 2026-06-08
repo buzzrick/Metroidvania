@@ -40,6 +40,8 @@ namespace Metroidvania.World
                     {
                         if (scaleObjectKV.Key.activeInHierarchy)
                         {
+                            //  The CharacterKinematicSystem doesn't like Scaling characters to less than (1,1,1)
+                            //  I need to figure out a better way to do this in the future for Characters.
                             scaleObjectKV.Key.transform.localScale = Vector3.Lerp(Vector3.zero, scaleObjectKV.Value, percent);
                         }
                     }                        
