@@ -230,10 +230,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6725591686140760882}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -356,7 +356,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1070351515674705263}
-  - component: {fileID: 2120332937166071835}
   - component: {fileID: 6800784393522794489}
   m_Layer: 8
   m_Name: InteractionCollider
@@ -380,24 +379,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8081470019332738460}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2120332937166071835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7864554633139198172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 108a181e61ca5314aabf4d368cd108f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DetectionRadius: 0.75
-  LayerMask:
-    serializedVersion: 2
-    m_Bits: 512
-  SwishSound: {fileID: 8300000, guid: 6dacfe6983d7f37409129c19e2359fe3, type: 3}
-  _parentTransform: {fileID: 8081470019332738460}
 --- !u!82 &6800784393522794489
 AudioSource:
   m_ObjectHideFlags: 0
@@ -409,6 +390,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
